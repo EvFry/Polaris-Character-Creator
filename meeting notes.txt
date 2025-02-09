@@ -1,0 +1,28 @@
+unsplash API
+
+pull in photos
+
+
+excalidraw to draw wireframe
+figjam to put note
+
+accordian element to html
+
+to pass info back and forth
+https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams to pass data
+
+pagination= to switch between sections
+
+https://www.w3schools.com/howto/howto_css_pagination.asp
+
+
+line 42 on game.js +scores.js
+
+
+next steps
+wireframe pages
+page flow
+goals
+pseduocode
+passing info back and forth
+
