@@ -8,7 +8,9 @@ figjam to put note
 
 accordian element to html
 
+https://www.w3schools.com/howto/howto_js_accordion.asp
 to pass info back and forth
+
 https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams to pass data
 
 pagination= to switch between sections
