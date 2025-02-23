@@ -21,6 +21,8 @@ https://www.w3schools.com/howto/howto_css_pagination.asp
 line 42 on game.js +scores.js
 
 
+https://lucid.app/lucidspark/9ee7df02-9cea-4fb5-b8db-7d7aed52e254/edit?viewport_loc=-23825%2C-7812%2C23800%2C11575%2C0_0&invitationId=inv_00974d11-1dcf-4aaf-b36a-12fcee9c96d8
+
 next steps
 wireframe pages
 page flow
