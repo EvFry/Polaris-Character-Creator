@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Sheet</title>
+</head>
+<body>
+    <h1>Character Sheet</h1>
+    <pre id="characterData">Loading...</pre>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const characterFile = params.get("character");
+
+            if (characterFile) {
+                fetch(`http://localhost:3000/load-file/${characterFile}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("characterData").textContent = JSON.stringify(data, null, 2);
+                    })
+                    .catch(error => console.error("Error loading character:", error));
+            } else {
+                document.getElementById("characterData").textContent = "No character selected.";
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+

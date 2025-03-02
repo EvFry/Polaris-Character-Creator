@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     const savedCharactersList = document.getElementById("savedCharacters");
-    
+
     function loadSavedCharacters() {
+        console.log("Loading saved characters...");
         fetch("http://localhost:3000/list-files")
             .then(response => response.json())
             .then(files => {
+                console.log("Files fetched:", files);
                 savedCharactersList.innerHTML = "";
                 files.forEach(file => {
                     let option = document.createElement("option");
@@ -16,9 +18,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.getElementById("newCharacter").addEventListener("click", function () {
-        window.location.href = "page2.html";
+        console.log("New Character button clicked!"); // Log the button click
+        fetch("http://localhost:3000/create-folder", { method: "POST" }) // Request server to create folder
+            .then(response => {
+                if (!response.ok) {
+                    console.error("Error creating folder. Status:", response.status);
+                    return response.json(); // Parsing response even in error
+                }
+                return response.json(); // Normal response
+            })
+            .then(data => {
+                console.log("Folder creation response:", data.message);
+                if (data.message === "Folder created") {
+                    window.location.href = "page2.html"; // Redirect after folder creation
+                } else {
+                    console.log("Folder already exists, no need to create.");
+                }
+            })
+            .catch(error => {
+                console.error("Error creating folder:", error);
+            });
     });
-
+    
     document.getElementById("loadCreator").addEventListener("click", function () {
         const selectedCharacter = savedCharactersList.value;
         if (selectedCharacter) {
