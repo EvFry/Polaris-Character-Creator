@@ -18,28 +18,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.getElementById("newCharacter").addEventListener("click", function () {
-        console.log("New Character button clicked!"); // Log the button click
-        fetch("http://localhost:3000/create-folder", { method: "POST" }) // Request server to create folder
-            .then(response => {
-                if (!response.ok) {
-                    console.error("Error creating folder. Status:", response.status);
-                    return response.json(); 
-                }
-                return response.json(); 
-            })
+        console.log("New Character button clicked!");
+
+        fetch("http://localhost:3000/create-folder", { method: "POST" })
+            .then(response => response.json())
             .then(data => {
                 console.log("Folder creation response:", data.message);
-                if (data.message === "Folder created") {
-                    window.location.href = "page2.html"; // Redirect after folder creation
-                } else {
-                    console.log("Folder already exists, no need to create.");
-                }
+
+                // ✅ Always navigate to page2.html, even if folder already exists
+                setTimeout(() => {
+                    window.location.href = "html/page2.html";
+                }, 500);
             })
             .catch(error => {
                 console.error("Error creating folder:", error);
+                alert("An error occurred while creating the folder.");
             });
     });
-    
+
     document.getElementById("loadCreator").addEventListener("click", function () {
         const selectedCharacter = savedCharactersList.value;
         if (selectedCharacter) {
