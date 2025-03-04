@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => {
                 if (!response.ok) {
                     console.error("Error creating folder. Status:", response.status);
-                    return response.json(); // Parsing response even in error
+                    return response.json(); 
                 }
-                return response.json(); // Normal response
+                return response.json(); 
             })
             .then(data => {
                 console.log("Folder creation response:", data.message);

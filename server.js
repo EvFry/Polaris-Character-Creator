@@ -25,7 +25,7 @@ app.get('/favicon.ico', (req, res) => {
 });
 
 
-// ✅ Ensure folder exists when "New Character" is clicked
+
 app.post("/create-folder", (req, res) => {
     try {
         if (!fs.existsSync(folderPath)) {
@@ -40,12 +40,12 @@ app.post("/create-folder", (req, res) => {
     }
 });
 
-// ✅ Root route for testing
+
 app.get("/", (req, res) => {
     res.send("<h1>Welcome to the JSON File API</h1><p>Use /list-files to see available JSON files.</p>");
 });
 
-// ✅ Get list of JSON files
+
 app.get("/list-files", (req, res) => {
     fs.readdir(folderPath, (err, files) => {
         if (err) return res.status(500).json({ error: "Error reading files" });
@@ -53,7 +53,7 @@ app.get("/list-files", (req, res) => {
     });
 });
 
-// ✅ Load JSON file
+
 app.get("/load-file/:filename", (req, res) => {
     const filePath = path.join(folderPath, req.params.filename);
     if (!fs.existsSync(filePath)) return res.status(404).json({ error: "File not found" });
@@ -64,7 +64,7 @@ app.get("/load-file/:filename", (req, res) => {
     });
 });
 
-// ✅ Delete JSON file
+
 app.delete("/delete-file/:filename", (req, res) => {
     const filePath = path.join(folderPath, req.params.filename);
     if (!fs.existsSync(filePath)) return res.status(404).json({ error: "File not found" });
@@ -75,26 +75,25 @@ app.delete("/delete-file/:filename", (req, res) => {
     });
 });
 
-// ✅ Copy JSON file
-// ✅ Copy JSON file with incrementing copy number
+
 app.post("/copy-file/:filename", (req, res) => {
     const originalFile = path.join(folderPath, req.params.filename);
     if (!fs.existsSync(originalFile)) return res.status(404).json({ error: "File not found" });
 
-    const baseName = req.params.filename.replace(/\.json$/, ""); // Remove ".json" to create base name
+    const baseName = req.params.filename.replace(/\.json$/, ""); /
     let copyNumber = 1;
     let newFileName;
 
-    // Find the next available copy number
+
     do {
         newFileName = `${baseName}_copy${copyNumber}.json`;
         console.log(`Checking if ${newFileName} exists...`);
         copyNumber++;
-    } while (fs.existsSync(path.join(folderPath, newFileName))); // Check if the copy already exists
+    } while (fs.existsSync(path.join(folderPath, newFileName))); 
 
     console.log(`Creating new file: ${newFileName}`);
     
-    // Copy the original file to the new file
+
     fs.copyFile(originalFile, path.join(folderPath, newFileName), err => {
         if (err) {
             console.error("❌ Error copying file:", err);
