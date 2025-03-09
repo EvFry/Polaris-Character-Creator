@@ -1,10 +1,79 @@
-const skills = [
+import { attributes } from './attributes.js'; // Ensure the file path is correct
+
+// Define the skill class
+export class skill {
+    constructor({
+        name, description, firstAttribute, secondAttribute,
+        hasPrerequisites, prerequisites, limitingskill, exclusiveskill,
+        difficultskill, npskill, skillchoice, skilloptions, baseSkill, skillMastery
+    }) {
+        this.name = name;
+        this.description = description;
+        this.firstAttribute = firstAttribute;
+        this.secondAttribute = secondAttribute;
+        this.hasPrerequisites = hasPrerequisites;
+        this.prerequisites = prerequisites;
+        this.limitingskill = limitingskill;
+        this.exclusiveskill = exclusiveskill;
+        this.difficultskill = difficultskill;
+        this.npskill = npskill;
+        this.skillchoice = skillchoice;
+        this.skilloptions = skilloptions;
+        this.baseSkill = baseSkill;
+        this._skillMastery = skillMastery;
+
+        // Debug log to ensure the skill is being created
+        console.log(`Skill created: ${this.name}`);
+    }
+
+    // Getter for skill mastery
+    get skillMastery() {
+        return this._skillMastery;
+    }
+
+    // Setter for skill mastery
+    set skillMastery(newValue) {
+        this._skillMastery = newValue;
+    }
+
+    // Method to calculate base skill dynamically based on natural abilities of the two attributes
+    calculateBaseSkill() {
+        const firstAttr = attributes.find(attr => attr.shortForm === this.firstAttribute);
+        const secondAttr = attributes.find(attr => attr.shortForm === this.secondAttribute);
+        
+        if (!firstAttr || !secondAttr) {
+            console.error(`Attributes not found for skill: ${this.name}`);
+            return null;
+        }
+
+        // Add the natural abilities of the first and second attributes to calculate base skill
+        return firstAttr.naturalAbility + secondAttr.naturalAbility;
+    }
+
+    // Update the base skill based on the current attributes' natural abilities
+    updateBaseSkill() {
+        this.baseSkill = this.calculateBaseSkill();
+    }
+
+    // Method to calculate the skill bonus
+    calculateSkillBonus() {
+        let bonus = this.baseSkill + this._skillMastery;
+        if (this.difficultskill || this.exclusiveskill) {
+            bonus -= 3;
+        }
+        return bonus;
+    }
+}
+
+
+    
+    export let allskills = [
      // ================================
-    // Combat (melee)
+    // Combat (melee) 5
     // ================================
-    {
+     new  skill({
         name: "Armed Combat",
-        description: "",  // To be added later
+        description: "This  skill makes it possible to use simple weapons, handled with one or two hands, such as knives and daggers, truncheons and combat staffs, sabers and swords, etc.", 
         firstAttribute: "STR",
         secondAttribute: "COO",
         hasPrerequisites: 0,
@@ -14,11 +83,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Hand-to-hand combat",
-        description: "",  // To be added later
+        description: "This  skill allows the character to fight and wrestle with bare hands.",  
         firstAttribute: "STR",
         secondAttribute: "COO",
         hasPrerequisites: 0,
@@ -28,11 +99,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Heavy weapons (melee)",
-        description: "",
+        description: "This  skill includes the use of heavy weapons, such as cutter spreaders, combat drills, etc",
         firstAttribute: "STR",
         secondAttribute: "STR",
         hasPrerequisites: 0,
@@ -42,11 +115,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Martial Arts",
-        description: "",
+        description: "This  skill includes all the special combat techniques related to training and particular maneuvers. ",
         firstAttribute: "COO",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -56,11 +131,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 1,
-        skilloptions: "Martial Arts Options"
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Special Weapons (melee)",
-        description: "",
+        description: "This  skill allows the use of weapons that must be handled in a very specific way, such as whips, chains, lassos, nets,grappling hooks, etc.",
         firstAttribute: "",
         secondAttribute: "",
         hasPrerequisites: 0,
@@ -70,14 +147,16 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 1,
-        skilloptions: "Special Weapons Options"
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
      // ================================
-    // Combat (Shooting)
+    // Combat (Shooting) 7
     // ================================
-    {
+     new  skill({
         name: "Bows, spearguns, Crossbows",
-        description: "",
+        description: "This  skill allows the character to use stringed weapons, such as bows, spearguns (not the heavy ones) and crossbows",
         firstAttribute: "COO",
         secondAttribute: "PER",
         hasPrerequisites: 0,
@@ -87,11 +166,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Handguns",
-        description: "",
+        description: "This  skill allows the use of small weapons like pistols, revolvers, or even submachine guns",
         firstAttribute: "COO",
         secondAttribute: "PER",
         hasPrerequisites: 0,
@@ -101,11 +182,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Heavy weapons (shooting)",
-        description: "",
+        description: "This  skill includes the use of light, mobile artillery: RPGs, mortars, portable torpedo launchers, and so on",
         firstAttribute: "COO",
         secondAttribute: "PER",
         hasPrerequisites: 0,
@@ -115,25 +198,29 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Sharpshooting",
-        description: "",
+        description: "his  skill limits the level of all Shoulder-fired weapons/Rifles used for precision shooting that require the use of a scope and specific knowledge in precision shooting. ",
         firstAttribute: "PER",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 0,
+        limitingskill: 1,
         exclusiveskill: 0,
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Shoulder-Fired Weapons/Rifles",
-        description: "",
+        description: "This  skill allows the character to use weapons such as rifles, gauge rifles, assault rifles.",
         firstAttribute: "COO",
         secondAttribute: "PER",
         hasPrerequisites: 0,
@@ -143,11 +230,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Special Weapons (shooting)",
-        description: "",
+        description: "This  skill allows the character to use a weapon withvery specific handling, such as a flame-thrower (STR/COO), the grenade launchers (COO/PER) or the hybrid wrist launcher (COO/PER)",
         firstAttribute: "",
         secondAttribute: "",
         hasPrerequisites: 0,
@@ -157,11 +246,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 1,
-        skilloptions: "Special Weapon Options"
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Throwing Weapons",
-        description: "",
+        description: "This  skill allows the use of throwing weapons, such as throwing knives, spears, etc.",
         firstAttribute: "COO",
         secondAttribute: "PER",
         hasPrerequisites: 0,
@@ -171,14 +262,16 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
     // ================================
-    // Communication/Social Relationships
+    // Communication/Social Relationships 6
     // ================================
-    {
+     new  skill({
         name: "Artistic Expression",
-        description: "",
+        description: "This talent makes it possible to know the different techniques for storytelling, dancing, acting (in the entertainment field), singing, etc. ",
         firstAttribute: "",
         secondAttribute: "",
         hasPrerequisites: 0,
@@ -188,11 +281,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 1,
-        skilloptions: "Art Form"
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Eloquence/Persuasion",
-        description: "",
+        description: "This  skill indicates the character’s ability to express himself, communicate, and persuade. It may, therefore, depending on the situation, be used to make a speech, to take part in verbal sparring, to convince (in selling or buying to obtain the best price, gain the upper hand in diplomatic negotiations, etc.), or even to manipulate or con the people with whom you are speaking. ",
         firstAttribute: "INT",
         secondAttribute: "PRE",
         hasPrerequisites: 1,
@@ -202,11 +297,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Empathic Analysis",
-        description: "",
+        description: "This  skill makes it possible for the character to understand a person’s feelings or emotions.",
         firstAttribute: "INT",
         secondAttribute: "PRE",
         hasPrerequisites: 0,
@@ -216,11 +313,13 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Intimidation",
-        description: "",
+        description: "As indicated by the name of the  skill, it can be used to intimidate, by showing oneself as confident and/or threatening. ",
         firstAttribute: "WIL",
         secondAttribute: "PRE",
         hasPrerequisites: 0,
@@ -230,11 +329,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Leadership",
-        description: "",
+        description: "This  skill accounts for the authority and leadership of a character.",
         firstAttribute: "WIL",
         secondAttribute: "PRE",
         hasPrerequisites: 0,
@@ -244,11 +345,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Socializing/Seduction",
-        description: "",
+        description: "his  skill allows the character to seduce others in a broad sense : it’s not only about romantic seduction but alsoabout being seen in a good light by someone, and building relationships in a community or a group in order to gain the trust of its members.",
         firstAttribute: "PRE",
         secondAttribute: "PRE",
         hasPrerequisites: 0,
@@ -258,14 +361,16 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
     // ================================
-    // Knowledge
+    // Knowledge 12
     // ================================
-    {
+     new  skill({
         name: "Bureaucracy",
-        description: "",
+        description: "This  skill makes it possible to know administrative organizations and current laws, to know where to ask for a particular authorization, how to get a certain permit or official document, even to speed up certain procedures (either through a legal loophole or clever bribes...). ",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1,
@@ -275,11 +380,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Business/Trafficking",
-        description: "",
+        description: "This  skill makes it possible for a character to purchase (or resell!) equipment, goods, services, or information. It also reveals how business-minded he is, as well as his knowledge of a particular market (producers and products, sellers and buyers, networks and trading places, etc.). ",
         firstAttribute: "INT",
         secondAttribute: "PRE",
         hasPrerequisites: 1,
@@ -289,11 +396,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 1,
-        skilloptions: "Business/Trafficking Options"
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Cartography",
-        description: "",
+        description: "This  skill makes it possible to draw up topographic surveys, regional maps, and to know where you are situated on a map",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1,
@@ -303,25 +412,29 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Cryptography",
-        description: "",
+        description: "This  skill makes it possible to code and decipher documents and messages. ",
         firstAttribute: "INT",
         secondAttribute: "INT",
-        hasPrerequisites: 0,
-        prerequisites: "",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10",
         limitingskill: 0,
         exclusiveskill: 1,
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Education/General Knowledge",
-        description: "",
+        description: "This  skill represents the character’s level of general education. At a very low level (Global Level lower than 3), the character can neither read nor write, and probably has great difficulty speaking correctly. At a low level (Levels 3 to 5), it indicates familiarity with essential knowledge: to read, write, or calculate. At an average level (6 to 10), it amounts to elementary knowledge in written expression, history, geography, arithmetic, science, etc. Finally, at a higher level (11 and above), it represents everything that can be included in the field of “general knowledge” and familiarity with the world at large.",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
@@ -331,11 +444,13 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Finding Information",
-        description: "",
+        description: "This  skill is useful for finding precise information in databases or for conducting research on a given subject.",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1,
@@ -345,11 +460,13 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Gambling",
-        description: "",
+        description: "This  skill amounts to the knowledge of most games (games based purely on chance need Luck) and also allows the character to cheat at these games. ",
         firstAttribute: "INT",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
@@ -359,11 +476,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Knowledge of Nations/Organizations",
-        description: "",
+        description: "This  skill includes all the general knowledge a character may have collected about any given nation, community, faction, or organization (history, geography, society, politics, laws, leaders, internal organization, customs and way of life, etc.).",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
@@ -373,11 +492,13 @@ const skills = [
         difficultskill: 0,
         npskill: 1,
         skillchoice: 1,
-        skilloptions: "Organization Options"
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Navigation",
-        description: "",
+        description: "This  skill, compulsory to direct a vessel with no visibility, allows you to determine your situation in a specific fashion and to calculate a route. ",
         firstAttribute: "INT",
         secondAttribute: "WIL",
         hasPrerequisites: 1,
@@ -387,11 +508,13 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Science/Specialized Knowledge",
-        description: "",
+        description: "This group of Skills comprises all science (including the social sciences) and specialized theoretical knowledge. ",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1,
@@ -401,11 +524,13 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 1,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Strategy",
-        description: "",
+        description: "This  skill allows a character to direct the action in a conflict on a global scale.",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1,
@@ -415,11 +540,13 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Tactics",
-        description: "",
+        description: "This  skill allows a character to direct combat units (or similar) engaged in a military operation and to give them effective plans of action so they can gain the upper hand over the opposing forces (movements, maneuvers, and positioning on the field of battle, specific tactics of attack and defense, ruses, etc.).",
         firstAttribute: "INT",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -429,15 +556,17 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 1,
-        skilloptions: "Tactics Options"
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
 
     // ================================
-    // Languages / Dialects
+    // Languages / Dialects 4
     // ================================
-    {
+     new  skill({
         name: "Ancient Languages",
-        description: "",
+        description: "The  skill for using ancinet languages (written, spoken, or other).",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
@@ -447,11 +576,13 @@ const skills = [
         difficultskill: 1,
         npskill: 0,
         skillchoice: 1, 
-        skilloptions: "Ancient Language Options"
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Foreign Languages",
-        description: "",
+        description: "The  skill for using languages (written, spoken, or other).",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
@@ -461,55 +592,63 @@ const skills = [
         difficultskill: 1,
         npskill: 1, 
         skillchoice: 1,
-        skilloptions: "Foreign Language Options"
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Sign Language",
-        description: "",
+        description: "The ability to convey information thorugh hand signs",
         firstAttribute: "COO",
         secondAttribute: "PER",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 10,
+        limitingskill: 1,
         exclusiveskill: 1, 
         difficultskill: 1,
         npskill: 0,
         skillchoice: 1, 
-        skilloptions: "Specific Language"
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Specialized Languages",
-        description: "",
+        description: "These languages are specific to a social group, a profession, and certain categories of individuals or even certain creatures.",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 0,
-        exclusiveskill: 0,
-        difficultskill: 0,
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
         npskill: 1, 
         skillchoice: 1,
-        skilloptions: "Specialized Language Options"
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
 
     // ================================
-    // Physical Abilities
+    // Physical Abilities 7
     // ================================
-    {
+     new  skill({
         name: "Acrobatics/Balance",
-        description: "",
+        description: "This  skill allows the character to execute acrobatic moves or gymnastic flips (outside the aquatic environment). It an be used to move through a laser grid, to get out of afight, to perform an acrobatic attack, etc. ",
         firstAttribute: "COO",
         secondAttribute: "COO",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 0,
+        limitingskill: 1,
         exclusiveskill: 0,
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Athletics",
         description: "",
         firstAttribute: "STR",
@@ -521,9 +660,11 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Climbing",
         description: "",
         firstAttribute: "STR",
@@ -535,9 +676,11 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Endurance",
         description: "",
         firstAttribute: "CON",
@@ -550,8 +693,8 @@ const skills = [
         npskill: 0,
         skillchoice: 0,
         skilloptions: ""
-    },
-    {
+    }),
+     new  skill({
         name: "FOF Breathing",
         description: "",
         firstAttribute: "CON",
@@ -560,72 +703,82 @@ const skills = [
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 0,
-        difficultskill: 1, // (-3)
+        difficultskill: 1, 
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Underwater Maneuvering",
         description: "",
         firstAttribute: "STR",
         secondAttribute: "COO",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 0,
+        limitingskill: 1,
         exclusiveskill: 0,
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Zero-G Maneuvering",
         description: "",
         firstAttribute: "COO",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 0,
+        limitingskill: 1,
         exclusiveskill: 0,
         difficultskill: 0,
         npskill: 0,
-        skillchoice: 0, // assuming no explicit dots indicator here
-        skilloptions: ""
-    },
+        skillchoice: 0, 
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
 
     // ================================
-    // Piloting
+    // Piloting 3
     // ================================
-    {
+     new  skill({
         name: "Armor Maneuvering",
-        description: "",
+        description: "This  skill allows the use of mechanized armor (also known as exo-armor), which are similar in many ways to vehicles.",
         firstAttribute: "COO",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 0,
+        limitingskill: 1,
         exclusiveskill: 0,
         difficultskill: 0,
         npskill: 0,
-        skillchoice: 1, // has "[. . .]"
-        skilloptions: ""
-    },
-    {
+        skillchoice: 1, 
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Piloting",
         description: "",
-        firstAttribute: "Varies",
-        secondAttribute: "Varies",
+        firstAttribute: "",
+        secondAttribute: "",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 0,
         difficultskill: 0,
         npskill: 0,
-        skillchoice: 1, // has "[. . .]"
-        skilloptions: ""
-    },
-    {
+        skillchoice: 1, 
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Remote piloting",
         description: "",
         firstAttribute: "INT",
@@ -634,30 +787,34 @@ const skills = [
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 0,
-        difficultskill: 1, // (-3)
+        difficultskill: 1, 
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
 
     // ================================
     // Special Skills
     // ================================
-    {
+     new  skill({
         name: "Absence",
-        description: "",
+        description: "This  skill allows a character to go undetected, to passunnoticed through a crowd, etc.",
         firstAttribute: "ADA",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Body Control",
         description: "",
         firstAttribute: "CON",
@@ -665,13 +822,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1,
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Control of Mutations",
         description: "",
         firstAttribute: "Varies",
@@ -679,13 +838,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
-        skillchoice: 1, // has "[. . .]"
-        skilloptions: ""
-    },
-    {
+        skillchoice: 1, 
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Hybrid (Hybrids Only)",
         description: "",
         firstAttribute: "CON",
@@ -697,9 +858,11 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Hypnosis",
         description: "",
         firstAttribute: "WIL",
@@ -707,13 +870,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Mastery of the Polaris Echo",
         description: "",
         firstAttribute: "INT",
@@ -721,13 +886,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Mastery of the Polaris Effect",
         description: "",
         firstAttribute: "WIL",
@@ -735,13 +902,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Meditation",
         description: "",
         firstAttribute: "WIL",
@@ -749,13 +918,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1,
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Mental Shield",
         description: "",
         firstAttribute: "WIL",
@@ -763,13 +934,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Polaris Powers",
         description: "",
         firstAttribute: "INT",
@@ -777,17 +950,19 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
 
     // ================================
     // Stealth / Subterfuge
     // ================================
-    {
+     new  skill({
         name: "Camouflage/Concealment",
         description: "",
         firstAttribute: "PER",
@@ -796,12 +971,14 @@ const skills = [
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 0,
-        difficultskill: 1, // (-3)
+        difficultskill: 1, 
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Discretion/Shadowing",
         description: "",
         firstAttribute: "PER",
@@ -813,9 +990,11 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Disguise/Deception",
         description: "",
         firstAttribute: "ADA",
@@ -827,9 +1006,11 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Escape",
         description: "",
         firstAttribute: "COO",
@@ -837,13 +1018,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Pickpocket",
         description: "",
         firstAttribute: "COO",
@@ -852,12 +1035,14 @@ const skills = [
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 0,
-        difficultskill: 1, // (-3)
+        difficultskill: 1, 
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Stealth/Silent Movement",
         description: "",
         firstAttribute: "PER",
@@ -869,13 +1054,15 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
 
     // ================================
     // Survival / Outside
     // ================================
-    {
+     new  skill({
         name: "Hunting/Tracking",
         description: "",
         firstAttribute: "PER",
@@ -883,13 +1070,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Knowledge of an Environment",
         description: "",
         firstAttribute: "INT",
@@ -899,11 +1088,13 @@ const skills = [
         limitingskill: 0,
         exclusiveskill: 0,
         difficultskill: 0,
-        npskill: 1, // (NP)
-        skillchoice: 1, // has "[. . .]"
-        skilloptions: ""
-    },
-    {
+        npskill: 1, 
+        skillchoice: 1, 
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Observation",
         description: "",
         firstAttribute: "PER",
@@ -915,9 +1106,11 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Orientation",
         description: "",
         firstAttribute: "PER",
@@ -929,9 +1122,11 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Survival",
         description: "",
         firstAttribute: "ADA",
@@ -939,19 +1134,21 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
 
     // ================================
     // Techniques
     // ================================
-    {
+     new  skill({
         name: "Aquaculture/Livestock Farming",
-        description: "",
+        description: "This  skill allows a character to use techniques for livestock farming, aquaculture, and hydroponic farming common inthe underwater world.",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
@@ -961,79 +1158,91 @@ const skills = [
         difficultskill: 0,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Armory",
-        description: "",
+        description: "This  skill allows a character to maintain and repair firearms",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Art/Craftsmanship",
-        description: "",
+        description: "This  skill allows a character to make various objects, which he can sell. There is a  skill for each general category of products, as defined by the Gamemaster (Cooking, Painting, Sculpture, Bladed Weapons, Musical Instruments, etc.)",
         firstAttribute: "INT",
         secondAttribute: "PER",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
+        exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
-        skillchoice: 1, // has "[. . .]"
-        skilloptions: ""
-    },
-    {
+        skillchoice: 1, 
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Computer Hacking",
         description: "",
         firstAttribute: "INT",
         secondAttribute: "INT",
-        hasPrerequisites: 1, // †
+        hasPrerequisites: 1, 
         prerequisites: "Requires specialized training",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Computing",
         description: "",
         firstAttribute: "INT",
         secondAttribute: "INT",
-        hasPrerequisites: 1, // †
+        hasPrerequisites: 1,
         prerequisites: "Requires specialized training",
         limitingskill: 0,
         exclusiveskill: 0,
-        difficultskill: 1, // (-3)
+        difficultskill: 1, 
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Electronics",
         description: "",
         firstAttribute: "INT",
         secondAttribute: "INT",
-        hasPrerequisites: 1, // †
+        hasPrerequisites: 1, 
         prerequisites: "Requires specialized training",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Explosives",
         description: "",
         firstAttribute: "INT",
@@ -1041,13 +1250,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "First Aid",
         description: "",
         firstAttribute: "INT",
@@ -1056,26 +1267,30 @@ const skills = [
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 0,
-        difficultskill: 1, // (-3)
+        difficultskill: 1, 
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Forgery",
         description: "",
         firstAttribute: "INT",
         secondAttribute: "PER",
-        hasPrerequisites: 1, // †
+        hasPrerequisites: 1,
         prerequisites: "Requires specialized training",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
         npskill: 0,
-        skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skillchoice: 1,
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Mechanics",
         description: "",
         firstAttribute: "INT",
@@ -1086,10 +1301,12 @@ const skills = [
         exclusiveskill: 0,
         difficultskill: 0,
         npskill: 0,
-        skillchoice: 1, // has "[. . .]"
-        skilloptions: ""
-    },
-    {
+        skillchoice: 1, 
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Onboard Weapons/Artillery",
         description: "",
         firstAttribute: "INT",
@@ -1097,13 +1314,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Security Systems",
         description: "",
         firstAttribute: "INT",
@@ -1111,13 +1330,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Soundscan Analysis",
         description: "",
         firstAttribute: "INT",
@@ -1125,13 +1346,15 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Spying/Surveillance",
         description: "",
         firstAttribute: "INT",
@@ -1139,41 +1362,47 @@ const skills = [
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Surgery",
         description: "",
         firstAttribute: "INT",
         secondAttribute: "ADA",
-        hasPrerequisites: 1, // †
+        hasPrerequisites: 1, 
         prerequisites: "Requires specialized training",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Technical Engineering",
         description: "",
         firstAttribute: "INT",
         secondAttribute: "INT",
-        hasPrerequisites: 1, // †
+        hasPrerequisites: 1, 
         prerequisites: "Requires specialized training",
         limitingskill: 0,
-        exclusiveskill: 1, // (X)
-        difficultskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
         npskill: 0,
-        skillchoice: 1, // has "[. . .]"
-        skilloptions: ""
-    },
-    {
+        skillchoice: 1, 
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Training",
         description: "",
         firstAttribute: "INT",
@@ -1182,12 +1411,14 @@ const skills = [
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 0,
-        difficultskill: 1, // (-3)
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    },
-    {
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     new  skill({
         name: "Traps",
         description: "",
         firstAttribute: "INT",
@@ -1196,11 +1427,892 @@ const skills = [
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 0,
-        difficultskill: 1, // (-3)
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
-        skilloptions: ""
-    }
+        skilloptions: "",
+        baseSkill: -2,
+        skillMastery: 0
+    })
 ];
 
-console.log(skills);
+
+export let skilloptions = [
+     // ================================
+    // Martial Arts
+    // ================================
+    new  skill({
+        name: "Wrestling",
+        description: "Hand-to-hand combat, based on locks, pins, strangle holds, takedowns, etc. This form of combat is useful when the two adversaries are fighting on the ground or underwater.",
+        firstAttribute: "COO",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Martial Arts",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new  skill({
+        name: "Defense Techniques",
+        description: "Use of specific defensive techniques, as well as all self-defense maneuvers (for example, escaping from grappling holds or strangle holds).",
+        firstAttribute: "COO",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Martial Arts",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new  skill({
+        name: "Offense Techniques",
+        description: "Attack techniques, notably strikes (with any part of the body: hands, elbows, feet, knees, shins, head, etc.). The successful use of this skill allows the Player to increase the amount of damage caused or to deliver special strikes: stun, knock out, etc.",
+        firstAttribute: "COO",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Martial Arts",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     // ================================
+    // Ancient Languages
+    // ================================
+    new skill({
+        name: "Ancient Language (Arkonian)",
+        description: "The ancient language of the Geneticists, with unknown linguistic roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Ancient Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Ancient Language (Azuran)",
+        description: "The ancient official language of the Azuran Alliance, derived from Azurean roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Ancient Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Ancient Language (Azurean)",
+        description: "A noble Azuran language with roots in the languages of the ancient past.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Ancient Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Ancient Language (Gatean)",
+        description: "An ancient language spoken at Gateo, with roots in Latin.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Ancient Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     // ================================
+    // Forigen Languages
+    // ================================
+    new skill({
+        name: "Foreign Language (Amanean)",
+        description: "The language of Amazonia, with unknown linguistic roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Azran)",
+        description: "A very rare language derived from an Azuran dialect.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Gashklarian)",
+        description: "An ancient language still spoken on Nova, rooted in languages of the ancient past.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Isitacian)",
+        description: "The language of the Coral Republic, derived from Azuran roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Lesarachian)",
+        description: "Spoken by the community of Leviathan, incorporating whistling and soft cries into speech. Linguistic roots are unknown.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Lexzion)",
+        description: "A language spoken on Pull, derived from Arkonian roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Neo-Azuran)",
+        description: "The most common language spoken under the oceans, derived from Azuran roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Nezraisian)",
+        description: "The language of the Cult of the Prophet of Sirte, with roots in languages of the ancient past.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Oceanian)",
+        description: "The language of the Mediterranean Union, derived from Azuran roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Olakarian)",
+        description: "The language of the Red League, with linguistic roots in Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Olosakian)",
+        description: "The language of the Hegemony, derived from Azuran roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Ossyrian)",
+        description: "The language of the Rift States, with linguistic roots in Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Renarean)",
+        description: "The language of the Polar Alliance, with roots in Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Ternasetian)",
+        description: "The language of the Ternasets; some believe this is the oldest language in the world. Its roots are unknown.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Foreign Language (Trashanes)",
+        description: "A language spoken in Kryss, Pushkar, and Suvadi, derived from Arkonian and languages of the ancient past.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Foreign Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     // ================================
+    // Specialized languages
+    // ================================
+    new skill({
+        name: "Specialized Language (Absolanese)",
+        description: "The language of diplomats, derived from Neo-Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Burrower)",
+        description: "The language of the Burrowers.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Enefid)",
+        description: "The jargon of spies; this language is closer to a code, with no known linguistic roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Exonese)",
+        description: "The language of dolphins; it has no written form and no known linguistic roots.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Inesisian)",
+        description: "The language of the priests of the Trident, derived from Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Ithraxian)",
+        description: "The language of pirates, derived from Neo-Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Klanese)",
+        description: "The language of miners, derived from Neo-Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Levean)",
+        description: "The language of Leviathans and the majority of mammals. Requires a radio device for communication. No written form.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Metalan)",
+        description: "The language of the educated class, derived from a mix of Isitac and Azurean.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Neolan)",
+        description: "The language of engineers, derived from Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Sirsian)",
+        description: "The language of the slums, thieves, and beggars, derived from Neo-Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Specialized Language (Solean)",
+        description: "A widely spread language of commerce, derived from Azuran.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Specialized Languages",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     // ================================
+    // Sign Language
+    // ================================
+        new skill({
+            name: "Sign Language (Arkonian)",
+            description: "The skill to sign in Arkonian.",
+            firstAttribute: "COO",
+            secondAttribute: "PER",
+            hasPrerequisites: 1,
+            prerequisites: "Ancient Language (Arkonian) 1",
+            limitingskill: 1,
+            exclusiveskill: 1,
+            difficultskill: 1,
+            npskill: 0,
+            skillchoice: 0,
+            skilloptions: "Sign Language",
+            baseSkill: -2,
+            skillMastery: 0
+        }),
+        new skill({
+            name: "Sign Language (Azuran)",
+            description: "The skill to sign in Azuran.",
+            firstAttribute: "COO",
+            secondAttribute: "PER",
+            hasPrerequisites: 1,
+            prerequisites: "Ancient Language (Azuran) 1",
+            limitingskill: 1,
+            exclusiveskill: 1,
+            difficultskill: 1,
+            npskill: 0,
+            skillchoice: 0,
+            skilloptions: "Sign Language",
+            baseSkill: -2,
+            skillMastery: 0
+        }),
+        new skill({
+            name: "Sign Language (Azurean)",
+            description: "The skill to sign in Azurean.",
+            firstAttribute: "COO",
+            secondAttribute: "PER",
+            hasPrerequisites: 1,
+            prerequisites: "Ancient Language (Azurean) 1",
+            limitingskill: 1,
+            exclusiveskill: 1,
+            difficultskill: 1,
+            npskill: 0,
+            skillchoice: 0,
+            skilloptions: "Sign Language",
+            baseSkill: -2,
+            skillMastery: 0
+        }),
+        new skill({
+            name: "Sign Language (Gatean)",
+            description: "The skill to sign in Gatean.",
+            firstAttribute: "COO",
+            secondAttribute: "PER",
+            hasPrerequisites: 1,
+            prerequisites: "Ancient Language (Gatean) 1",
+            limitingskill: 1,
+            exclusiveskill: 1,
+            difficultskill: 1,
+            npskill: 0,
+            skillchoice: 0,
+            skilloptions: "Sign Language",
+            baseSkill: -2,
+            skillMastery: 0
+        }),
+    
+            new skill({
+                name: "Sign Language (Amanean)",
+                description: "The skill to sign in Amanean.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Amanean) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Azran)",
+                description: "The skill to sign in Azran.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Azran) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Gashklarian)",
+                description: "The skill to sign in Gashklarian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Gashklarian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Isitacian)",
+                description: "The skill to sign in Isitacian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Isitacian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Lesarachian)",
+                description: "The skill to sign in Lesarachian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Lesarachian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Lexzion)",
+                description: "The skill to sign in Lexzion.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Lexzion) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Neo-azuran)",
+                description: "The skill to sign in Neo-azuran.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Neo-azuran) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Nezraisian)",
+                description: "The skill to sign in Nezraisian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Nezraisian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Oceanian)",
+                description: "The skill to sign in Oceanian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Oceanian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Olakarian)",
+                description: "The skill to sign in Olakarian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Olakarian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Olosakian)",
+                description: "The skill to sign in Olosakian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Olosakian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Ossyrian)",
+                description: "The skill to sign in Ossyrian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Ossyrian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Renarean)",
+                description: "The skill to sign in Renarean.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Renarean) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Ternasetian)",
+                description: "The skill to sign in Ternasetian.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Ternasetian) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            }),
+            new skill({
+                name: "Sign Language (Trashanes)",
+                description: "The skill to sign in Trashanes.",
+                firstAttribute: "COO",
+                secondAttribute: "PER",
+                hasPrerequisites: 1,
+                prerequisites: "Foreign Language (Trashanes) 1",
+                limitingskill: 1,
+                exclusiveskill: 1,
+                difficultskill: 1,
+                npskill: 0,
+                skillchoice: 0,
+                skilloptions: "Sign Language",
+                baseSkill: -2,
+                skillMastery: 0
+            })
+        ];
+        
+
+    
+     
+     
+
+
+    
+    
+
+window.allskills = allskills;
+
+console.log(allskills)

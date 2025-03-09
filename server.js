@@ -1,7 +1,12 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const cors = require("cors");
+import express from "express";
+import fs from "fs";
+import path from "path";
+import cors from "cors";
+import { fileURLToPath } from "url";
+
+// Get the current file path and dirname (equivalent of __dirname in ES Modules)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,11 +22,15 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+
+// Serve static files from the html, css, and javascript folders
+app.use("/html", express.static(path.join(__dirname, "public", "html")));
+app.use("/css", express.static(path.join(__dirname, "public", "css")));
+app.use("/javascript", express.static(path.join(__dirname, "public", "javascript")));
 
 // Serve the main HTML page
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "html","index.html"));
+    res.sendFile(path.join(__dirname, "public", "html", "index.html"));
 });
 
 // Avoid 404 error for favicon
