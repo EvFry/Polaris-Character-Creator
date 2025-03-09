@@ -953,7 +953,7 @@ export class skill {
         exclusiveskill: 1, 
         difficultskill: 0,
         npskill: 0,
-        skillchoice: 0,
+        skillchoice: 1,
         skilloptions: "",
         baseSkill: -2,
         skillMastery: 0
