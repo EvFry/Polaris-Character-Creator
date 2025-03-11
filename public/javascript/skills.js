@@ -1,11 +1,12 @@
 import { attributes } from './attributes.js'; // Ensure the file path is correct
+import { polarispowers } from './polarispowers.js';
 
 // Define the skill class
 export class skill {
     constructor({
         name, description, firstAttribute, secondAttribute,
         hasPrerequisites, prerequisites, limitingskill, exclusiveskill,
-        difficultskill, npskill, skillchoice, skilloptions, baseSkill, skillMastery
+        difficultskill, npskill, skillchoice, skilloptions, baseSkill, skillMastery,fullDescription,categories
     }) {
         this.name = name;
         this.description = description;
@@ -21,6 +22,9 @@ export class skill {
         this.skilloptions = skilloptions;
         this.baseSkill = baseSkill;
         this._skillMastery = skillMastery;
+        this.fullDescription=fullDescription
+        this.categories=categories
+
 
         // Debug log to ensure the skill is being created
         console.log(`Skill created: ${this.name}`);
@@ -61,7 +65,7 @@ export class skill {
         if (this.difficultskill || this.exclusiveskill) {
             bonus -= 3;
         }
-        return bonus;
+        return bonus;    
     }
 }
 
@@ -2301,9 +2305,614 @@ export let skilloptions = [
                 skilloptions: "Sign Language",
                 baseSkill: -2,
                 skillMastery: 0
-            })
-        ];
+            }),
+    // ================================
+    // Special Weapons(Melee)
+    // ================================
+    new skill({
+        name: "Combat Claw",
+        description: "A combat claw is fastened over the hand and increases contact damage. This weapon ignores 3 points of protection/armor at the H scale.",
+        firstAttribute: "COO",
+        secondAttribute: "COO",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Special Weapons (melee)",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Electrowhip",
+        description: "This weapon takes the form of an extremely thin, powered cable. It can be used to either hit a target, causing ugly electrical burns, or to catch him (see Whips and Chains, in the Combat chapter, CRB1 page 230). If a target is caught by the whip, he suffers damage each Combat Round, as long as he has not set himself free. On electronic devices (or cybernetic implants), the attack also imposes a Breakdown Test. It is absolutely necessary to have the Special Weapons (Whip) Skill to use this weapon; if not, every time the user fails, he wounds himself...",
+        firstAttribute: "COO",
+        secondAttribute: "COO",
+        hasPrerequisites: 1,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Special Weapons (melee)",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    // ================================
+    // Special Weapons(Shooting)
+    // ================================
+    new skill({
+        name: "Hybrid Wrist Launcher",
+        description: "This special weapon, made famous by the Hegemonian Techno-Hybrids, is worn on the wrist and covers part of the forearm. It launches micro projectiles, designed to be used both in and out of water, over a short range.",
+        firstAttribute: "COO",
+        secondAttribute: "PER",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Special Weapons (shooting)",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Directional Assault Sonar",
+        description: "This weapon is based on the same principle as the simple assault sonar but affects all creatures in a straight line from the sonar emitter, for its entire range.",
+        firstAttribute: "COO",
+        secondAttribute: "PER",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Special Weapons (shooting)",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Infrasound Cannon",
+        description: "This experimental weapon, inspired by the terrifying attacks of the Burrowers, bombards a target with infrasound waves to find a resonance frequency. The target is affected once the correct frequency is found. The weapon has various damaging effects based on the resonance frequency it finds, with different results for internal organ damage, convulsions, fractures, and more.",
+        firstAttribute: "COO",
+        secondAttribute: "PER",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Special Weapons (shooting)",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Flamethrower",
+        description: "This weapon projects a flaming liquid over an area. It requires the Special Weapons (shooting) skill to operate and can cause widespread damage. See Special Weapons, Flamethrowers, in the Combat chapter for more information.",
+        firstAttribute: "STR",
+        secondAttribute: "COO",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Special Weapons (shooting)",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Grenade Launcher",
+        description: "This weapon is used to launch grenades over distances. It requires precision and accuracy to use effectively. There are many types of grenades with different effects.",
+        firstAttribute: "COO",
+        secondAttribute: "PER",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Special Weapons (shooting)",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Net Thrower",
+        description: "This weapon projects a large projectile that releases a fine meshed net when it reaches its target. The net sticks to the victim, who usually cannot do anything to escape it. Some net throwers can be used underwater.",
+        firstAttribute: "COO",
+        secondAttribute: "PER",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Special Weapons (shooting)",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     // ================================
+    // Artistic Expression
+    // ================================
+    new skill({
+        name: "Singing",
+        description: "Skill in singing, part of the Artistic Expression category.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1, // Difficult skill
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Artistic Expression",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Acting/Storytelling",
+        description: "Skill in acting and storytelling, part of the Artistic Expression category.",
+        firstAttribute: "ADA",
+        secondAttribute: "PRE",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1, // Difficult skill
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Artistic Expression",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Dancing",
+        description: "Skill in dancing, part of the Artistic Expression category.",
+        firstAttribute: "COO",
+        secondAttribute: "PRE",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1, // Difficult skill
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Artistic Expression",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Music Instrument",
+        description: "Skill in playing a musical instrument, part of the Artistic Expression category.",
+        firstAttribute: "COO",
+        secondAttribute: "PER",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1, // Limiting because it's exclusive
+        exclusiveskill: 1, // Exclusive skill
+        difficultskill: 1, // Difficult skill because it's exclusive
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Artistic Expression",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    // ================================
+    // Knowledge of specific nation/community
+    // ================================
+    new skill({
+        name: "USER_PROVIDED_NAME_1", // User will provide the name here
+        description: "Knowledge of a specific nation, community, faction, or organization. Includes history, geography, society, politics, laws, leaders, internal organization, customs, and way of life.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Knowledge of Nations/Organizations",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     // ================================
+    // Science/Specialized Knowledge
+    // ================================
+    new skill({
+        name: "Administration/Management",
+        description: "Knowledge of account and resource management for a corporation (or whatever kind of organization), but also the techniques for commercial fraud.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Arms/Weapons systems",
+        description: "Knowledge of arms, munitions, weapons systems (mounted on top of vehicles), relevant technologies, etc.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Astrophysics/Astronomy",
+        description: "Knowledge concerning space and spatial physics.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Physics/Chemistry 10, Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Biology/Physiology",
+        description: "Knowledge of the biology of living organisms.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Botany",
+        description: "Knowledge of plants and their ecosystems. This Skill also allows for the diagnosis of diseases affecting flora and knowledge of the appropriate remedies.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Biology/Physiology 7, Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Criminology",
+        description: "Knowledge of crime scene analysis techniques (ballistics, fingerprints and trace evidence, microfibers, etc.).",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Economy",
+        description: "Knowledge of economic sciences and theories.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Finance",
+        description: "Knowledge of financial and banking systems and the capacity to carry out good stock operations and judicious financial investments.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Geography",
+        description: "Study of the geography of nations (society, economy, etc.).",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Geology",
+        description: "Knowledge concerning the planet’s physical geography, the make-up of the earth’s crust, minerals, and volcanic activity.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Physics/Chemistry 5, Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "History/Archeology",
+        description: "Knowledge of the history of nations, study of archeological remains.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Law/Legislation",
+        description: "Knowledge of the law, the legal code, and the functions of justice.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Medicine",
+        description: "Knowledge of the illnesses and problems that can affect human beings, whatever their nature, and the treatments that can cure them.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Biology/Physiology 7, Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Pharmacology",
+        description: "Knowledge of medications, but also drugs and poisons.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Biology/Physiology 5, Physics/Chemistry 5, Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Physics/Chemistry",
+        description: "Study of the physical properties of matter.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Political science",
+        description: "Knowledge of nations and their political systems, global geopolitics, etc.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Geography 7, History/Archaeology 5, Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Psychology",
+        description: "Study of the human mind and behavior.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Sociology",
+        description: "Study of the social sciences.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "Zoology",
+        description: "Knowledge of animals and their ecosystems. This Skill also allows for the diagnosis of illnesses affecting animals and knowledge of the appropriate remedies.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Biology/Physiology 7, Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Science/Specialized Knowledge",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    // ================================
+    // Tactics
+    // ================================
+    new skill({
+        name: "Naval Combat",
+        description: "This concerns combat between submarine ships (whatever their size).",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Tactics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Underground Combat",
+        description: "This concerns military operations conducted in an underground environment.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Tactics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Ground Combat",
+        description: "This concerns military operations conducted on the surface and satellite weapons.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Tactics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Commando Operations",
+        description: "This concerns specialized operations conducted by a small group with a specific objective (infiltration or extraction, sabotage or assassination, seizing control of a small station or a ship, neutralization of terrorists or hostage-takers, etc.), or for combat situated in a difficult environment (urban combat, for example, in the big cities or large underwater stations).",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Tactics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+];
         
+
+
+
+    
 
     
      
@@ -2314,5 +2923,6 @@ export let skilloptions = [
     
 
 window.allskills = allskills;
-
+window.skilloptions= skilloptions;
 console.log(allskills)
+console.log(skilloptions)

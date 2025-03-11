@@ -34,7 +34,7 @@ export class Attribute {
 }
 
 // Initialize attributes
-export const attributes = [
+export let attributes = [
     new Attribute("Strength", "STR", "Measures physical might and muscular capabilities.", 7),
     new Attribute("Constitution", "CON", "Represents stamina, health, resistance to trauma, poisons, and extreme conditions.", 7),
     new Attribute("Coordination", "COO", "Indicates neuromuscular coordination, agility, balance, and movement precision.", 7),
