@@ -6,7 +6,7 @@ export class skill {
     constructor({
         name, description, firstAttribute, secondAttribute,
         hasPrerequisites, prerequisites, limitingskill, exclusiveskill,
-        difficultskill, npskill, skillchoice, skilloptions, baseSkill, skillMastery,fullDescription,categories
+        difficultskill, npskill, skillchoice, skilloptions, baseSkill, skillMastery, fullDescription, categories
     }) {
         this.name = name;
         this.description = description;
@@ -22,7 +22,7 @@ export class skill {
         this.skilloptions = skilloptions;
         this.baseSkill = baseSkill;
         this._skillMastery = skillMastery;
-        this.fullDescription=fullDescription
+        this.fullDescription= fullDescription
         this.categories=categories
 
 

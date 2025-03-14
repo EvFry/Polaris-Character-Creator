@@ -1,5 +1,5 @@
 
-
+import class skill 
 
 export let polarispowers =[
 new skill({
