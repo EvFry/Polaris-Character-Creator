@@ -1,5 +1,5 @@
 
-import class skill 
+import { skill }  from "./define.js";
 
 export let polarispowers =[
 new skill({

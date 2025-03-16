@@ -1,75 +1,9 @@
 import { attributes } from './attributes.js'; // Ensure the file path is correct
+import {skill} from './define.js';
+
+
+
 import { polarispowers } from './polarispowers.js';
-
-// Define the skill class
-export class skill {
-    constructor({
-        name, description, firstAttribute, secondAttribute,
-        hasPrerequisites, prerequisites, limitingskill, exclusiveskill,
-        difficultskill, npskill, skillchoice, skilloptions, baseSkill, skillMastery, fullDescription, categories
-    }) {
-        this.name = name;
-        this.description = description;
-        this.firstAttribute = firstAttribute;
-        this.secondAttribute = secondAttribute;
-        this.hasPrerequisites = hasPrerequisites;
-        this.prerequisites = prerequisites;
-        this.limitingskill = limitingskill;
-        this.exclusiveskill = exclusiveskill;
-        this.difficultskill = difficultskill;
-        this.npskill = npskill;
-        this.skillchoice = skillchoice;
-        this.skilloptions = skilloptions;
-        this.baseSkill = baseSkill;
-        this._skillMastery = skillMastery;
-        this.fullDescription= fullDescription
-        this.categories=categories
-
-
-        // Debug log to ensure the skill is being created
-        console.log(`Skill created: ${this.name}`);
-    }
-
-    // Getter for skill mastery
-    get skillMastery() {
-        return this._skillMastery;
-    }
-
-    // Setter for skill mastery
-    set skillMastery(newValue) {
-        this._skillMastery = newValue;
-    }
-
-    // Method to calculate base skill dynamically based on natural abilities of the two attributes
-    calculateBaseSkill() {
-        const firstAttr = attributes.find(attr => attr.shortForm === this.firstAttribute);
-        const secondAttr = attributes.find(attr => attr.shortForm === this.secondAttribute);
-        
-        if (!firstAttr || !secondAttr) {
-            console.error(`Attributes not found for skill: ${this.name}`);
-            return null;
-        }
-
-        // Add the natural abilities of the first and second attributes to calculate base skill
-        return firstAttr.naturalAbility + secondAttr.naturalAbility;
-    }
-
-    // Update the base skill based on the current attributes' natural abilities
-    updateBaseSkill() {
-        this.baseSkill = this.calculateBaseSkill();
-    }
-
-    // Method to calculate the skill bonus
-    calculateSkillBonus() {
-        let bonus = this.baseSkill + this._skillMastery;
-        if (this.difficultskill || this.exclusiveskill) {
-            bonus -= 3;
-        }
-        return bonus;    
-    }
-}
-
-
     
     export let allskills = [
      // ================================
@@ -208,7 +142,7 @@ export class skill {
     }),
      new  skill({
         name: "Sharpshooting",
-        description: "his  skill limits the level of all Shoulder-fired weapons/Rifles used for precision shooting that require the use of a scope and specific knowledge in precision shooting. ",
+        description: "This  skill limits the level of all Shoulder-fired weapons/Rifles used for precision shooting that require the use of a scope and specific knowledge in precision shooting. ",
         firstAttribute: "PER",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
@@ -355,7 +289,7 @@ export class skill {
     }),
      new  skill({
         name: "Socializing/Seduction",
-        description: "his  skill allows the character to seduce others in a broad sense : it’s not only about romantic seduction but alsoabout being seen in a good light by someone, and building relationships in a community or a group in order to gain the trust of its members.",
+        description: "This  skill allows the character to seduce others in a broad sense : it’s not only about romantic seduction but alsoabout being seen in a good light by someone, and building relationships in a community or a group in order to gain the trust of its members.",
         firstAttribute: "PRE",
         secondAttribute: "PRE",
         hasPrerequisites: 0,
@@ -654,7 +588,7 @@ export class skill {
     }),
      new  skill({
         name: "Athletics",
-        description: "",
+        description: "This Skill includes all all manner of physical actions: running, jumping, swimming, and so on. ",
         firstAttribute: "STR",
         secondAttribute: "COO",
         hasPrerequisites: 0,
@@ -670,7 +604,7 @@ export class skill {
     }),
      new  skill({
         name: "Climbing",
-        description: "",
+        description: "This Skill makes it possible to climb walls. It also makes it possible to know how to use climbing gear, how to rappel, etc",
         firstAttribute: "STR",
         secondAttribute: "COO",
         hasPrerequisites: 0,
@@ -686,12 +620,12 @@ export class skill {
     }),
      new  skill({
         name: "Endurance",
-        description: "",
+        description: "This Skill amounts to the character’s resistance to effort and Fatigue, physical as well as mental",
         firstAttribute: "CON",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 0,
+        limitingskill: 1,
         exclusiveskill: 0,
         difficultskill: 0,
         npskill: 0,
@@ -700,7 +634,7 @@ export class skill {
     }),
      new  skill({
         name: "FOF Breathing",
-        description: "",
+        description: "This Skill allows the character to master the techniques of breathing fluid or any other organic or artificial substance",
         firstAttribute: "CON",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
@@ -716,7 +650,7 @@ export class skill {
     }),
      new  skill({
         name: "Underwater Maneuvering",
-        description: "",
+        description: "This Skill makes it possible to move underwater: quicklyturn over, execute a difficult move, reach the desiredlocation, move through a complex environment (maze,wreck, etc.)",
         firstAttribute: "STR",
         secondAttribute: "COO",
         hasPrerequisites: 0,
@@ -732,7 +666,7 @@ export class skill {
     }),
      new  skill({
         name: "Zero-G Maneuvering",
-        description: "",
+        description: "This Skill makes it possible to operate in zero gravity: quickly turn around, perform a difficult move, reach the desired location, move through a complex environment (maze, wreck, etc.)",
         firstAttribute: "COO",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -768,7 +702,7 @@ export class skill {
     }),
      new  skill({
         name: "Piloting",
-        description: "",
+        description: "This Skill allows the piloting of a specific type of vehicle",
         firstAttribute: "",
         secondAttribute: "",
         hasPrerequisites: 0,
@@ -784,7 +718,7 @@ export class skill {
     }),
      new  skill({
         name: "Remote piloting",
-        description: "",
+        description: "This Skill covers the use of weapons and equipment remotely controled through an electronic or mechanical interface.",
         firstAttribute: "INT",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -836,14 +770,14 @@ export class skill {
     }),
      new  skill({
         name: "Control of Mutations",
-        description: "",
+        description: "Certain mutations give characters access to specific Skills.",
         firstAttribute: "Varies",
         secondAttribute: "Varies",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1, 
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 1, 
         skilloptions: "",
@@ -852,7 +786,7 @@ export class skill {
     }),
      new  skill({
         name: "Hybrid (Hybrids Only)",
-        description: "",
+        description: "Only Natural hybrids, Geno-Hybrids, Techno-Hybrids, and characters endowed with the Amphibian mutation may develop this Skill, which represents their affinity for the aquatic environment and the mastery of their mutation or their modifications.",
         firstAttribute: "CON",
         secondAttribute: "COO",
         hasPrerequisites: 0,
@@ -868,14 +802,14 @@ export class skill {
     }),
      new  skill({
         name: "Hypnosis",
-        description: "",
+        description: "This Skill allows a character to put an individual into a state of hypnosis (however, this is impossible to use on an animal or inopen combat)",
         firstAttribute: "WIL",
         secondAttribute: "PRE",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1, 
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
         skilloptions: "",
@@ -884,14 +818,14 @@ export class skill {
     }),
      new  skill({
         name: "Mastery of the Polaris Echo",
-        description: "",
+        description: "This is one of the rare Skills that a character can use in the Polaris Flux",
         firstAttribute: "INT",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1, 
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
         skilloptions: "",
@@ -900,7 +834,7 @@ export class skill {
     }),
      new  skill({
         name: "Mastery of the Polaris Effect",
-        description: "",
+        description: "This Skill allows a character to voluntarily unleash the energy of the Polaris Effect and to control it, so that he can use its powers.",
         firstAttribute: "WIL",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
@@ -916,14 +850,14 @@ export class skill {
     }),
      new  skill({
         name: "Meditation",
-        description: "",
+        description: "This Skill allows a character to empty his mind, to concentrate, or to rest",
         firstAttribute: "WIL",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1,
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
         skilloptions: "",
@@ -932,7 +866,7 @@ export class skill {
     }),
      new  skill({
         name: "Mental Shield",
-        description: "",
+        description: "This Skill allows a character to reinforce one of his mental Attributes (Willpower, Intelligence, Adaptation) against anyaggression that might affect them (mental attacks, hypnosis,subliminal images, interrogation, or any other action directly affecting the mind of an individual). ",
         firstAttribute: "WIL",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
@@ -948,14 +882,14 @@ export class skill {
     }),
      new  skill({
         name: "Polaris Powers",
-        description: "",
+        description: "Each Polaris Effect Power is the subject of a particular Skill",
         firstAttribute: "INT",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1, 
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 1,
         skilloptions: "",
@@ -968,7 +902,7 @@ export class skill {
     // ================================
      new  skill({
         name: "Camouflage/Concealment",
-        description: "",
+        description: "This Skill allows a character to conceal himself within the natural environment, using nooks or crevices, darkness,and vegetation (including underwater vegetation).",
         firstAttribute: "PER",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -984,7 +918,7 @@ export class skill {
     }),
      new  skill({
         name: "Discretion/Shadowing",
-        description: "",
+        description: "This Skill allows a character to pass unnoticed through a public place, avoid notice, or follow a person without being discovered.",
         firstAttribute: "PER",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -1000,7 +934,7 @@ export class skill {
     }),
      new  skill({
         name: "Disguise/Deception",
-        description: "",
+        description: "This Skill allows a character to change his appearance and even to pass for someone else",
         firstAttribute: "ADA",
         secondAttribute: "PRE",
         hasPrerequisites: 0,
@@ -1016,14 +950,14 @@ export class skill {
     }),
      new  skill({
         name: "Escape",
-        description: "",
+        description: "This Skill allows a character to free himself from bonds, such as ropes, mechanical handcuffs, or nets. ",
         firstAttribute: "COO",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1, 
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
         skilloptions: "",
@@ -1032,7 +966,7 @@ export class skill {
     }),
      new  skill({
         name: "Pickpocket",
-        description: "",
+        description: "This Skill allows a character to quietly steal objects from the pockets of other characters or even from merchants’ displays",
         firstAttribute: "COO",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -1048,12 +982,12 @@ export class skill {
     }),
      new  skill({
         name: "Stealth/Silent Movement",
-        description: "",
+        description: "This Skill allows a character to move without noise and without being noticed.",
         firstAttribute: "PER",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
         prerequisites: "",
-        limitingskill: 0,
+        limitingskill: 1,
         exclusiveskill: 0,
         difficultskill: 0,
         npskill: 0,
@@ -1068,14 +1002,14 @@ export class skill {
     // ================================
      new  skill({
         name: "Hunting/Tracking",
-        description: "",
+        description: "This Skill covers all the techniques for hunting, fishing,and tracking.",
         firstAttribute: "PER",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1, 
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
         skilloptions: "",
@@ -1084,7 +1018,7 @@ export class skill {
     }),
      new  skill({
         name: "Knowledge of an Environment",
-        description: "",
+        description: "This Skill allows a character to know the specifics of an environment: dangers, phenomena, general knowledge of the flora and fauna, etc. ",
         firstAttribute: "INT",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -1100,7 +1034,7 @@ export class skill {
     }),
      new  skill({
         name: "Observation",
-        description: "",
+        description: "This Skill allows a character to carefully analyze his environment, to attempt to recall fine details, indicators, anomalies, a familiar face or the particular behavior of an individual in a crowd, etc",
         firstAttribute: "PER",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
@@ -1116,7 +1050,7 @@ export class skill {
     }),
      new  skill({
         name: "Orientation",
-        description: "",
+        description: "This Skill allows a character to orient himself and travel in his environment, avoid getting lost, relocate his trail, to keep an awareness of his position and movements, and even to avoid dangerous zones and undesirable encounters.",
         firstAttribute: "PER",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -1132,14 +1066,14 @@ export class skill {
     }),
      new  skill({
         name: "Survival",
-        description: "",
+        description: "his Skill allows a character to survive in a hostile environment, to find food and water, to make fire, to build shelter, to protect himself from cold, to fashion improvised tools, etc.",
         firstAttribute: "ADA",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1, 
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 0,
         skilloptions: "",
@@ -1184,14 +1118,14 @@ export class skill {
     }),
      new  skill({
         name: "Art/Craftsmanship",
-        description: "This  skill allows a character to make various objects, which he can sell. There is a  skill for each general category of products, as defined by the Gamemaster (Cooking, Painting, Sculpture, Bladed Weapons, Musical Instruments, etc.)",
+        description: "This skill allows a character to make various objects, which he can sell. There is a  skill for each general category of products, as defined by the Gamemaster (Cooking, Painting, Sculpture, Bladed Weapons, Musical Instruments, etc.)",
         firstAttribute: "INT",
         secondAttribute: "PER",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
         exclusiveskill: 1, 
-        difficultskill: 0,
+        difficultskill: 1,
         npskill: 0,
         skillchoice: 1, 
         skilloptions: "",
@@ -1200,11 +1134,11 @@ export class skill {
     }),
      new  skill({
         name: "Computer Hacking",
-        description: "",
+        description: "This Skill allows a character to illegally enter computer systems and databases. ",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1, 
-        prerequisites: "Requires specialized training",
+        prerequisites: "Computing 10",
         limitingskill: 0,
         exclusiveskill: 1, 
         difficultskill: 1,
@@ -1216,11 +1150,11 @@ export class skill {
     }),
      new  skill({
         name: "Computing",
-        description: "",
+        description: "This Skill includes all the operations performed with the aid of computerized devices",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1,
-        prerequisites: "Requires specialized training",
+        prerequisites: "Education/General knowledge 10",
         limitingskill: 0,
         exclusiveskill: 0,
         difficultskill: 1, 
@@ -1232,11 +1166,11 @@ export class skill {
     }),
      new  skill({
         name: "Electronics",
-        description: "",
+        description: "This Skill allows a character to install, repair, or modify electrical or electronic equipment.",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1, 
-        prerequisites: "Requires specialized training",
+        prerequisites: "Education/General knowledge 10",
         limitingskill: 0,
         exclusiveskill: 1, 
         difficultskill: 1,
@@ -1248,7 +1182,7 @@ export class skill {
     }),
      new  skill({
         name: "Explosives",
-        description: "",
+        description: "This Skill allows a character to use and defuse explosives,to understand demolition techniques, and to assembleexplosive charges, with an eye to inventing new procedures",
         firstAttribute: "INT",
         secondAttribute: "WIL",
         hasPrerequisites: 0,
@@ -1264,7 +1198,7 @@ export class skill {
     }),
      new  skill({
         name: "First Aid",
-        description: "",
+        description: "This indispensable Skill allows a character to treat small wounds, but more importantly to stabilize more severe injuries. ",
         firstAttribute: "INT",
         secondAttribute: "ADA",
         hasPrerequisites: 0,
@@ -1280,27 +1214,27 @@ export class skill {
     }),
      new  skill({
         name: "Forgery",
-        description: "",
+        description: "This Skill allows a character to create false documents, fake accreditations, etc",
         firstAttribute: "INT",
         secondAttribute: "PER",
         hasPrerequisites: 1,
-        prerequisites: "Requires specialized training",
+        prerequisites: "The necessary Skill depends on the type of forgery required, often Art/Craftsmanship, Computing,Bureaucracy, Electronics, etc., at a level of 7 or mor",
         limitingskill: 0,
         exclusiveskill: 1,
         difficultskill: 1,
         npskill: 0,
-        skillchoice: 1,
+        skillchoice: 0,
         skilloptions: "",
         baseSkill: -2,
         skillMastery: 0
     }),
      new  skill({
         name: "Mechanics",
-        description: "",
+        description: "This Skill allows the character to repair and maintain vehicles and machinery. ",
         firstAttribute: "INT",
         secondAttribute: "INT",
-        hasPrerequisites: 0,
-        prerequisites: "",
+        hasPrerequisites: 1,
+        prerequisites: "Electronics 5",
         limitingskill: 0,
         exclusiveskill: 0,
         difficultskill: 0,
@@ -1312,7 +1246,7 @@ export class skill {
     }),
      new  skill({
         name: "Onboard Weapons/Artillery",
-        description: "",
+        description: "This Skill covers the use of weapons systems used aboard vehicles (cannons, torpedoes, rocket launchers, etc.)",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
@@ -1328,11 +1262,11 @@ export class skill {
     }),
      new  skill({
         name: "Security Systems",
-        description: "",
+        description: "This Skill allows for the installation, detection, and neutralization of all kinds of security systems. ",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
-        prerequisites: "",
+        prerequisites: "Electronics 5",
         limitingskill: 0,
         exclusiveskill: 1, 
         difficultskill: 1,
@@ -1344,7 +1278,7 @@ export class skill {
     }),
      new  skill({
         name: "Soundscan Analysis",
-        description: "",
+        description: "This Skill allows a character to interpret the information transmitted by a detection device, such as a radar, sonar, or scanner.",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
@@ -1360,11 +1294,11 @@ export class skill {
     }),
      new  skill({
         name: "Spying/Surveillance",
-        description: "",
+        description: "This Skill covers the various techniques of spying and counter-spying, based on the installation and use of specific equipment (microscopic tech, spy cameras, listening systems, communication jammers, etc.). ",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 0,
-        prerequisites: "",
+        prerequisites: " Education/General knowledge 10, Electronics 3",
         limitingskill: 0,
         exclusiveskill: 1, 
         difficultskill: 1,
@@ -1376,11 +1310,11 @@ export class skill {
     }),
      new  skill({
         name: "Surgery",
-        description: "",
+        description: "This Skill allows a character to conduct surgical interventions. ",
         firstAttribute: "INT",
-        secondAttribute: "ADA",
+        secondAttribute: "INT",
         hasPrerequisites: 1, 
-        prerequisites: "Requires specialized training",
+        prerequisites: "Medicine 10, optinal: Bionics/Cybertechnology 5 (for implantation of cybernetic equipment).",
         limitingskill: 0,
         exclusiveskill: 1, 
         difficultskill: 1,
@@ -1392,11 +1326,11 @@ export class skill {
     }),
      new  skill({
         name: "Technical Engineering",
-        description: "",
+        description: "These Skills allow a character to invent all sorts of products or highly technological equipment.",
         firstAttribute: "INT",
         secondAttribute: "INT",
         hasPrerequisites: 1, 
-        prerequisites: "Requires specialized training",
+        prerequisites: "Education/General knowledge 10",
         limitingskill: 0,
         exclusiveskill: 1, 
         difficultskill: 1,
@@ -1408,9 +1342,9 @@ export class skill {
     }),
      new  skill({
         name: "Training",
-        description: "",
-        firstAttribute: "INT",
-        secondAttribute: "INT",
+        description: "This Skill can be used to train domestic animals or tame wild creatures",
+        firstAttribute: "WIL",
+        secondAttribute: "PRE",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
@@ -1424,9 +1358,9 @@ export class skill {
     }),
      new  skill({
         name: "Traps",
-        description: "",
+        description: "his Skill allows a character to build and set traps (of all kinds: mechanical, explosive, etc.), but also to detect and defuse them.",
         firstAttribute: "INT",
-        secondAttribute: "INT",
+        secondAttribute: "PER",
         hasPrerequisites: 0,
         prerequisites: "",
         limitingskill: 0,
@@ -2906,6 +2840,947 @@ export let skilloptions = [
         baseSkill: -2,
         skillMastery: 0
     }),
+     // ================================
+    //  Armor Maneuvering
+    // ================================
+    new skill({
+        name: "Atmospheric exo-armor",
+        description: "This talent allows a pilot to maneuver armor that possesses atmospheric boosters that enable it to fly.",
+        firstAttribute: "COO",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Armor Maneuvering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "External exo-armor",
+        description: "This includes Surface exo-armor.",
+        firstAttribute: "COO",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Armor Maneuvering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Underwater exo-armor",
+        description: "This includes the operation of exo-armor designed for underwater environments.",
+        firstAttribute: "COO",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Armor Maneuvering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Space exo-armor",
+        description: "This talent allows a character to use space exo-armor. It is also used for procedures during atmospheric re-entry.",
+        firstAttribute: "COO",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Armor Maneuvering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    // ================================
+    // Piloting
+    // ================================
+    new skill({
+        name: "Underwater fighters",
+        description: "Allows piloting of an underwater fighter.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 1,
+        prerequisites: "Athletics 10, Education/General knowledge 10, Light ships 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Piloting",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Atmospheric fighters",
+        description: "Allows piloting of a fighter on the surface.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 1,
+        prerequisites: "Athletics 10, Education/General knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Piloting",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Light ships",
+        description: "The character who possesses this skill is familiar with all the procedures of piloting a light ship, such as a small civil transport or patrol ship.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 7",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Piloting",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Heavy ships",
+        description: "This skill allows the piloting of a heavy ship, such as a civil cargo ship or a heavy tonnage military ship (frigates, cruisers, or destroyers).",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Light ships 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Piloting",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Spacecraft",
+        description: "Gives the character knowledge of how to pilot shuttles and other space vehicles.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Piloting",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Underground vehicles",
+        description: "Gives the character knowledge of how to pilot underground patrol vehicles and drills.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Piloting",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Ground vehicles",
+        description: "Gives the character the ability to pilot all kinds of vehicles that move on wheels, treads, sliders, or with the help of mechanical feet, whether they are able to move underwater or on the surface.",
+        firstAttribute: "PER",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Piloting",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Underwater scooters",
+        description: "Gives the character knowledge of how to use scooters and hydro-propulsors.",
+        firstAttribute: "PER",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Piloting",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    // ================================
+    // Knowledge of an Enviroment
+    // ================================
+    new skill({
+        name: "Underwater cities and stations",
+        description: "Knowledge of the specifics of underwater cities and stations, including dangers, phenomena, and general knowledge of the flora and fauna.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Knowledge of an Environment",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Oceans",
+        description: "Knowledge of oceanic environments, including their dangers, phenomena, and general knowledge of marine flora and fauna.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Knowledge of an Environment",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Underground",
+        description: "Knowledge of underground environments, including their dangers, phenomena, and general knowledge of subterranean flora and fauna.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Knowledge of an Environment",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Surface",
+        description: "Knowledge of surface environments, including their dangers, phenomena, and general knowledge of terrestrial flora and fauna.",
+        firstAttribute: "INT",
+        secondAttribute: "ADA",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 1,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 1,
+        skillchoice: 0,
+        skilloptions: "Knowledge of an Environment",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     // ================================
+    // Business/Trafficking
+    // ================================
+    new skill({
+        name: "Food (common goods)",
+        description: "Knowledge of food market, including basic trade and sources of food.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Food (high technology)",
+        description: "Knowledge of the trade and sourcing of high-tech food products, such as lab-grown food or specialized food for space missions.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Information (common goods)",
+        description: "Knowledge of basic information trade, including information networks and simple data selling.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Information (high technology)",
+        description: "Expert knowledge in the trade and selling of high-tech information, such as advanced data streams, encrypted communications, and high-value intelligence.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Medical supplies (common goods)",
+        description: "Knowledge of basic medical supplies market, including trade in general healthcare products, medicines, and medical equipment.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Medical supplies (high technology)",
+        description: "Knowledge of high-tech medical supplies, including advanced treatments, biotechnologies, and medical devices for specialized care.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Raw material (common goods)",
+        description: "Knowledge of the trade and sourcing of raw materials, such as metals, oil, and basic industrial goods.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Raw material (high technology)",
+        description: "Knowledge of high-tech raw materials, such as rare earth elements, specialized alloys, and advanced construction materials.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Vehicles (common goods)",
+        description: "Knowledge of the trade and sourcing of vehicles, such as cars, trucks, and basic machinery.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Vehicles (high technology)",
+        description: "Knowledge of high-tech vehicles, including spacecraft, military vehicles, and specialized transportation technology.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Weapons (common goods)",
+        description: "Knowledge of the trade and sourcing of basic weapons, including firearms, melee weapons, and personal defense equipment.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 5",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Weapons (high technology)",
+        description: "Knowledge of high-tech weapons, including energy weapons, advanced firearms, and military-grade weapons.",
+        firstAttribute: "INT",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General Knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Business/Trafficking",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    // ================================
+    // Art/Craftsmanship
+    // ================================
+    new skill({
+        name: "USER_PROVIDED_NAME_1", // User will provide the name here
+        description:"This skill allows a character to make various objects, which he can sell. There is a  skill for each general category of products, as defined by the Gamemaster (Cooking, Painting, Sculpture, Bladed Weapons, Musical Instruments, etc.)",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Art/Craftsmanship",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+     // ================================
+    // Mechanics
+    // ================================
+    new skill({
+        name: "Exo-armors Mechanics",
+        description: "This Skill allows the character to repair and maintain exo-armors, including their propulsion systems and armaments.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Electronics 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Mechanics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Ships/Underwater Fighters Mechanics",
+        description: "This Skill allows the character to repair and maintain ships and underwater fighters, including their engines, pressure systems, and hull integrity.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Electronics 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Mechanics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Atmospheric Fighters Mechanics",
+        description: "This Skill allows the character to repair and maintain atmospheric fighters, including their aerodynamics, propulsion systems, and weapons.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Electronics 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Mechanics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Underground Vehicles Mechanics",
+        description: "This Skill allows the character to repair and maintain underground vehicles, including drills, excavation machines, and underground transport systems.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Electronics 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Mechanics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Ground Vehicles Mechanics",
+        description: "This Skill allows the character to repair and maintain ground vehicles, including wheeled, treaded, and walker-based transports.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Electronics 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Mechanics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new skill({
+        name: "USER_PROVIDED_NAME_1", // User will provide the name here
+        description:"TThis Skill allows the character to repair and maintain vehicles and machinery. ",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 0,
+        prerequisites: "Electronics 5",
+        limitingskill: 0,
+        exclusiveskill: 0,
+        difficultskill: 0,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Mechanics",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    // ================================
+    // Technical Engineering
+    // ================================
+    new skill({
+        name: "Architecture/Civil Engineering",
+        description: "This Skill allows the design and construction of stations and underwater cities.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Bionics/Cybertechnology",
+        description: "This Skill covers the study of biological mechanisms and their industrial applications, including human-machine interfaces and cybernetic replacement body parts.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10, Biology/Physiology 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Biotechnology/Genetic Engineering",
+        description: "This Skill covers the technological procedures that can be applied to living organisms, notably genetic manipulations.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10, Biology/Physiology 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Electronics/Computing",
+        description: "This Skill allows for the invention of electronic equipment and computing devices.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10, Electronics 10, Computing 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Nanotechnology",
+        description: "This Skill provides knowledge of nanotechnology and its applications in daily life.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10, Physics/Chemistry 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Naval Architecture",
+        description: "This Skill allows for the design of ships.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Robotics",
+        description: "This Skill provides knowledge of robotics, including the creation and engineering of robotic systems.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10, Electronics 10, Computing 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Programming",
+        description: "This Skill allows for the invention and engineering of computing programs.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10, Computing 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    
+    new skill({
+        name: "Telecommunications",
+        description: "This Skill covers the invention of communication systems.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1,
+        prerequisites: "Education/General knowledge 10, Electronics 10, Computing 10",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    new  skill({
+        name: "USER_PROVIDED_NAME_1",
+        description: "These Skills allow a character to invent all sorts of products or highly technological equipment.",
+        firstAttribute: "INT",
+        secondAttribute: "INT",
+        hasPrerequisites: 1, 
+        prerequisites: "Education/General knowledge 10",
+        limitingskill: 0,
+        exclusiveskill: 1, 
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0, 
+        skilloptions: "Technical Engineering",
+        baseSkill: -2,
+        skillMastery: 0
+    }),
+    // ================================
+    // Control of Mutations
+    // ================================
+    new skill({
+        name: "Contagion",
+        description: "The mutant can try to control their contagion. If successful, it becomes a Special Skill that can be developed at twice the cost.",
+        firstAttribute: "CON",
+        secondAttribute: "WIL",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Contagion",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 1
+    }),
+    
+    new skill({
+        name: "Empathy",
+        description: "This skill enables the character to communicate with empathic creatures such as coral and to feel the emotions of animals.",
+        firstAttribute: "WIL",
+        secondAttribute: "PRE",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Empathy",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 1
+    }),
+    
+    new skill({
+        name: "Molecular Control",
+        description: "The molecular structure of a person with this power can be altered, occurring when this mutation is intentionally or unintentionally activated.",
+        firstAttribute: "CON",
+        secondAttribute: "WIL",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Molecular Instability",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 1
+    }),
+    
+    new skill({
+        name: "Outdoor Adaptation",
+        description: "The character is resistant to the surface’s nefarious effects, such as radiation, air acidity, and molecular alteration. This skill can only be developed naturally.",
+        firstAttribute: "CON",
+        secondAttribute: "CON",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Outdoor Adaptation",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 0
+    }),
+    
+    new skill({
+        name: "Purulence",
+        description: "The character can try to control their Purulence in order to curb contamination periods.",
+        firstAttribute: "CON",
+        secondAttribute: "WIL",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Purulence",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 0
+    }),
+    
+    new skill({
+        name: "Radiations",
+        description: "This skill enables the character to release a flow of radiation into a victim’s body through simple physical contact.",
+        firstAttribute: "CON",
+        secondAttribute: "WIL",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Radiation",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 1
+    }),
+    
+    new skill({
+        name: "Metamorphosis",
+        description: "This skill enables the character to take somebody else’s physical appearance (and physical appearance only).",
+        firstAttribute: "CON",
+        secondAttribute: "WIL",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Shape-Shifter",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 1
+    }),
+    
+    new skill({
+        name: "Sonar",
+        description: "The character is gifted with a type of sonar that enables them to detect obstacles underwater or in the dark.",
+        firstAttribute: "PER",
+        secondAttribute: "PER",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Sonar",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 0
+    }),
+    
+    new skill({
+        name: "Tail Agility",
+        description: "A character with this skill can learn how to handle objects with their tail, attack with it, or use it as a normal limb.",
+        firstAttribute: "COO",
+        secondAttribute: "COO",
+        hasPrerequisites: 1,
+        prerequisites: "Mutation: Tail",
+        limitingskill: 0,
+        exclusiveskill: 1,
+        difficultskill: 1,
+        npskill: 0,
+        skillchoice: 0,
+        skilloptions: "Control of Mutations",
+        baseSkill: -2,
+        skillMastery: 0,
+        doublecost: 0
+    }),
     
 ];
         
@@ -2922,7 +3797,6 @@ export let skilloptions = [
     
     
 
-window.allskills = allskills;
-window.skilloptions= skilloptions;
 console.log(allskills)
 console.log(skilloptions)
+console.log(polarispowers)

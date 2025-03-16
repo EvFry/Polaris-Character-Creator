@@ -24,14 +24,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve static files from the html, css, and javascript folders
-app.use("/html", express.static(path.join(__dirname, "public", "html")));
-app.use("/css", express.static(path.join(__dirname, "public", "css")));
-app.use("/javascript", express.static(path.join(__dirname, "public", "javascript")));
+app.use("", express.static(path.join(__dirname, "./public")));
 
 // Serve the main HTML page
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "index.html"));
-});
+//app.get("/", (req, res) => {
+ //   res.sendFile(path.join(__dirname, "public", "html", "index.html"));
+//});
 
 // Avoid 404 error for favicon
 app.get('/favicon.ico', (req, res) => res.status(204).end());
@@ -90,11 +88,11 @@ app.post("/copy-file/:filename", (req, res) => {
     let copyNumber = 1;
     let newFileName;
 
-    do {
-        newFileName = `${baseName}_copy${copyNumber}.json`;
-        console.log(`Checking if ${newFileName} exists...`);
-        copyNumber++;
-    } while (fs.existsSync(path.join(folderPath, newFileName))); 
+    //for {
+   //     newFileName = `${baseName}_copy${copyNumber}.json`;
+ //       console.log(`Checking if ${newFileName} exists...`);
+  //      copyNumber++;
+   // } while (fs.existsSync(path.join(folderPath, newFileName))); 
 
     console.log(`Creating new file: ${newFileName}`);
 
