@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // ✅ Always navigate to page2.html, even if folder already exists
                 setTimeout(() => {
-                    window.location.href = "html/page2.html";
+                    window.location.href = "/page2.html";
                 }, 500);
             })
             .catch(error => {

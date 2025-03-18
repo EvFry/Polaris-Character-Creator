@@ -3,158 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skill Selector</title>
-    <style>
-        .container {
-            margin: 20px;
-            font-family: Arial, sans-serif;
-        }
-        select {
-            width: 200px;
-            padding: 5px;
-            margin: 10px;
-        }
-        .info {
-            margin-top: 20px;
-        }
-    </style>
+    <title>Character Creation</title>
+    <link rel="stylesheet" href="css/page2.css">
+    <script defer type="module" src="javascript/define.js"></script>
+    <script defer type="module" src="javascript/attributes.js"></script>
+    <script defer type="module" src="javascript/page2.js"></script>
+    <script defer type="module" src="javascript/background.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Skill Selector</h1>
-
-        <!-- First list box to select skills -->
-        <label for="skillSelect">Select Skill:</label>
-        <select id="skillSelect">
-            <option value="">--Select a Skill--</option>
-            <!-- Skills will be populated dynamically here -->
-        </select>
-
-        <!-- Second list box for skill options (only visible if skillchoice is selected) -->
-        <div id="skillOptionsContainer" style="display:none;">
-            <label for="skillOptions">Select Option:</label>
-            <select id="skillOptions">
-                <option value="">--Select an Option--</option>
-                <!-- Options will be populated dynamically here -->
-            </select>
-        </div>
-
-        <!-- Information display area -->
-        <div class="info" id="info">
-            <!-- Information about the selected skill and option will be displayed here -->
-        </div>
+    <div id="cp-tracker">
+        CP: <span id="cp-total">0</span>
     </div>
 
-    <!-- Import the skills.js file -->
-    <script src="/javascript/skills.js" type="module"></script>
+    <div class="container">
+        <h1>Create Your Character</h1>
 
-    <script>
-        window.addEventListener('load', () => {
-            // Ensure that allskills is available
-            if (!window.allskills) {
-                console.error("Skills data not available");
-                return;
-            }
+        <!-- Character Name Input -->
+        <label for="characterName">Enter Character Name:</label>
+        <input type="text" id="characterName" placeholder="Enter a valid name..." required>
+        <p id="nameError" class="error-message"></p>
 
-            // Populate the first list box with all skill names
-            const skillSelect = document.getElementById("skillSelect");
-            window.allskills.forEach((skill, index) => {
-                const option = document.createElement("option");
-                option.value = index;
-                option.textContent = skill.name;
-                skillSelect.appendChild(option);
-            });
+        <!-- Character Type Dropdown -->
+        <label for="characterType">Select Character Type:</label>
+        <select id="characterType">
+            <option value="realistic">Realistic (30 AP)</option>
+            <option value="intermediary">Intermediary (38 AP)</option>
+            <option value="heroic">Heroic (46 AP)</option>
+        </select>
 
-            // Event listener for when a skill is selected
-            skillSelect.addEventListener("change", (event) => {
-                const selectedSkillIndex = event.target.value;
-                if (selectedSkillIndex) {
-                    const selectedSkill = window.allskills[selectedSkillIndex];
-                    updateSkillInfo(selectedSkill);
-                    if (selectedSkill.skillchoice === 1) {
-                        // If skill has options, show the second list box
-                        populateSkillOptions(selectedSkill);
-                        document.getElementById("skillOptionsContainer").style.display = "block";
-                    } else {
-                        // Otherwise hide the second list box
-                        document.getElementById("skillOptionsContainer").style.display = "none";
-                    }
-                } else {
-                    document.getElementById("skillOptionsContainer").style.display = "none";
-                    document.getElementById("info").innerHTML = "";
-                }
-            });
+        <!-- Attributes Section -->
+        <h2>Attributes <span class="ap-counter">Attribute Points: <span id="ap-total">0</span></span></h2>
+        <div id="attributes-list"></div>
 
-            // Function to update the skill information display
-            function updateSkillInfo(skill) {
-                const infoDiv = document.getElementById("info");
-                infoDiv.innerHTML = `
-                    <h2>Selected Skill: ${skill.name}</h2>
-                    <p><strong>Description:</strong> ${skill.description}</p>
-                    <p><strong>First Attribute:</strong> ${skill.firstAttribute}</p>
-                    <p><strong>Second Attribute:</strong> ${skill.secondAttribute}</p>
-                    <p><strong>Prerequisites:</strong> ${skill.prerequisites}</p>
-                    <p><strong>Difficulty:</strong> ${skill.difficultskill ? 'Difficult' : 'Normal'}</p>
-                    <p><strong>Exclusivity:</strong> ${skill.exclusiveskill ? 'Exclusive' : 'Not Exclusive'}</p>
-                `;
-            }
+        <!-- CP Spending Dropdown -->
+        <h3>Spend CP to Gain Attribute Points</h3>
+        <select id="cp-spend">
+            <option value="0">No CP Cost</option>
+            <option value="1">1 CP → +2 AP</option>
+            <option value="2">2 CP → +4 AP</option>
+            <option value="3">3 CP → +6 AP</option>
+            <option value="4">4 CP → +8 AP</option>
+            <option value="5">5 CP → +10 AP</option>
+            <option value="6">6 CP → +12 AP</option>
+            <option value="7">7 CP → +14 AP</option>
+            <option value="8">8 CP → +16 AP</option>
+        </select>
 
-            // Function to populate the options for a skill that has skillchoices
-            function populateSkillOptions(skill) {
-                const skillOptionsSelect = document.getElementById("skillOptions");
-                skillOptionsSelect.innerHTML = "<option value=''>--Select an Option--</option>"; // Clear previous options
-                const options = skill.skilloptions || [];
-
-                options.forEach((skilloptions, index) => {
-                    const optionElement = document.createElement("option");
-                    optionElement.value = index;
-                    optionElement.textContent = option.optionName;
-                    skillOptionsSelect.appendChild(optionElement);
-                });
-
-                // Add event listener to update info when an option is selected
-                skillSelect.addEventListener("change", (event) => {
-    const selectedSkillIndex = event.target.value;
-    console.log("Selected Skill Index:", selectedSkillIndex);
-
-    if (selectedSkillIndex) {
-        const selectedSkill = window.allskills[selectedSkillIndex];
-        console.log("Selected Skill:", selectedSkill);
-
-        updateSkillInfo(selectedSkill);
-
-        if (selectedSkill.skillchoice === 1) {
-            console.log("Skill has options, showing the second list box.");
-            // If skill has options, show the second list box
-            populateSkillOptions(selectedSkill);
-            document.getElementById("skillOptionsContainer").style.display = "block";
-        } else {
-            console.log("Skill has no options, hiding the second list box.");
-            // Otherwise hide the second list box
-            document.getElementById("skillOptionsContainer").style.display = "none";
-        }
-    } else {
-        console.log("No skill selected, hiding the second list box.");
-        document.getElementById("skillOptionsContainer").style.display = "none";
-        document.getElementById("info").innerHTML = "";
-    }
-});
-
-            }
-
-            // Function to display information about the selected skill option
-            function updateOptionInfo(option) {
-                const infoDiv = document.getElementById("info");
-                infoDiv.innerHTML += `
-                    <h3>Selected Option: ${option.optionName}</h3>
-                    <p><strong>First Attribute:</strong> ${option.firstAttribute}</p>
-                    <p><strong>Second Attribute:</strong> ${option.secondAttribute}</p>
-                    <p><strong>Prerequisites:</strong> ${option.prerequisites}</p>
-                    <p><strong>Difficulty:</strong> ${option.difficultskill ? 'Difficult' : 'Normal'}</p>
-                    <p><strong>Exclusivity:</strong> ${option.exclusiveskill ? 'Exclusive' : 'Not Exclusive'}</p>
-                `;
-            }
-        });
-    </script>
+        <!-- Save and Next Buttons -->
+        <div class="button-group">
+            <button id="saveCharacter">Save</button>
+            <button id="nextCharacter">Next</button>
+        </div>
+    </div>
 </body>
 </html>

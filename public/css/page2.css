@@ -1,0 +1,36 @@
+#cp-tracker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #333;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+}
+
+.ap-counter {
+    float: right;
+}
+
+.attribute-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc; /* Grayed-out buttons when disabled */
+    cursor: not-allowed;
+}
+
+/* Button container styling */
+.button-container {
+    display: inline-block;
+}

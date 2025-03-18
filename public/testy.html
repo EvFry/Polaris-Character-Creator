@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Selector</title>
+    <style>
+        .container {
+            margin: 20px;
+            font-family: Arial, sans-serif;
+        }
+        select {
+            width: 200px;
+            padding: 5px;
+            margin: 10px;
+        }
+        .info {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Skill Selector</h1>
+
+        <!-- First list box to select skills -->
+        <label for="skillSelect">Select Skill:</label>
+        <select id="skillSelect">
+            <option value="">--Select a Skill--</option>
+            <!-- Skills will be populated dynamically here -->
+        </select>
+
+        <!-- Second list box for skill options (only visible if skillchoice is selected) -->
+        <div id="skillOptionsContainer" style="display:none;">
+            <label for="skillOptions">Select Option:</label>
+            <select id="skillOptions">
+                <option value="">--Select an Option--</option>
+                <!-- Options will be populated dynamically here -->
+            </select>
+        </div>
+
+        <!-- Information display area -->
+        <div class="info" id="info">
+            <!-- Information about the selected skill and option will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Import the skills.js file -->
+    <script src="/javascript/skills.js" type="module"></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            // Ensure that allskills is available
+            if (!window.allskills) {
+                console.error("Skills data not available");
+                return;
+            }
+
+            // Populate the first list box with all skill names
+            const skillSelect = document.getElementById("skillSelect");
+            window.allskills.forEach((skill, index) => {
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = skill.name;
+                skillSelect.appendChild(option);
+            });
+
+            // Event listener for when a skill is selected
+            skillSelect.addEventListener("change", (event) => {
+                const selectedSkillIndex = event.target.value;
+                if (selectedSkillIndex) {
+                    const selectedSkill = window.allskills[selectedSkillIndex];
+                    updateSkillInfo(selectedSkill);
+                    if (selectedSkill.skillchoice === 1) {
+                        // If skill has options, show the second list box
+                        populateSkillOptions(selectedSkill);
+                        document.getElementById("skillOptionsContainer").style.display = "block";
+                    } else {
+                        // Otherwise hide the second list box
+                        document.getElementById("skillOptionsContainer").style.display = "none";
+                    }
+                } else {
+                    document.getElementById("skillOptionsContainer").style.display = "none";
+                    document.getElementById("info").innerHTML = "";
+                }
+            });
+
+            // Function to update the skill information display
+            function updateSkillInfo(skill) {
+                const infoDiv = document.getElementById("info");
+                infoDiv.innerHTML = `
+                    <h2>Selected Skill: ${skill.name}</h2>
+                    <p><strong>Description:</strong> ${skill.description}</p>
+                    <p><strong>First Attribute:</strong> ${skill.firstAttribute}</p>
+                    <p><strong>Second Attribute:</strong> ${skill.secondAttribute}</p>
+                    <p><strong>Prerequisites:</strong> ${skill.prerequisites}</p>
+                    <p><strong>Difficulty:</strong> ${skill.difficultskill ? 'Difficult' : 'Normal'}</p>
+                    <p><strong>Exclusivity:</strong> ${skill.exclusiveskill ? 'Exclusive' : 'Not Exclusive'}</p>
+                `;
+            }
+
+            // Function to populate the options for a skill that has skillchoices
+            function populateSkillOptions(skill) {
+                const skillOptionsSelect = document.getElementById("skillOptions");
+                skillOptionsSelect.innerHTML = "<option value=''>--Select an Option--</option>"; // Clear previous options
+                const options = skill.skilloptions || [];
+
+                options.forEach((skilloptions, index) => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = index;
+                    optionElement.textContent = option.optionName;
+                    skillOptionsSelect.appendChild(optionElement);
+                });
+
+                // Add event listener to update info when an option is selected
+                skillSelect.addEventListener("change", (event) => {
+    const selectedSkillIndex = event.target.value;
+    console.log("Selected Skill Index:", selectedSkillIndex);
+
+    if (selectedSkillIndex) {
+        const selectedSkill = window.allskills[selectedSkillIndex];
+        console.log("Selected Skill:", selectedSkill);
+
+        updateSkillInfo(selectedSkill);
+
+        if (selectedSkill.skillchoice === 1) {
+            console.log("Skill has options, showing the second list box.");
+            // If skill has options, show the second list box
+            populateSkillOptions(selectedSkill);
+            document.getElementById("skillOptionsContainer").style.display = "block";
+        } else {
+            console.log("Skill has no options, hiding the second list box.");
+            // Otherwise hide the second list box
+            document.getElementById("skillOptionsContainer").style.display = "none";
+        }
+    } else {
+        console.log("No skill selected, hiding the second list box.");
+        document.getElementById("skillOptionsContainer").style.display = "none";
+        document.getElementById("info").innerHTML = "";
+    }
+});
+
+            }
+
+            // Function to display information about the selected skill option
+            function updateOptionInfo(option) {
+                const infoDiv = document.getElementById("info");
+                infoDiv.innerHTML += `
+                    <h3>Selected Option: ${option.optionName}</h3>
+                    <p><strong>First Attribute:</strong> ${option.firstAttribute}</p>
+                    <p><strong>Second Attribute:</strong> ${option.secondAttribute}</p>
+                    <p><strong>Prerequisites:</strong> ${option.prerequisites}</p>
+                    <p><strong>Difficulty:</strong> ${option.difficultskill ? 'Difficult' : 'Normal'}</p>
+                    <p><strong>Exclusivity:</strong> ${option.exclusiveskill ? 'Exclusive' : 'Not Exclusive'}</p>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -437,7 +437,7 @@ const mutationTable = [
     { range: [20, 24], name: "Fangs", symbiotic: false },
     { range: [25, 28], name: "Genetic Animal Traits", symbiotic: true, subRoll: "geneticTraits" },
     { range: [29, 31], name: "Horn", symbiotic: false },
-    { range: [32, 36], name: "Light Deformity", symbiotic: false },
+    { range: [32, 36], name: "Deformities (Light)", symbiotic: false },
     { range: [37, 38], name: "Missing Sensory Organ", symbiotic: false, subRoll: "missingSensoryOrgan" },
     { range: [39, 39], name: "Molecular Instability", symbiotic: false },
     { range: [40, 44], name: "Natural Resistance", symbiotic: true, subRoll: "naturalResistance" },
@@ -452,9 +452,9 @@ const mutationTable = [
     { range: [69, 71], name: "Retractable Bone Growth", symbiotic: false },
     { range: [72, 74], name: "Retractable Tentacle", symbiotic: false },
     { range: [75, 77], name: "Self-fertilization", symbiotic: true },
-    { range: [78, 80], name: "Severe Deformity", symbiotic: false },
+    { range: [78, 80], name: "Deformities (Severe)", symbiotic: false },
     { range: [81, 83], name: "Sexless", symbiotic: false },
-    { range: [84, 86], name: "Shape Shifter", symbiotic: true },
+    { range: [84, 86], name: "Shape-Shifter", symbiotic: true },
     { range: [87, 91], name: "Sixth Sense", symbiotic: true },
     { range: [92, 94], name: "Sonar", symbiotic: true },
     { range: [95, 97], name: "Symbiont", symbiotic: false },
@@ -479,10 +479,10 @@ const subRolls = {
 
     geneticTraits: () => {
         const options = [
-            "Feline Traits",
-            "Canine Traits",
-            "Reptilian Traits",
-            "Simian Traits"
+            "Feline",
+            "Canine",
+            "Reptilian",
+            "Simian"
         ];
         return options[Math.floor(Math.random() * options.length)];
     },
@@ -512,58 +512,73 @@ const subRolls = {
 };
 function rollMutation() {
     const roll = Math.floor(Math.random() * 100) + 1;
+    console.log("Rolled:", roll);  // Debugging: Log the roll
 
     // Find the mutation based on the roll
     const mutationEntry = mutationTable.find(entry => roll >= entry.range[0] && roll <= entry.range[1]);
 
     if (!mutationEntry) {
-        // If no mutation entry is found, return null
-        return null;
+        console.log("No mutation found for roll:", roll);  // Debugging: Log if no mutation is found
+        return null;  // No mutation found, should not happen if the table is set up correctly.
     }
+
+    console.log("Found mutation entry:", mutationEntry);  // Debugging: Log the found mutation entry
 
     // Build the full name by appending the sub-roll result if necessary
     let mutationName = mutationEntry.name;
     if (mutationEntry.subRoll) {
         const subRollResult = subRolls[mutationEntry.subRoll]();  // Call the appropriate sub-roll function
-        mutationName += ` (${subRollResult})`;
+        mutationName +=  ` (${subRollResult})`;
     }
+
+    console.log("Final mutation name with sub-roll (if applicable):", mutationName);
 
     // Normalize the case to avoid case sensitivity issues and trim spaces
     const normalizedMutationName = mutationName.toLowerCase().trim();
 
+    // Log all mutation names to check for discrepancies (extra spaces, casing issues)
+    console.log("All mutations in allmutations:", allmutations.map(mutation => mutation.name.toLowerCase().trim()));
+
     // Retrieve the full mutation details from the allmutations array
     const mutationDetails = allmutations.find(mutation => {
+        // Ensure mutation.name is a string before calling toLowerCase and trimming spaces
         const mutationNameStr = mutation.name ? mutation.name.toString().toLowerCase().trim() : "";
         return mutationNameStr === normalizedMutationName;
     });
 
     if (!mutationDetails) {
-        // If mutation details are not found in allmutations, return null
-        return null;
+        console.log("Mutation details not found in allmutations:", mutationName);  // Debugging: Log if mutation details are missing
+        return null;  // Mutation details not found in allmutations
     }
+
+    console.log("Final mutation ", mutationDetails.name);  // Debugging: Log the final mutation name
 
     // Return a new Mutation object with all its properties
     return new Mutation(
-        mutationDetails.name,
-        mutationDetails.cpCost,
-        mutationDetails.hasSkill,
-        mutationDetails.descriptionShort,
-        mutationDetails.descriptionFull,
-        mutationDetails.symbiotic
+        mutationDetails.name,            // Mutation name (including sub-roll if applicable)
+        mutationDetails.cpCost,  // CP cost
+        mutationDetails.hasSkill,  // Skill availability
+        mutationDetails.descriptionShort,  // Short description
+        mutationDetails.descriptionFull,   // Full description
+        mutationDetails.symbiotic      // Is the mutation symbiotic?
     );
 }
 
 
 
 
-// Example usage
-const mutation = rollMutation();
-if (mutation) {
-    console.log("Mutation ", mutation.name);           // Mutation name with sub-roll details if applicable
-    console.log("CP cost:", mutation.cpCost);               // CP cost
-    console.log("Short description:", mutation.descriptionShort); // Short description
-    console.log("Full description:", mutation.descriptionFull);  // Full description
-    console.log("Symbiotic:", mutation.symbiotic);           // Symbiotic flag
-} else {
-    console.log("No mutation was rolled.");
-}
+
+   
+
+    if (mutation) {
+        console.log("Mutation:", mutation.name);
+        console.log("CP cost:", mutation.cpCost);
+        console.log("Short description:", mutation.descriptionShort);
+        console.log("Full description:", mutation.descriptionFull);
+        console.log("Symbiotic:", mutation.symbiotic);
+
+        rolledNumbers.add(mutation.roll); // Track unique roll values
+    } else {
+        console.log("No mutation was rolled.");
+    }
+

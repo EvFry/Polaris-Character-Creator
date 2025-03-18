@@ -77,3 +77,7 @@ export class Mutation {
         this.symbiotic = symbiotic
     }
 }
+
+// Global variables for Character Points (CP) and Attribute Points (AP)
+let characterPoints = 0;
+let attributePoints = 0;
