@@ -1,8 +1,8 @@
 
-import { skill }  from "./define.js";
+import { Skill }  from "./define.js";
 
 export let polarispowers =[
-new skill({
+ new  Skill({
     name: "Blob of Destruction",
     description: "Unleash a dark, gelatinous entity that consumes all life in its path. If controlled, it follows the user’s commands; if not, it attacks indiscriminately.",
     firstAttribute: "INT",
@@ -24,7 +24,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Change in Mass",
     description: "Alter the mass of a target without changing its physical size, either increasing its weight to immobilize it or decreasing it to enhance mobility.",
     firstAttribute: "INT",
@@ -46,7 +46,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Change in Pressure",
     description: "Manipulate the surrounding pressure, increasing or decreasing it within a defined area, affecting all living and non-living things within range.",
     firstAttribute: "INT",
@@ -69,7 +69,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Change in Temperature",
     description: "Alter the ambient temperature within a defined area, either increasing or decreasing it with potentially harmful effects.",
     firstAttribute: "INT",
@@ -92,7 +92,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Crossing",
     description: "This power creates a crack between our world and the Polaris Flux, allowing for instant travel between two points on the globe, but with associated risks.",
     firstAttribute: "INT",
@@ -115,7 +115,7 @@ new skill({
     }
 }),
     
-new skill({
+ new  Skill({
     name: "Deadly Whirlpool",
     description: "This power creates a moving whirlpool of crackling black energy that damages anything it contacts.",
     firstAttribute: "INT",
@@ -139,7 +139,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }   
 }),
-new skill({
+ new  Skill({
     name: "Disruption of Reality",
     description: "This power distorts reality, causing disturbances in senses and actions within a certain area.",
     firstAttribute: "INT",
@@ -162,7 +162,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Disintegration",
     description: "This power temporarily disintegrates matter, making it immaterial and allowing passage through obstacles.",
     firstAttribute: "INT",
@@ -185,7 +185,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Energy Bolts",
     description: "This power creates energy bolts that inflict physical damage, which can be spread over multiple targets.",
     firstAttribute: "INT",
@@ -208,7 +208,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Electromagnetic Pulse",
     description: "This power unleashes an electromagnetic wave through a wide area, affecting all electronic devices within its range.",
     firstAttribute: "INT",
@@ -230,7 +230,7 @@ new skill({
         "Range": "100 meters +/- (100 m x Success Modifier)."
     }
 }),
-new skill({
+ new  Skill({
     name: "Energy Drain",
     description: "This power drains the energy from all sources within the affected area, rendering them powerless for the duration.",
     firstAttribute: "INT",
@@ -252,7 +252,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Flux Beast",
     description: "This power summons a terrifying creature from the Polaris Flux to wreak havoc on anything in its path.",
     firstAttribute: "INT",
@@ -274,7 +274,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Flux Storm",
     description: "This power creates a dangerous storm of Flux energy, materializing as a chaotic maelstrom that wreaks havoc on everything in its path.",
     firstAttribute: "INT",
@@ -296,7 +296,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Flux Tear",
     description: "This power creates a rift in reality, opening a crossing to the dangerous and unpredictable universe of the Polaris Flux.",
     firstAttribute: "INT",
@@ -318,7 +318,7 @@ new skill({
         "Max. Range": "15 meters +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Force Barrier",
     description: "This power creates a protective barrier capable of absorbing damage, which can be strategically placed within the range limit of the power.",
     firstAttribute: "INT",
@@ -341,7 +341,7 @@ new skill({
         "Max. Range from the center of the Area of Effect": "10 meters +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Force Field",
     description: "This power creates a spherical force field that moves with the character, capable of absorbing damage to protect both the character and everything around them.",
     firstAttribute: "INT",
@@ -363,7 +363,7 @@ new skill({
         "Area of Effect": "5 meters in diameter +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Gravity Sphere",
     description: "This power creates a Gravity Sphere around the character, attracting objects and living beings within its Area of Effect towards the character.",
     firstAttribute: "INT",
@@ -385,7 +385,7 @@ new skill({
         "Area of Effect": "15 meters in diameter +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Jamming",
     description: "This power creates disruptions that jam all the detection and transmission devices in a sphere centered on the character, inflicting a penalty on them.",
     firstAttribute: "INT",
@@ -407,7 +407,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Lightning",
     description: "This power releases a lightning bolt that inflicts physical damage to a target. If it is an electronic device, it is submitted to an EMP attack (‘electromagnetic pulse’) that imposes a Breakdown Test.",
     firstAttribute: "INT",
@@ -430,7 +430,7 @@ new skill({
         "Area of Effect (accidental release)": "5 meters in diameter + Failure Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Mental Imprisonment",
     description: "This power targets the minds of everything inside a sphere around the character, temporarily trapping their consciousness in the Flux.",
     firstAttribute: "INT",
@@ -451,7 +451,7 @@ new skill({
         "Area of Effect": "5 meters in diameter +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Mind Control",
     description: "A complex power that influences, neutralizes, or dominates a target’s mind.",
     firstAttribute: "INT",
@@ -473,7 +473,7 @@ new skill({
         "Area of Effect (accidental release)": "1 meter per level of intensity of the phenomenon (use the Failure Modifier)."
     }
 }),
-new skill({
+ new  Skill({
     name: "Molecular Barrier",
     description: "Creates a molecular barrier capable of absorbing damage, though it degrades over time.",
     firstAttribute: "INT",
@@ -496,7 +496,7 @@ new skill({
         "Max. Range from the center of the Area of Effect": "10 meters +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Molecular Breakdown",
     description: "Disintegrates matter, causing permanent damage to all living creatures in the area.",
     firstAttribute: "INT",
@@ -518,7 +518,7 @@ new skill({
         "Max. Range from the center of the Area of Effect": "15 meters +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Molecular Disruption",
     description: "Inflicts physical damage to everything in the area, bypassing armor and protections.",
     firstAttribute: "INT",
@@ -540,7 +540,7 @@ new skill({
         "Max. Range from the center of the Area of Effect": "15 meters +/- Success Modifier."
     }
 }),
-new skill({
+ new  Skill({
     name: "Molecular Healing",
     description: "Allows the character to heal physical wounds, location by location.",
     firstAttribute: "INT",
@@ -558,7 +558,7 @@ new skill({
     fullDescription: "The character can heal physical wounds (Location by Location). The Molecular Healing Test suffers the same penalties caused by the seriousness of the Wound as the First Aid and Medicine Tests (see Care and Healing in the States of Health chapter, CRB page 232). If the Test is successful, the healed Location immediately gets back a number of Wound boxes equal to the Success Modifier. This power can also be used to stabilize a Wound (the Wound stabilization penalties also apply). In the case of a Success, the Wound is tended but it will be imperative to treat it further or use the power again to continue healing.\n\nNote: The character can use this power on himself.\n\nIf the power is not controlled, it is the equivalent of a Molecular Disruption.",
     categories: {}
 }),
-new skill({
+ new  Skill({
     name: "Molecular Regeneration",
     description: "Allows the user to regenerate damaged tissue and slow aging.",
     firstAttribute: "INT",
@@ -578,7 +578,7 @@ new skill({
         "Area of Effect(Accidental Release)": "5 meters in diameter +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Nightmare",
     description: "Inflicts terrifying, nightmarish visions upon those in the area of effect.",
     firstAttribute: "INT",
@@ -601,7 +601,7 @@ new skill({
         "Max. Range from Center": "50 meters +/- (10 m x Success Modifier)"
     }
 }),
-new skill({
+ new  Skill({
     name: "Molecular Field",
     description: "Generates a spherical molecular field that absorbs damage.",
     firstAttribute: "INT",
@@ -623,7 +623,7 @@ new skill({
         "Area of Effect": "5 meters in diameter +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Organic Repulsion Sphere",
     description: "Creates a sphere that repels organic entities, preventing them from coming near the user.",
     firstAttribute: "INT",
@@ -645,7 +645,7 @@ new skill({
         "Area of Effect": "5 meters in diameter +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Pacification / Enragement",
     description: "Changes the state of mind of a target, either calming them or driving them into blind rage.",
     firstAttribute: "INT",
@@ -667,7 +667,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Physical Vortex",
     description: "Creates a vortex that sucks in matter, pulling objects and living beings towards it.",
     firstAttribute: "INT",
@@ -690,7 +690,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Polaris Wave",
     description: "Combines the effects of Psychic Attack, Molecular Disruption, and Electromagnetic Pulse while sending targets into the past or future.",
     firstAttribute: "INT",
@@ -712,7 +712,7 @@ new skill({
         "Area of Effect": "5 meters in diameter +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Premonition",
     description: "Gives the character the ability to foresee a near-future event.",
     firstAttribute: "INT",
@@ -730,7 +730,7 @@ new skill({
     fullDescription: "This power gives the character the ability to foresee a near-future event. By focusing on an action, an individual, an event, a place, etc., he can perceive a very blurry vision of the future (in cases where the vision is involuntarily triggered, it is up to the GM to determine what will be the subject of the vision). A character who uses this power will find himself engulfed by the Polaris Effect, and his mind will be one with the ocean and the marine mammals. This phenomenon is an experience that is both wonderful and terribly worrying, in a universe where the sinister presence of ‘The Other,’ a mysterious being who haunts the Polaris Effect, is ever present.\n\nBefore carrying out the Test, the Player must choose a unit of time that will determine the Difficulty Modifier:\n- Second: +0\n- Combat Round: -3\n- Minute: -5\n- Hour: -7\n- Days: -10\n\nAfter the Test, the user of the power can foresee the future, up to a number of time units equivalent to his Success Margin. If this power is not controlled, roll 1D10 on the following table to obtain the range of the vision:\n1–2: 1D100 seconds\n3–4: 1D100 Rounds\n5–6: 1D100 minutes\n7–8: 1D100 hours\n9–10: 1D100 days\n\nThis power lasts for a number of Combat Rounds equal to half of the character’s Mastery Level in the Premonition Skill.\n\nThe use of this power mainly allows the character to feel impressions, feelings, or sensations, and not really precise images. The further away the targeted period is in time, the blurrier the vision will be. The Player can sacrifice a few points from his Success Margin to obtain more details, but he won’t be able to see as far forward into the future.\n\nIn the case of a Catastrophe (whether the power is triggered voluntarily or not), there is always a 1 in 20 chance (1 on a 1D20) that he will experience the future as a whole. This is usually a terrible experience for the unfortunate viewer, and he must take an Intelligence Test. The Success Modifier of this roll will determine the number of Willpower and Intelligence points the character has LOST. If the Intelligence Test is a Failure, the victim loses consciousness for 1D10 hours. His Intelligence and Willpower are reduced to 1 and will regenerate at a speed of 1 point per hour.\n\nFinally, a character who uses this power may face The Other (see The Entities in The Polaris Flux on page 265). The Other has a 1 in 20 chance to intervene (1 on a 1D20). In this case, the character will feel an absolutely terrifying presence and must succeed in passing a Willpower Test against a Willpower of 20. If the character fails, he will experience a psychic attack. The losing player must reduce their Willpower by the Opposed Test winner’s Success Modifier. If the character wins the Opposed Test, he can disengage and regain consciousness without further side effects. If the character loses, the duel continues through successive Opposed Tests. If the character’s Willpower drops below 3, he will be taken prisoner by The Other. The Other can then choose to destroy him, hold him prisoner (placing him in a coma), or manipulate him (making the victim dominated by The Other). The victim can attempt to break free by performing a Willpower Test with a penalty of -20 (penalty decreases by 1 point per week). A successful Test will allow the victim to break free from The Other’s influence.",
     categories: {}
 }),
-new skill({
+ new  Skill({
     name: "Psychic Attack",
     description: "Forces living beings in the Area of Effect to perform a Shock Resistance Test.",
     firstAttribute: "WIL",
@@ -752,7 +752,7 @@ new skill({
         "Max. Range from the center of the Area of Effect": "15 meters +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Barrier",
     description: "Creates a psychic barrier that provides bonuses to Shock Resistance and Willpower against mental attacks.",
     firstAttribute: "WIL",
@@ -776,7 +776,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Bolts",
     description: "Creates psychic bolts that attack multiple targets, causing Shock Resistance Tests.",
     firstAttribute: "WIL",
@@ -799,7 +799,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Dagger",
     description: "Creates a psychic dagger that materializes at the user's fist, requiring a Hand-to-hand combat Skill to strike and force a Shock Resistance Test.",
     firstAttribute: "INT",
@@ -820,7 +820,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Field",
     description: "Surrounds the character and everything nearby with a psychic field that offers protection against psychic attacks and enhances Willpower against mental attacks.",
     firstAttribute: "INT",
@@ -843,7 +843,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Healing",
     description: "Allows the character to cancel the effects of Shock, hypnotic suggestions, mental domination, and even stress or fear.",
     firstAttribute: "INT",
@@ -864,7 +864,7 @@ new skill({
         "Duration (cancellation of stress)": "3 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Obliteration",
     description: "Destroys the target’s conscience, potentially dazing or rendering them unconscious, and causing permanent damage to their Willpower.",
     firstAttribute: "INT",
@@ -886,7 +886,7 @@ new skill({
         "Max. Range from the center of the Area of Effect": "15 meters +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Sensitivity",
     description: "Allows the user to locate living beings within a certain radius, providing bonuses to Perception Tests and the ability to detect life forms.",
     firstAttribute: "INT",
@@ -907,7 +907,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Vortex",
     description: "Creates a tear in the fabric of reality that gives access to the universe of the Flux, threatening the spirits of those nearby.",
     firstAttribute: "INT",
@@ -930,7 +930,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Shock Waves",
     description: "Releases concentric psychic shock waves that spread out from the character, causing shock damage to living beings.",
     firstAttribute: "INT",
@@ -951,7 +951,7 @@ new skill({
         "Shock damage (per shock wave)": "3D10 +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Psychic Shock Waves",
     description: "Releases concentric psychic shock waves that spread out from the character, causing shock damage to living beings.",
     firstAttribute: "INT",
@@ -972,7 +972,7 @@ new skill({
         "Shock damage (per shock wave)": "3D10 +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Shock Waves",
     description: "Releases concentric shock waves that destroy everything in their path, causing physical damage to targets.",
     firstAttribute: "INT",
@@ -993,7 +993,7 @@ new skill({
         "Damage (per shock wave)": "2D10 +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Soundscan",
     description: "Allows the user to locate and analyze several targets inside a certain area.",
     firstAttribute: "INT",
@@ -1015,7 +1015,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Soul Eater",
     description: "Summons a nightmarish, immaterial creature that devours the minds of its prey.",
     firstAttribute: "INT",
@@ -1037,7 +1037,7 @@ new skill({
         "Duration": "5 Combat Rounds +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Telekinesis",
     description: "Moves objects with the user's thoughts, using telekinetic strength.",
     firstAttribute: "INT",
@@ -1059,7 +1059,7 @@ new skill({
         "Area of Effect (accidental release)": "5 meters in diameter +/- Failure Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Teleportation",
     description: "Teleports a character or object to a specified location within the range.",
     firstAttribute: "INT",
@@ -1081,7 +1081,7 @@ new skill({
         "Range": "30 meters +/- (10 m x Success Modifier)"
     }
 }),
-new skill({
+ new  Skill({
     name: "Temporal Shift",
     description: "Allows the user to transport themselves and others to the past or future.",
     firstAttribute: "INT",
@@ -1103,7 +1103,7 @@ new skill({
         "Max. Range from the center of the Area of Effect": "15 meters +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Temporal Sphere",
     description: "Creates a sphere that isolates everything inside it from the outside world, altering the passage of time.",
     firstAttribute: "INT",
@@ -1125,7 +1125,7 @@ new skill({
         "Area of Effect": "5 meters in diameter +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Terror Sphere",
     description: "Creates a sphere that terrorizes any creature entering it.",
     firstAttribute: "INT",
@@ -1147,7 +1147,7 @@ new skill({
         "Area of Effect": "5 meters in diameter +/- Success Modifier"
     }
 }),
-new skill({
+ new  Skill({
     name: "Whirlpool",
     description: "Creates a vortex with the power to control its movement.",
     firstAttribute: "INT",

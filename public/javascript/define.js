@@ -1,5 +1,5 @@
 // Define the skill class
-export class skill {
+export class Skill {
     constructor({
         name, description, firstAttribute, secondAttribute,
         hasPrerequisites, prerequisites, limitingskill, exclusiveskill,
@@ -64,5 +64,16 @@ export class skill {
             bonus -= 3;
         }
         return bonus;    
+    }
+}
+
+export class Mutation {
+    constructor(name, cpCost, hasSkill, descriptionShort, descriptionFull,symbiotic) {
+        this.name = name;  // Name of the mutation
+        this.cpCost = cpCost;  // Character Point cost
+        this.hasSkill = hasSkill;  // Boolean: Does this mutation grant a skill?
+        this.descriptionShort = descriptionShort;  // Brief description
+        this.descriptionFull = descriptionFull;  // Detailed description
+        this.symbiotic = symbiotic
     }
 }
