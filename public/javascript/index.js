@@ -19,13 +19,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("newCharacter").addEventListener("click", function () {
         console.log("New Character button clicked!");
+        localStorage.setItem("newCharacter", "true");  // ✅ Set newCharacter to true
 
         fetch("http://localhost:3000/create-folder", { method: "POST" })
             .then(response => response.json())
             .then(data => {
                 console.log("Folder creation response:", data.message);
 
-                // ✅ Always navigate to page2.html, even if folder already exists
                 setTimeout(() => {
                     window.location.href = "/page2.html";
                 }, 500);
@@ -39,9 +39,16 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("loadCreator").addEventListener("click", function () {
         const selectedCharacter = savedCharactersList.value;
         if (selectedCharacter) {
+            localStorage.setItem("newCharacter", "false");  // ✅ Set newCharacter to false
+
             fetch(`http://localhost:3000/load-file/${selectedCharacter}`)
                 .then(response => response.json())
-                .then(data => console.log("Loaded Character:", data))
+                .then(data => {
+                    console.log("Loaded Character:", data);
+                    setTimeout(() => {
+                        window.location.href = "/final.html";
+                    }, 500);
+                })
                 .catch(error => console.error("Error loading character:", error));
         }
     });

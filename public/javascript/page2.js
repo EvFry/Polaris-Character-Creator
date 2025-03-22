@@ -1,212 +1,223 @@
-// Import the attributes data
+import state from './state.js';
 import { attributes as attributeData } from "./attributes.js";
 
 // DOM Elements
 const cpTotalElement = document.getElementById("cp-total");
 const apTotalElement = document.getElementById("ap-total");
-const attributesList = document.getElementById("attributes-list");  // Changed name here
-const cpSpendDropdown = document.getElementById("cp-spend");
+const attributesList = document.getElementById("attributes-list");
 const characterTypeDropdown = document.getElementById("characterType");
+const cpSpendDropdown = document.getElementById("cp-spend");
 
-// Global Variables
-let cpTotal = 20; // Default CP if loaded from index.html
-let apTotal = 30; // Default to Realistic
-let spentCPOnAP = 0;
-let startingAP = apTotal; // Store the starting AP value for comparison
+// Force `newcharacter()` to run on every page load for testing
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM fully loaded and parsed.");
+    state.resetState(); // Initialize character state
+    renderAttributes();
+    updateDifficultyDropdown();
+    updateDropdownOptions()
+    cpTotalElement.textContent = state.getCpTotal(); // Get cpTotal
+    apTotalElement.textContent = state.getApTotal(); // Get apTotal
+});
 
-// Base AP values for difficulty levels
-const difficultyLevels = {
-    realistic: 30,
-    intermediary: 38,
-    heroic: 46,
-};
-
-// Call update functions after modifying attributes or CP/AP.
+// Modify attributes as needed
 function modifyAttribute(attrShortForm, change) {
     const attribute = attributeData.find(attr => attr.shortForm === attrShortForm);
     if (!attribute) return;
 
-    const newLevel = attribute.level + change;
-    if (newLevel < 3 || newLevel > 20) return;
+    const oldLevel = attribute.level;
+    const newLevel = oldLevel + change;
+    if (newLevel < 7 || newLevel > 20) return;
 
-    let cost = 1;
+    let cost = 1, refund = 1;
     if (newLevel >= 16 && newLevel <= 18) cost = 2;
     if (newLevel >= 19 && newLevel <= 20) cost = 3;
+    if (oldLevel >= 16 && oldLevel <= 18) refund = 2;
+    if (oldLevel >= 19 && oldLevel <= 20) refund = 3;
 
-    if (change > 0 && apTotal < cost) return;
-    if (change < 0) apTotal += Math.abs(cost);
-    else apTotal -= cost;
+    if (change > 0 && state.getApTotal() < cost) return; // Can't increase if insufficient AP
+    if (change < 0) {
+        state.setApTotal(state.getApTotal() + refund); // Refund AP when lowering
+    } else {
+        state.setApTotal(state.getApTotal() - cost); // Deduct AP when increasing
+    }
 
     attribute.level = newLevel;
-    document.getElementById(`value-${attrShortForm}`).textContent = newLevel;
-    apTotalElement.textContent = apTotal;  // Update AP display here
-    cpTotalElement.textContent = cpTotal;  // Update CP display here
+    document.getElementById(`value-${attribute.shortForm}`).textContent = newLevel;
+    apTotalElement.textContent = state.getApTotal(); // Update DOM
 
-    updateDifficultyDropdown();
+    updateButtonStates(attribute);
+    updateDropdownOptions()
 }
-
-// Define the renderAttributes function
+// Render attributes and buttons
 function renderAttributes() {
-    // Clear any existing content
-    attributesList.innerHTML = '';
+    attributesList.innerHTML = '';  // Clear existing content
 
-    // Loop through the attribute data and display them
+    if (!Array.isArray(attributeData) || attributeData.length === 0) {
+        console.error("Attribute data is empty or not loaded properly.");
+        return;
+    }
+
     attributeData.forEach(attribute => {
         const listItem = document.createElement("li");
         listItem.id = `attribute-${attribute.shortForm}`;
 
-        // Create the display for the attribute and its level
         const attributeLabel = document.createElement("span");
-        attributeLabel.textContent = `${attribute.name}: Level `;
+        attributeLabel.textContent = `${attribute.name}: `;
 
         const levelText = document.createElement("span");
         levelText.id = `value-${attribute.shortForm}`;
         levelText.textContent = attribute.level;
 
-        // Add buttons for increase and decrease
         const buttonContainer = document.createElement("div");
         buttonContainer.classList.add("button-container");
 
-        const decreaseButton = document.createElement("button");
-        decreaseButton.textContent = "-";
-        decreaseButton.classList.add("decrease");
-        decreaseButton.id = `decrease-${attribute.shortForm}`;
-        buttonContainer.appendChild(decreaseButton);
+        if (attribute.shortForm !== "LCK") {  // Skip Luck attribute buttons
+            const decreaseButton = document.createElement("button");
+            decreaseButton.textContent = "-";
+            decreaseButton.id = `decrease-${attribute.shortForm}`;
+            buttonContainer.appendChild(decreaseButton);
 
-        const increaseButton = document.createElement("button");
-        increaseButton.textContent = "+";
-        increaseButton.classList.add("increase");
-        increaseButton.id = `increase-${attribute.shortForm}`;
-        buttonContainer.appendChild(increaseButton);
+            const increaseButton = document.createElement("button");
+            increaseButton.textContent = "+";
+            increaseButton.id = `increase-${attribute.shortForm}`;
+            buttonContainer.appendChild(increaseButton);
 
-        // Add the label, level, and buttons to the list item
+            decreaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, -1));
+            increaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, 1));
+        }
+
         listItem.appendChild(attributeLabel);
         listItem.appendChild(levelText);
         listItem.appendChild(buttonContainer);
-
-        // Append the list item to the attributes list
         attributesList.appendChild(listItem);
 
-        // Add event listeners to the buttons
-        decreaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, -1));
-        increaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, 1));
-
-        // Call a function to update button states
         updateButtonStates(attribute);
+    
+    });
+}
+function updateDropdownOptions() {
+    // Update Difficulty Dropdown
+    const difficultyMap = { realistic: 1, intermediary: 2, heroic: 3 };
+    const difficultyLevels = { 1: 30, 2: 38, 3: 46 };
+
+    Object.entries(difficultyMap).forEach(([key, value]) => {
+        const option = document.querySelector(`#characterType option[value="${key}"]`);
+        if (option) {
+            const previousDifficulty = state.getDifficulty();
+            const previousAp = difficultyLevels[previousDifficulty] || 0;
+            const newAp = difficultyLevels[value];
+            const apDifference = newAp - previousAp;
+
+            // Disable if AP would go negative
+            option.disabled = (state.getApTotal() + apDifference < 0);
+        }
+    });
+
+    const cpSpendOptions = cpSpendDropdown.querySelectorAll("option");
+    cpSpendOptions.forEach(option => {
+        const cpCost = parseInt(option.value, 10);
+        const apGain = cpCost * 2;
+    
+        // Disable options that would cause negative CP or AP
+        option.disabled = (state.getCpTotal() < cpCost) || (state.getApTotal() + apGain < 0);
     });
 }
 
-// Function to update button states based on current AP and attribute level
+
+
+
+// Optionally, also run it on page load
+document.addEventListener("DOMContentLoaded", updateDropdownOptions);
+
+function updateDifficultyDropdown() {
+    const difficultyMap = { realistic: 1, intermediary: 2, heroic: 3 };
+    const difficultyLevels = { 1: 30, 2: 38, 3: 46 };
+    const luckValues = { 1: 11, 2: 13, 3: 15 };
+
+    const previousDifficulty = state.getDifficulty();
+    const newDifficulty = difficultyMap[characterTypeDropdown.value];
+
+    if (!newDifficulty) {
+        console.error("Invalid difficulty level selected:", characterTypeDropdown.value);
+        return;
+    }
+
+    // Pre-check before changing difficulty
+    const previousAp = difficultyLevels[previousDifficulty] || 0;
+    const newAp = difficultyLevels[newDifficulty];
+    const apDifference = newAp - previousAp;
+
+    if (state.getApTotal() + apDifference < 0) {
+        alert("Not enough AP to lower difficulty!");
+        characterTypeDropdown.value = Object.keys(difficultyMap).find(
+            key => difficultyMap[key] === previousDifficulty
+        );
+        return;
+    }
+
+    // Apply difficulty change
+    state.setApTotal(state.getApTotal() + apDifference);
+    state.updateDifficulty(newDifficulty);
+    apTotalElement.textContent = state.getApTotal();
+
+    // Update Luck attribute
+    const luckAttribute = attributeData.find(attr => attr.shortForm === "LCK");
+    if (luckAttribute) {
+        luckAttribute.level = luckValues[newDifficulty];
+        document.getElementById(`value-LCK`).textContent = luckAttribute.level;
+    }
+
+    // Update dropdown options
+    updateDropdownOptions();
+}
+
+characterTypeDropdown.addEventListener("change", updateDifficultyDropdown);
+
+// Function to update button states (disable minus button if at 7)
 function updateButtonStates(attribute) {
     const decreaseButton = document.getElementById(`decrease-${attribute.shortForm}`);
     const increaseButton = document.getElementById(`increase-${attribute.shortForm}`);
 
-    // Disable the decrease button if attribute level is at the minimum (7)
-    if (attribute.level <= 7) {
-        decreaseButton.disabled = true;
-    } else {
-        decreaseButton.disabled = false;
+    if (decreaseButton) {
+        decreaseButton.disabled = attribute.level <= 7; // Disable if attribute level is 7 or lower
     }
-
-    // Disable the increase button if there is not enough AP to increase the attribute
-    let cost = 1;
-    if (attribute.level >= 16 && attribute.level <= 18) cost = 2;
-    if (attribute.level >= 19 && attribute.level <= 20) cost = 3;
-
-    if (apTotal < cost) {
-        increaseButton.disabled = true;
-    } else {
-        increaseButton.disabled = false;
+    if (increaseButton) {
+        increaseButton.disabled = attribute.level >= 20; // Optional: Disable if at max (20)
     }
 }
+// Function to handle CP spending and AP gain/loss dynamically
+function handleCpSpendChange() {
+    const selectedValue = parseInt(cpSpendDropdown.value, 10);
+    const cpCost = selectedValue; // CP spent is the selected value
+    const apGain = selectedValue * 2; // AP gained is double the CP spent
 
-// Handle CP Spending (Always Editable)
-cpSpendDropdown.addEventListener("change", function() {
-    const selectedValue = parseInt(this.value);
-    if (selectedValue === spentCPOnAP) return; // No change
+    const currentCp = state.getCpTotal();
+    const currentAp = state.getApTotal();
+    const previousCpSpent = state.spentCPOnAP;
+    const previousApGained = previousCpSpent * 2;
 
-    const newAP = difficultyLevels[characterTypeDropdown.value] + (selectedValue * 2);
-    const newCP = cpTotal + spentCPOnAP - selectedValue;
+    // Determine the difference in CP and AP
+    const cpDifference = cpCost - previousCpSpent;
+    const apDifference = apGain - previousApGained;
 
-    if (newCP < 0) return; // Prevent negative CP
-
-    // Update global variables
-    spentCPOnAP = selectedValue;
-    apTotal = newAP;
-    cpTotal = newCP;
-
-    // Update UI
-    apTotalElement.textContent = apTotal;
-    cpTotalElement.textContent = cpTotal;
-
-    updateDropdown();
-    updateDifficultyDropdown();
-});
-
-// Handle Difficulty Change
-characterTypeDropdown.addEventListener("change", function () {
-    const currentDifficulty = characterTypeDropdown.value;
-    const newDifficulty = this.value;
-
-    // Handle the case of going up (Realistic -> Intermediate -> Heroic)
-    if (difficultyLevels[newDifficulty] > difficultyLevels[currentDifficulty]) {
-        apTotal += 8;  // Add 8 points when going up
-    }
-    // Handle the case of going down (Heroic -> Intermediate -> Realistic)
-    else if (difficultyLevels[newDifficulty] < difficultyLevels[currentDifficulty]) {
-        if (apTotal >= 8) {
-            apTotal -= 8;  // Subtract 8 points when going down (only if enough points)
-        } else {
-            // If not enough points, revert the selection to the old difficulty
-            this.value = currentDifficulty;
-            return;
-        }
+    // Prevent AP from going negative when lowering CP spending
+    if (apDifference < 0 && currentAp + apDifference < 0) {
+        cpSpendDropdown.value = state.spentCPOnAP; // Reset to last valid value
+        return;
     }
 
-    // Update the AP total displayed on the page
-    apTotalElement.textContent = apTotal;
+    // Update state with new CP and AP values
+    state.setCpTotal(currentCp - cpDifference); // Update CP total first
+    state.setApTotal(currentAp + apDifference); // Then update AP total
+    state.spentCPOnAP = selectedValue; // Store last valid CP spend level
 
-    // Update the difficulty dropdown (disable options if needed)
-    updateDifficultyDropdown();
-});
-
-// Disable difficulty dropdown options if you can't afford the downgrade
-function updateDifficultyDropdown() {
-    const currentDifficulty = characterTypeDropdown.value;
-
-    // Loop through each option in the dropdown
-    for (const level in difficultyLevels) {
-        const option = characterTypeDropdown.querySelector(`option[value="${level}"]`);
-
-        // If you are at Heroic or Intermediate and trying to go down
-        if (difficultyLevels[level] < difficultyLevels[currentDifficulty]) {
-            // Disable downgrade if not enough points (you need at least 8 AP to downgrade)
-            if (apTotal < 8) {
-                option.disabled = true;
-            } else {
-                option.disabled = false;
-            }
-        } else {
-            // Always enable going up or staying at the current difficulty
-            option.disabled = false;
-        }
-    }
-
-    // Ensure that the current difficulty is never disabled
-    const currentOption = characterTypeDropdown.querySelector(`option[value="${currentDifficulty}"]`);
-    if (currentOption.disabled) {
-        currentOption.disabled = false;
-    }
+    // Update displayed totals
+    cpTotalElement.textContent = state.getCpTotal();
+    apTotalElement.textContent = state.getApTotal();
+    updateDropdownOptions()
 }
 
-// Initialize the page by setting up initial values and updating the dropdown
-renderAttributes();
-cpTotalElement.textContent = cpTotal;
-apTotalElement.textContent = apTotal;
-updateDifficultyDropdown();
-// Initialize Page
-renderAttributes();
-cpTotalElement.textContent = cpTotal;
-apTotalElement.textContent = apTotal;
-updateDropdown();
-updateDifficultyDropdown();  // Disable/Enable difficulty options based on current AP
+// Attach event listener
+
+
+cpSpendDropdown.addEventListener("change", handleCpSpendChange);

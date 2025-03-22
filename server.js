@@ -24,8 +24,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve static files from the html, css, and javascript folders
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static(path.join(__dirname, 'public'), {
+    extensions: ['js', 'html','css']
+}));
 // Serve the main HTML page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "index.html"));

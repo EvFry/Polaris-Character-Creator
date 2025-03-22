@@ -1,3 +1,4 @@
+
 // Define the skill class
 export class Skill {
     constructor({
@@ -78,6 +79,37 @@ export class Mutation {
     }
 }
 
-// Global variables for Character Points (CP) and Attribute Points (AP)
-let characterPoints = 0;
-let attributePoints = 0;
+export class Attribute {
+    constructor(name, shortForm, description, level) {
+        this.name = name;
+        this.shortForm = shortForm;
+        this.description = description;
+        this._level = level; // Private variable to store level
+        this.naturalAbility = this.calculateNaturalAbility(); // Initialize natural ability
+    }
+
+    // Getter for level
+    get level() {
+        return this._level;
+    }
+
+    // Setter for level (recalculates and stores naturalAbility)
+    set level(newLevel) {
+        this._level = newLevel;
+        this.naturalAbility = this.calculateNaturalAbility(); // Update natural ability
+    }
+
+    // Method to calculate natural ability based on level
+    calculateNaturalAbility() {
+        if (this._level >= 3 && this._level <= 4) return this._level === 3 ? -4 : -3;
+        if (this._level >= 5 && this._level <= 7) return -1;
+        if (this._level >= 8 && this._level <= 9) return 0;
+        if (this._level >= 10 && this._level <= 12) return 1;
+        if (this._level >= 13 && this._level <= 15) return 2;
+        if (this._level >= 16 && this._level <= 18) return 3;
+        if (this._level >= 19 && this._level <= 21) return 4;
+        if (this._level >= 22 && this._level <= 24) return 5;
+        if (this._level === 25) return 6;
+        return null;
+    }
+}

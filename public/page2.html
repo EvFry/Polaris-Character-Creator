@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Creation</title>
     <link rel="stylesheet" href="css/page2.css">
-    <script defer type="module" src="javascript/define.js"></script>
-    <script defer type="module" src="javascript/attributes.js"></script>
-    <script defer type="module" src="javascript/page2.js"></script>
-    <script defer type="module" src="javascript/background.js"></script>
+    <script defer type="module" src="/javascript/define.js"></script>
+    <script defer type="module" src="/javascript/attributes.js"></script>
+    <script defer type="module" src="/javascript/page2.js"></script>
+    <script defer type="module" src="/javascript/background.js"></script>
 </head>
 <body>
     <div id="cp-tracker">
         CP: <span id="cp-total">0</span>
     </div>
-
+    
     <div class="container">
         <h1>Create Your Character</h1>
-
+    
         <!-- Character Name Input -->
         <label for="characterName">Enter Character Name:</label>
         <input type="text" id="characterName" placeholder="Enter a valid name..." required>
         <p id="nameError" class="error-message"></p>
-
+    
         <!-- Character Type Dropdown -->
         <label for="characterType">Select Character Type:</label>
         <select id="characterType">
@@ -30,11 +30,11 @@
             <option value="intermediary">Intermediary (38 AP)</option>
             <option value="heroic">Heroic (46 AP)</option>
         </select>
-
+    
         <!-- Attributes Section -->
         <h2>Attributes <span class="ap-counter">Attribute Points: <span id="ap-total">0</span></span></h2>
         <div id="attributes-list"></div>
-
+    
         <!-- CP Spending Dropdown -->
         <h3>Spend CP to Gain Attribute Points</h3>
         <select id="cp-spend">
@@ -48,12 +48,11 @@
             <option value="7">7 CP → +14 AP</option>
             <option value="8">8 CP → +16 AP</option>
         </select>
-
+    
         <!-- Save and Next Buttons -->
         <div class="button-group">
             <button id="saveCharacter">Save</button>
             <button id="nextCharacter">Next</button>
         </div>
     </div>
-</body>
-</html>
+    
