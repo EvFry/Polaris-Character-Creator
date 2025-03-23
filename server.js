@@ -53,8 +53,14 @@ app.post("/create-folder", (req, res) => {
 // List all JSON files
 app.get("/list-files", (req, res) => {
     fs.readdir(folderPath, (err, files) => {
-        if (err) return res.status(500).json({ error: "Error reading files" });
-        res.json(files.filter(file => file.endsWith(".json")));
+        if (err) {
+            console.error("Error reading files:", err);
+            return res.status(500).json({ error: "Error reading files" });
+        }
+        console.log("Files in folder:", files); // Log the files
+        const jsonFiles = files.filter(file => file.endsWith(".json"));
+        console.log("Filtered JSON files:", jsonFiles); // Log the filtered JSON files
+        res.json(jsonFiles);
     });
 });
 
@@ -106,7 +112,34 @@ app.post("/copy-file/:filename", (req, res) => {
         res.json({ message: "File copied", newFileName });
     });
 });
+// server.js
 
+app.post('/save-character', (req, res) => {
+    const characterData = req.body;
+    const characterName = characterData.name;
+
+    const filePath = path.join(folderPath, `${characterName}.json`);
+
+    fs.writeFile(filePath, JSON.stringify(characterData, null, 2), (err) => {
+        if (err) {
+            console.error('Error saving character:', err);
+            return res.status(500).json({ error: 'Failed to save character' });
+        }
+        res.json({ message: 'Character saved successfully' });
+    });
+});
+
+// Load Character State from JSON
+app.get("/load-character/:characterName", (req, res) => {
+    const filePath = path.join(folderPath, `${req.params.characterName}.json`);
+
+    if (!fs.existsSync(filePath)) return res.status(404).json({ error: "Character not found" });
+
+    fs.readFile(filePath, "utf-8", (err, data) => {
+        if (err) return res.status(500).json({ error: "Error reading file" });
+        res.json(JSON.parse(data));
+    });
+});
 // Start the server
 app.listen(PORT, async () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);

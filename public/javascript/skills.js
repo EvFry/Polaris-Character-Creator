@@ -4385,6 +4385,6 @@ categories: [] ,
     
     
 
-console.log(allskills)
+/*console.log(allskills)
 console.log(skilloptions)
-console.log(polarispowers)
+console.log(polarispowers)*/

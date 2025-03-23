@@ -570,15 +570,5 @@ function rollMutation() {
 
    
 
-    if (mutation) {
-        console.log("Mutation:", mutation.name);
-        console.log("CP cost:", mutation.cpCost);
-        console.log("Short description:", mutation.descriptionShort);
-        console.log("Full description:", mutation.descriptionFull);
-        console.log("Symbiotic:", mutation.symbiotic);
 
-        rolledNumbers.add(mutation.roll); // Track unique roll values
-    } else {
-        console.log("No mutation was rolled.");
-    }
 

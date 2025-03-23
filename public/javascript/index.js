@@ -1,31 +1,52 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const savedCharactersList = document.getElementById("savedCharacters");
+import { loadCharacterState } from './state.js';
 
-    function loadSavedCharacters() {
-        console.log("Loading saved characters...");
-        fetch("http://localhost:3000/list-files")
-            .then(response => response.json())
-            .then(files => {
-                console.log("Files fetched:", files);
-                savedCharactersList.innerHTML = "";
-                files.forEach(file => {
-                    let option = document.createElement("option");
-                    option.textContent = file;
-                    savedCharactersList.appendChild(option);
-                });
-            })
-            .catch(error => console.error("Error loading characters:", error));
-    }
+
+const savedCharactersList = document.getElementById("savedCharacters");
+
+function loadSavedCharacters() {
+    console.log("Loading saved characters...");
+    fetch("http://localhost:3000/list-files")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch files. Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(files => {
+            console.log("Files fetched:", files);
+            savedCharactersList.innerHTML = "";  // Clear existing list
+            
+            if (files.length === 0) {
+                console.log("No saved characters found.");
+                return;  // Exit early if no files
+            }
+            
+            // Populate the list of saved characters
+            files.forEach(file => {
+                let option = document.createElement("option");
+                option.textContent = file;
+                savedCharactersList.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Error loading characters:", error);
+            alert("Failed to load saved characters.");
+        });
+}
+document.addEventListener("DOMContentLoaded", function () {
+   
+    
+    // Call the loadSavedCharacters function (now globally defined)
+    loadSavedCharacters();
 
     document.getElementById("newCharacter").addEventListener("click", function () {
         console.log("New Character button clicked!");
-        localStorage.setItem("newCharacter", "true");  // ✅ Set newCharacter to true
+        localStorage.setItem("newCharacter", "true");  // Set newCharacter to true
 
         fetch("http://localhost:3000/create-folder", { method: "POST" })
             .then(response => response.json())
             .then(data => {
                 console.log("Folder creation response:", data.message);
-
                 setTimeout(() => {
                     window.location.href = "/page2.html";
                 }, 500);
@@ -39,17 +60,59 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("loadCreator").addEventListener("click", function () {
         const selectedCharacter = savedCharactersList.value;
         if (selectedCharacter) {
-            localStorage.setItem("newCharacter", "false");  // ✅ Set newCharacter to false
+            localStorage.setItem("newCharacter", "false");  // Set newCharacter to false
 
             fetch(`http://localhost:3000/load-file/${selectedCharacter}`)
                 .then(response => response.json())
                 .then(data => {
                     console.log("Loaded Character:", data);
+                    localStorage.setItem("characterState", JSON.stringify(data)); // Save state
+                    loadCharacterState(selectedCharacter);  // Load the character's state
+
+                    const pageNumber = data.pageNumber; // Assuming the loaded data has pageNumber property
+                    let pageUrl = "/index.html";  // Default page URL
+                    switch (pageNumber) {
+                        case 1:
+                            pageUrl = "/index.html";
+                            break;
+                        case 2:
+                            pageUrl = "/page2.html";
+                            break;
+                        case 3:
+                            pageUrl = "/page3.html";
+                            break;
+                        case 4:
+                            pageUrl = "/page4.html";
+                            break;
+                        case 5:
+                            pageUrl = "/page5.html";
+                            break;
+                        case 6:
+                            pageUrl = "/page6.html";
+                            break;
+                        case 7:
+                            pageUrl = "/final.html";
+                            break;
+                        default:
+                            console.log("Unknown page number");
+                            pageUrl = "/index.html";
+                            break;
+                    }
                     setTimeout(() => {
-                        window.location.href = "/final.html";
+                        window.location.href = pageUrl;
                     }, 500);
                 })
                 .catch(error => console.error("Error loading character:", error));
+        }
+    });
+
+    document.getElementById("loadSheet").addEventListener("click", function () {
+        const selectedCharacter = savedCharactersList.value;
+        if (selectedCharacter) {
+            loadCharacterState(selectedCharacter);
+            setTimeout(() => {
+                window.location.href = "/final.html";
+            }, 500);
         }
     });
 
@@ -70,6 +133,4 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => console.error("Error copying character:", error));
         }
     });
-
-    loadSavedCharacters();
-});
+})
