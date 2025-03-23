@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Creation - Page 3</title>
+    <link rel="stylesheet" href="/css/page3.css">
+    <script type="module" defer src="/javascript/page3.js"></script>
+<body>
+    <!-- CP Tracker (Sticky to Top) -->
+    <div id="cp-tracker">
+        <span>CP Total: <span id="cp-total">0</span></span>
+    </div>
+
+    <!-- Genotype Selection -->
+    <div class="section" id="genotype-section">
+        <h2>Select Genotype</h2>
+        <div id="genotype-options">
+            <button class="genotype-btn" data-type="Human">Human</button>
+            <button class="genotype-btn" data-type="Natural Hybrid">Natural Hybrid</button>
+            <button class="genotype-btn" data-type="Techno Hybrid">Techno Hybrid</button>
+            <button class="genotype-btn" data-type="GenoHybrid">GenoHybrid</button>
+        </div>
+        <div id="genotype-info"></div>
+        <button id="choose-genotype">Choose Genotype</button>
+    </div>
+
+    <!-- Mutations List -->
+    <div class="section" id="mutation-section">
+        <h2>Mutations</h2>
+        <button id="random-mutation">Random Mutation</button>
+        <select id="mutation-list" size="10"></select>
+        <div id="mutation-details"></div>
+        <button id="add-mutation">Add Mutation</button>
+        <ul id="selected-mutations"></ul>
+    </div>
+
+<!-- Polaris Effect -->
+<div class="section" id="polaris-section">
+    <h2>Polaris Effect</h2>
+    <button id="access-polaris">Access Polaris Effect (-5 CP)</button>
+    <button id="remove-polaris" disabled>Remove Polaris Effect</button>
+
+    <div id="granted-power">
+        <h3>Granted Power: <span id="polaris-power-name"></span></h3>
+        <p><strong>Variables:</strong></p>
+        <pre id="polaris-power-categories"></pre>
+        <p><strong>Description:</strong> <span id="polaris-power-description"></span></p>
+        <button id="reroll-power">Reroll</button>
+    </div>
+</div>
+
+<!-- Polaris Power Selection (Stacked) -->
+<div id="power-selection">
+    <div>
+        <label><input type="checkbox" id="first-power" disabled> First Power (-1 CP)</label>
+        <div id="first-power-options"></div> <!-- Holds power choices -->
+        <button id="reroll-first-power" disabled>Reroll First Power</button>
+    </div>
+
+    <div>
+        <label><input type="checkbox" id="second-power" disabled> Second Power (-1 CP)</label>
+        <div id="second-power-options"></div> <!-- Holds power choices -->
+        <button id="reroll-second-power" disabled>Reroll Second Power</button>
+    </div>
+
+    <div>
+        <label><input type="checkbox" id="third-power" disabled> Third Power (-1 CP)</label>
+        <div id="third-power-options"></div> <!-- Holds power choices -->
+        <button id="reroll-third-power" disabled>Reroll Third Power</button>
+    </div>
+</div>
+
+
+    <!-- Navigation Buttons -->
+    <button id="saveCharacter">Save</button>
+    <button id="nextCharacter">Next</button>
+</body>
+</html>

@@ -510,7 +510,7 @@ const subRolls = {
         return options[Math.floor(Math.random() * options.length)];
     }
 };
-function rollMutation() {
+export function rollMutation() {
     const roll = Math.floor(Math.random() * 100) + 1;
     console.log("Rolled:", roll);  // Debugging: Log the roll
 

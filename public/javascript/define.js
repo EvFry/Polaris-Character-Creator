@@ -113,3 +113,14 @@ export class Attribute {
         return null;
     }
 }
+
+export class Genotype {
+    constructor(name, cpCost, hasSkill, descriptionShort, descriptionFull,attirbutechanges) {
+        this.name = name;  // Name of the mutation
+        this.cpCost = cpCost;  // Character Point cost
+        this.hasSkill = hasSkill;  // Boolean: Does this mutation grant a skill?
+        this.descriptionShort = descriptionShort;  // Brief description
+        this.descriptionFull = descriptionFull;  // Detailed description
+        this.attributechanges=attirbutechanges;
+    }
+}

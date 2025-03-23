@@ -1,6 +1,112 @@
 
 import { Skill }  from "./define.js";
 
+export function randomPower(powerCount = 1) {
+    let selectedPowers = [];
+
+    // Define power table
+    const powerTable = [
+        { range: [1, 2], power: "Blob of Destruction" },
+        { range: [3, 4], power: "Change in Mass" },
+        { range: [5, 6], power: "Change in Pressure" },
+        { range: [7, 8], power: "Change in Temperature" },
+        { range: [9, 11], power: "Crossing" },
+        { range: [12, 13], power: "Deadly Whirlpool" },
+        { range: [14, 15], power: "Disintegration" },
+        { range: [16, 18], power: "Disruption of Reality" },
+        { range: [19, 21], power: "Electromagnetic Pulse" },
+        { range: [22, 24], power: "Energy Bolts" },
+        { range: [25, 26], power: "Energy Drain" },
+        { range: [27, 29], power: "Flux Beast" },
+        { range: [30, 31], power: "Force Barrier" },
+        { range: [32, 33], power: "Force Field" },
+        { range: [34, 35], power: "Gravity Sphere" },
+        { range: [36, 37], power: "Jamming" },
+        { range: [38, 39], power: "Lightning" },
+        { range: [40, 42], power: "Mental Imprisonment" },
+        { range: [43, 44], power: "Mind Control" },
+        { range: [45, 46], power: "Molecular Barrier" },
+        { range: [47, 48], power: "Molecular Disruption" },
+        { range: [49, 50], power: "Molecular Field" },
+        { range: [51, 52], power: "Molecular Healing" },
+        { range: [53, 55], power: "Molecular Regeneration" },
+        { range: [56, 57], power: "Nightmare" },
+        { range: [58, 59], power: "Organic Repulsion Sphere" },
+        { range: [60, 61], power: "Pacification/Enragement" },
+        { range: [62, 63], power: "Premonitions" },
+        { range: [64, 65], power: "Psychic Attack" },
+        { range: [66, 67], power: "Psychic Barrier" },
+        { range: [68, 70], power: "Psychic Bolts" },
+        { range: [71, 72], power: "Psychic Dagger" },
+        { range: [73, 74], power: "Psychic Field" },
+        { range: [75, 76], power: "Psychic Healing" },
+        { range: [77, 78], power: "Psychic Sensitivity" },
+        { range: [79, 80], power: "Psychic Shock Waves" },
+        { range: [81, 82], power: "Shock Waves" },
+        { range: [83, 84], power: "Soul Eater" },
+        { range: [85, 86], power: "Soundscan" },
+        { range: [87, 88], power: "Telekinesis" },
+        { range: [89, 90], power: "Teleportation" },
+        { range: [91, 92], power: "Temporal Shift" },
+        { range: [93, 94], power: "Temporal Sphere" },
+        { range: [95, 96], power: "Terror Sphere" },
+        { range: [97, 98], power: "Whirlpool" }
+    ];
+
+    // Select the requested number of powers
+    for (let i = 0; i < powerCount; i++) {
+        let selectedPower;
+        
+        do {
+            const roll = Math.floor(Math.random() * 100) + 1;
+            console.log("Rolled for power", i + 1, ":", roll);
+
+            // Find the power based on the roll
+            const powerEntry = powerTable.find(entry => roll >= entry.range[0] && roll <= entry.range[1]);
+
+            if (!powerEntry) {
+                console.log("No power found for roll:", roll); // Should never happen if table is correct
+                return null;
+            }
+
+            console.log("Found power entry:", powerEntry);
+
+            // Ensure no duplicate powers are selected
+            if (!selectedPowers.includes(powerEntry.power)) {
+                selectedPower = powerEntry.power;
+                selectedPowers.push(selectedPower);
+                break; // Exit the loop if a unique power has been selected
+            } else {
+                console.log("Duplicate power detected, rerolling...");
+            }
+
+        } while (true); // Continue until a unique power is selected
+    }
+
+    // Normalize power names for case insensitivity
+    const normalizedPowerNames = selectedPowers.map(name => name.toLowerCase().trim());
+
+    // Retrieve full details from polarispowers array (including name, fullDescription, categories)
+    const powerDetails = normalizedPowerNames.map(powerName => {
+        return polarispowers.find(power => power.name.toLowerCase().trim() === powerName);
+    });
+
+    if (powerDetails.includes(undefined)) {
+        console.log("Some power details not found:", selectedPowers);
+        return null;
+    }
+
+    console.log("Final selected powers:", powerDetails);
+
+    // Map and return the power details, now including name, fullDescription, and categories
+    return powerDetails.map(power => ({
+        name: power.name,
+        fullDescription: power.fullDescription,
+        categories: power.categories
+    }));
+}
+
+
 export let polarispowers =[
  new  Skill({
     name: "Blob of Destruction",

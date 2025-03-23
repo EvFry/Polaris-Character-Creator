@@ -116,7 +116,7 @@ cpSpendOptions.forEach(option => {
     const apDifference = apGain - (state.spentCPOnAP * 2);
 
     // Disable options if selecting them would result in negative CP or AP
-    option.disabled = (currentCp < cpCost) || (currentAp + apGain < 0);
+    option.disabled = (currentCp < cpDifference) || (currentAp + apDifference < 0);
 });
 }
 
