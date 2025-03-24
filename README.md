@@ -5,4 +5,4 @@ Current issues
 fix slected power function on page3.js
 
 
-get loading to work across pages, saving seems to work
+state now loads correctly but doesnt properly show on page
