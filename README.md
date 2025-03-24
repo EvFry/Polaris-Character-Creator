@@ -5,4 +5,4 @@ Current issues
 fix slected power function on page3.js
 
 
-state now loads correctly but doesnt properly show on page
+state now loads correctly but difficultylevel gets changed

@@ -26,49 +26,82 @@ document.addEventListener("DOMContentLoaded", function () {
             loadCharacterState(characterState); 
         }
     }
-
+    console.log("✅ state before timeout:", {
+        cpTotal: state.cpTotal,
+        apTotal: state.apTotal,
+        difficultyLevel: state.difficultyLevel,
+        spentCPOnAP: state.spentCPOnAP,
+    });
+    
+    setTimeout(() => {
+        console.log("⏳ state right before calling UI update:", {
+            cpTotal: state.cpTotal,
+            apTotal: state.apTotal,
+            difficultyLevel: state.difficultyLevel,
+            spentCPOnAP: state.spentCPOnAP,
+        });
+    
+        updateUIWithState();
+    }, 50);
+    
     renderAttributes();
     updateDifficultyDropdown();
     updateDropdownOptions();
 
     // Ensure UI reflects loaded state
-    updateUIWithState();  // <-- Call function to set correct dropdown values
+  
 
     cpTotalElement.textContent = state.getCpTotal();
     apTotalElement.textContent = state.getApTotal();
 });
 
 function updateUIWithState() {
-    console.log("Updating UI with loaded state...");
+    console.log("🔄 Updating UI with loaded state...");
 
-    // 1. Set the correct difficulty level in the dropdown
-    const difficultyMap = { 1: "realistic", 2: "intermediary", 3: "heroic" };
-    const selectedDifficulty = difficultyMap[state.getDifficulty()];
-    if (selectedDifficulty) {
-        characterTypeDropdown.value = selectedDifficulty;
-    }
-
-    // 2. Set the correct Luck (LCK) value
-    const luckAttribute = attributeData.find(attr => attr.shortForm === "LCK");
-    if (luckAttribute) {
-        document.getElementById(`value-LCK`).textContent = luckAttribute.level;
-    }
-
-    // 3. Set attribute levels from state
-    attributeData.forEach(attribute => {
-        const stateAttribute = state.selectedAttributes.find(attr => attr.shortForm === attribute.shortForm);
-        if (stateAttribute) {
-            attribute.level = stateAttribute.level;
-            document.getElementById(`value-${attribute.shortForm}`).textContent = stateAttribute.level;
-        }
+    console.log("✅ state at the START of UI update:", {
+        cpTotal: state.cpTotal,
+        apTotal: state.apTotal,
+        difficultyLevel: state.difficultyLevel,
+        spentCPOnAP: state.spentCPOnAP,
     });
 
-    // 4. Set the CP spend dropdown correctly
-    if (state.spentCPOnAP !== undefined) {
-        cpSpendDropdown.value = state.spentCPOnAP.toString();
-    }
-}
+    // 1️⃣ Update the character type (difficulty level)
+    const difficultyMap = { 1: "realistic", 2: "intermediary", 3: "heroic" };
 
+    if (state.difficultyLevel in difficultyMap) {
+        characterTypeDropdown.value = difficultyMap[state.difficultyLevel];
+
+        console.log("📌 CharacterTypeDropdown value set to:", characterTypeDropdown.value);
+        
+        // 🔹 Add this to see if changing dropdown triggers any listener
+        characterTypeDropdown.dispatchEvent(new Event("change"));
+    } else {
+        console.error("❌ Invalid difficulty level in state:", state.difficultyLevel);
+    }
+
+    console.log("✅ state AFTER updating dropdown:", {
+        cpTotal: state.cpTotal,
+        apTotal: state.apTotal,
+        difficultyLevel: state.difficultyLevel,
+        spentCPOnAP: state.spentCPOnAP,
+    });
+
+    // 2️⃣ Update the CP spend dropdown
+    if (typeof state.spentCPOnAP === "number") {
+        cpSpendDropdown.value = state.spentCPOnAP.toString();
+    } else {
+        console.error("❌ Invalid CP spent on AP in state:", state.spentCPOnAP);
+    }
+
+    console.log("✅ state AFTER updating CP dropdown:", {
+        cpTotal: state.cpTotal,
+        apTotal: state.apTotal,
+        difficultyLevel: state.difficultyLevel,
+        spentCPOnAP: state.spentCPOnAP,
+    });
+
+    console.log("✅ UI fully updated!");
+}
 
 // Function to render attributes and buttons
 function renderAttributes() {
