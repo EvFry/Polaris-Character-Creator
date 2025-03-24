@@ -7,6 +7,8 @@ import { allmutations } from './mutations.js';
 import { allskills, skilloptions } from './skills.js';
 import { polarispowers } from './polarispowers.js';
 
+
+
 // Utility function to get the current page number
 function getPageNumber() {
     const currentPage = window.location.pathname;
