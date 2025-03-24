@@ -8,7 +8,8 @@ const apTotalElement = document.getElementById("ap-total");
 const attributesList = document.getElementById("attributes-list");
 const characterTypeDropdown = document.getElementById("characterType");
 const cpSpendDropdown = document.getElementById("cp-spend");
-const characterName = document.getElementById('characterName').value;
+const stateJson = localStorage.getItem("characterState");
+
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded and parsed.");
@@ -16,15 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const newCharacter = localStorage.getItem("newCharacter");
 
     if (newCharacter === "true") {
-        // Initialize new character state
-        state.resetState();  // Reset the state
-        localStorage.setItem("newCharacter", "false"); // Set it to false to prevent resetting on future reloads
-        localStorage.setItem("state", JSON.stringify(state)); // Store state in localStorage
+        state.resetState();  
+        localStorage.setItem("newCharacter", "false"); 
+        localStorage.setItem("state", JSON.stringify(state)); 
     } else {
-        // If not a new character, load from localStorage (if saved)
         const characterState = JSON.parse(localStorage.getItem('characterState'));
         if (characterState) {
-            loadCharacterState(characterState); // Pass the actual state data to load
+            loadCharacterState(characterState); 
         }
     }
 
@@ -32,9 +31,44 @@ document.addEventListener("DOMContentLoaded", function () {
     updateDifficultyDropdown();
     updateDropdownOptions();
 
-    cpTotalElement.textContent = state.getCpTotal(); // Get cpTotal
-    apTotalElement.textContent = state.getApTotal(); // Get apTotal
+    // Ensure UI reflects loaded state
+    updateUIWithState();  // <-- Call function to set correct dropdown values
+
+    cpTotalElement.textContent = state.getCpTotal();
+    apTotalElement.textContent = state.getApTotal();
 });
+
+function updateUIWithState() {
+    console.log("Updating UI with loaded state...");
+
+    // 1. Set the correct difficulty level in the dropdown
+    const difficultyMap = { 1: "realistic", 2: "intermediary", 3: "heroic" };
+    const selectedDifficulty = difficultyMap[state.getDifficulty()];
+    if (selectedDifficulty) {
+        characterTypeDropdown.value = selectedDifficulty;
+    }
+
+    // 2. Set the correct Luck (LCK) value
+    const luckAttribute = attributeData.find(attr => attr.shortForm === "LCK");
+    if (luckAttribute) {
+        document.getElementById(`value-LCK`).textContent = luckAttribute.level;
+    }
+
+    // 3. Set attribute levels from state
+    attributeData.forEach(attribute => {
+        const stateAttribute = state.selectedAttributes.find(attr => attr.shortForm === attribute.shortForm);
+        if (stateAttribute) {
+            attribute.level = stateAttribute.level;
+            document.getElementById(`value-${attribute.shortForm}`).textContent = stateAttribute.level;
+        }
+    });
+
+    // 4. Set the CP spend dropdown correctly
+    if (state.spentCPOnAP !== undefined) {
+        cpSpendDropdown.value = state.spentCPOnAP.toString();
+    }
+}
+
 
 // Function to render attributes and buttons
 function renderAttributes() {
@@ -264,8 +298,6 @@ document.getElementById('nextCharacter').addEventListener('click', handleButtonC
 
 // Optionally, load the character state on page load
 window.addEventListener('load', () => {
-    const characterName = document.getElementById('characterName').value;
-    const stateJson = localStorage.getItem(characterName);
     if (stateJson) {
         const state = JSON.parse(stateJson);
         document.getElementById('characterName').value = state.name;

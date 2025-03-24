@@ -51,8 +51,8 @@ export function saveCharacterState() {
         pageNumber: pageNumber
     };
     const stateJson = JSON.stringify(stateData);
-    localStorage.setItem(characterName, stateJson);
-
+    localStorage.setItem("characterState", stateJson);
+    
     fetch('/save-character', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -68,7 +68,7 @@ export function saveCharacterState() {
 }
 
 export function loadCharacterState(characterName) {
-    const savedState = localStorage.getItem(characterName);
+    const savedState = localStorage.getItem("characterState");
     if (savedState) {
         const parsedState = JSON.parse(savedState);
 

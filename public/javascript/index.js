@@ -39,9 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Call the loadSavedCharacters function (now globally defined)
     loadSavedCharacters();
 
-    document.getElementById("newCharacter").addEventListener("click", function () {
+document.getElementById("newCharacter").addEventListener("click", function () {
         console.log("New Character button clicked!");
-        localStorage.setItem("newCharacter", "true");  // Set newCharacter to true
+        localStorage.setItem("isNewCharacter", "true");  // Set newCharacter to true
 
         fetch("http://localhost:3000/create-folder", { method: "POST" })
             .then(response => response.json())
@@ -60,52 +60,56 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("loadCreator").addEventListener("click", function () {
         const selectedCharacter = savedCharactersList.value;
         if (selectedCharacter) {
-            localStorage.setItem("newCharacter", "false");  // Set newCharacter to false
-
+            localStorage.setItem("isNewCharacter", "false");  // Standardizing key name
+    
             fetch(`http://localhost:3000/load-file/${selectedCharacter}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Loaded Character:", data);
-                    localStorage.setItem("characterState", JSON.stringify(data)); // Save state
-                    loadCharacterState(selectedCharacter);  // Load the character's state
-
-                    const pageNumber = data.pageNumber; // Assuming the loaded data has pageNumber property
-                    let pageUrl = "/index.html";  // Default page URL
-                    switch (pageNumber) {
-                        case 1:
-                            pageUrl = "/index.html";
-                            break;
-                        case 2:
-                            pageUrl = "/page2.html";
-                            break;
-                        case 3:
-                            pageUrl = "/page3.html";
-                            break;
-                        case 4:
-                            pageUrl = "/page4.html";
-                            break;
-                        case 5:
-                            pageUrl = "/page5.html";
-                            break;
-                        case 6:
-                            pageUrl = "/page6.html";
-                            break;
-                        case 7:
-                            pageUrl = "/final.html";
-                            break;
-                        default:
-                            console.log("Unknown page number");
-                            pageUrl = "/index.html";
-                            break;
-                    }
-                    setTimeout(() => {
-                        window.location.href = pageUrl;
-                    }, 500);
-                })
-                .catch(error => console.error("Error loading character:", error));
-        }
+            .then(response => response.json())
+            .then(data => {
+                console.log("Loaded Character:", data);
+                localStorage.setItem("characterState", JSON.stringify(data)); // Store the raw JSON
+                
+                // Call loadCharacterState without .then()
+                loadCharacterState(selectedCharacter);  
+        
+                const pageNumber = data.pageNumber || 1; // Default to page 1 if missing
+                let pageUrl = "/index.html";  // Default page URL
+                switch (pageNumber) {
+                    case 1:
+                        pageUrl = "/index.html";
+                        break;
+                    case 2:
+                        pageUrl = "/page2.html";
+                        break;
+                    case 3:
+                        pageUrl = "/page3.html";
+                        break;
+                    case 4:
+                        pageUrl = "/page4.html";
+                        break;
+                    case 5:
+                        pageUrl = "/page5.html";
+                        break;
+                    case 6:
+                        pageUrl = "/page6.html";
+                        break;
+                    case 7:
+                        pageUrl = "/final.html";
+                        break;
+                    default:
+                        console.log("Unknown page number");
+                        pageUrl = "/index.html";
+                        break;
+                }
+                setTimeout(() => {
+                    window.location.href = pageUrl;
+                }, 500);
+            })
+            .catch(error => console.error("Error loading character:", error));
+        
+           
+        }  
     });
-
+    
     document.getElementById("loadSheet").addEventListener("click", function () {
         const selectedCharacter = savedCharactersList.value;
         if (selectedCharacter) {
