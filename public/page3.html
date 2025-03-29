@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="/css/page3.css">
     <script type="module" defer src="/javascript/page3.js"></script>
 <body>
-    <!-- CP Tracker (Sticky to Top) -->
-    <div id="cp-tracker">
-        <span>CP Total: <span id="cp-total">0</span></span>
-    </div>
+<!-- CP Tracker (Sticky to Top) -->
+<div id="cp-tracker">
+    <span>Character Name: <span id="cp-character-name">Unknown</span></span> |
+    <span>CP Total: <span id="cp-total">0</span></span>
+</div>
 
     <!-- Genotype Selection -->
     <div class="section" id="genotype-section">
@@ -33,7 +34,10 @@
         <div id="mutation-details"></div>
         <button id="add-mutation">Add Mutation</button>
         <ul id="selected-mutations"></ul>
+        <ul id="mutation-container"></ul>
     </div>
+
+    
 
 <!-- Polaris Effect -->
 <div class="section" id="polaris-section">
@@ -46,7 +50,7 @@
         <p><strong>Variables:</strong></p>
         <pre id="polaris-power-categories"></pre>
         <p><strong>Description:</strong> <span id="polaris-power-description"></span></p>
-        <button id="reroll-power">Reroll</button>
+        <button id="reroll-power"disabled>Reroll</button>
     </div>
 </div>
 

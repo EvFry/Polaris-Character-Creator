@@ -31,3 +31,33 @@ body {
 #power-selection div {
     margin-bottom: 15px;
 }
+
+.accordion {
+    background-color: #f1f1f1;
+    color: #444;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+}
+
+.panel {
+    padding: 0 18px;
+    display: none;
+    background-color: #f1f1f1;
+    overflow: hidden;
+}
+
+.panel.active {
+    display: block;
+}
+
+.remove-button {
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+}

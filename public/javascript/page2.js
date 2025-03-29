@@ -8,41 +8,45 @@ const apTotalElement = document.getElementById("ap-total");
 const attributesList = document.getElementById("attributes-list");
 const characterTypeDropdown = document.getElementById("characterType");
 const cpSpendDropdown = document.getElementById("cp-spend");
-const stateJson = localStorage.getItem("characterState");
+const characterName = document.getElementById('characterName')
 
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded and parsed.");
 
-    const newCharacter = localStorage.getItem("newCharacter");
+    const newCharacter = localStorage.getItem("isNewCharacter");
+    let characterState = JSON.parse(localStorage.getItem('characterState')) || {};
 
     if (newCharacter === "true") {
-        state.resetState();  
-        localStorage.setItem("newCharacter", "false"); 
-        localStorage.setItem("state", JSON.stringify(state)); 
+        state.resetState();
+        localStorage.setItem("characterState", JSON.stringify(state));
+        localStorage.setItem("isNewCharacter", "false");
+
+        // Clear name input
+        characterName.value = "";
+        document.getElementById('cp-character-name').textContent = "Unknown";
+
+        console.log("New character initialized.");
     } else {
-        const characterState = JSON.parse(localStorage.getItem('characterState'));
-        if (characterState) {
-            loadCharacterState(characterState); 
+        if (characterState.name) {
+            // ✅ Load name into textbox and cp-character-name display
+            characterName.value = characterState.name;
+            document.getElementById('cp-character-name').textContent = characterState.name;
+
+            console.log("Loaded character name:", characterState.name);
+        } else {
+            // Default to empty if name is missing
+            characterName.value = "";
+            document.getElementById('cp-character-name').textContent = "Unknown";
+
+            console.log("No character name found in state.");
         }
     }
-    console.log("✅ state before timeout:", {
-        cpTotal: state.cpTotal,
-        apTotal: state.apTotal,
-        difficultyLevel: state.difficultyLevel,
-        spentCPOnAP: state.spentCPOnAP,
-    });
-    
-    setTimeout(() => {
-        console.log("⏳ state right before calling UI update:", {
-            cpTotal: state.cpTotal,
-            apTotal: state.apTotal,
-            difficultyLevel: state.difficultyLevel,
-            spentCPOnAP: state.spentCPOnAP,
-        });
-    
-        updateUIWithState();
-    }, 50);
+
+    updateUIWithState();
+
+
+  
     
     renderAttributes();
     updateDifficultyDropdown();
@@ -330,10 +334,21 @@ document.getElementById('saveCharacter').addEventListener('click', handleButtonC
 document.getElementById('nextCharacter').addEventListener('click', handleButtonClick);
 
 // Optionally, load the character state on page load
-window.addEventListener('load', () => {
-    if (stateJson) {
-        const state = JSON.parse(stateJson);
-        document.getElementById('characterName').value = state.name;
-    }
+
+
+function updateCharacterName() {
+    const nameValue = characterName.value.trim();
+    document.getElementById('cp-character-name').textContent = nameValue || "Unknown";
+}
+
+
+// Add an event listener to update the name in real-time
+
+let typingTimer;
+const typingDelay = 500; // Delay in milliseconds (adjust as needed)
+
+document.getElementById('characterName').addEventListener('input', () => {
+    clearTimeout(typingTimer); // Clear any previous timer
+    typingTimer = setTimeout(updateCharacterName, typingDelay);
 });
 

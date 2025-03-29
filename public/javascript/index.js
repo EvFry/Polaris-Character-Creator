@@ -1,3 +1,4 @@
+import stateManager from './state.js';
 import { loadCharacterState } from './state.js';
 
 
