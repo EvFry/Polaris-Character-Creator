@@ -5,4 +5,7 @@ Current issues
 
 state now loads correctly but difficultylevel gets changed on page2
 
+attributes at negative returning null for natural ability
+
+mastery,level not being pulled from selected powers into full powers
 

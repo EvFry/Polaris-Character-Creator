@@ -3,7 +3,8 @@ import { allgenotypes } from './genotype.js';
 import { allmutations, rollMutation } from './mutations.js';
 import { randomPower } from './polarispowers.js';
 import { saveCharacterState,loadCharacterState } from './state.js';
-import { Mutation } from './define.js';
+import { attributes } from './attributes.js';
+
 
 window.grantedPowersData = window.grantedPowersData || [];
 
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
     initializeMutationSystem();
+    loadCurrentGenotype();
     
 
     console.log("Checking state.selectedPolarisPowers before calling handlePolarisEffect:", state.selectedPolarisPowers);
@@ -124,6 +126,37 @@ function createOptionsContainer(powerId, optionsContainerId, grantedPowers) {
 }
 
 
+function loadCurrentGenotype() {
+    // Get the current genotype from the state
+    const currentGenotype = state.getGenotype();
+
+    // Set the Current Genotype label on the page
+    document.getElementById("current-genotype").textContent = currentGenotype;
+
+    // Check if the current genotype exists in the allgenotypes object
+    if (currentGenotype !== "Human" && allgenotypes.hasOwnProperty(currentGenotype)) {
+        const genotypeInfo = allgenotypes[currentGenotype];
+
+        // Display detailed genotype information
+        document.getElementById("genotype-info").innerHTML = `
+            <h3>${genotypeInfo.name}</h3>
+            <p><strong>CP Cost:</strong> ${genotypeInfo.cpCost}</p>
+            <p><strong>Description:</strong> ${genotypeInfo.descriptionFull}</p>
+            <p><strong>Attribute Changes:</strong></p>
+            <ul>
+                ${Object.entries(genotypeInfo.attributechanges).map(([attr, value]) => 
+                    `<li><strong>${attr}:</strong> ${value > 0 ? "+" : ""}${value}</li>`
+                ).join("")}
+            </ul>
+        `;
+    } else {
+        // If the genotype is "Human" or not found, clear any genotype information
+        document.getElementById("genotype-info").innerHTML = "<p>No genotype selected.</p>";
+    }
+}
+
+
+
 
 
 
@@ -136,22 +169,126 @@ function loadGenotypeSelection() {
             const selectedGenotype = button.getAttribute("data-type");
             const genotypeInfo = allgenotypes[selectedGenotype];
 
+            // Display the genotype information
             document.getElementById("genotype-info").innerHTML = `
+                <h3>${genotypeInfo.name}</h3>
                 <p><strong>CP Cost:</strong> ${genotypeInfo.cpCost}</p>
-                <p><strong>Attribute Changes:</strong> ${JSON.stringify(genotypeInfo.attributes)}</p>
-                <p><strong>Features:</strong> ${genotypeInfo.features.join(", ")}</p>
+                <p><strong>Description:</strong> ${genotypeInfo.descriptionFull}</p>
+                <p><strong>Attribute Changes:</strong></p>
+                <ul>
+                    ${Object.entries(genotypeInfo.attributechanges).map(([attr, value]) => 
+                        `<li><strong>${attr}:</strong> ${value > 0 ? "+" : ""}${value}</li>`
+                    ).join("")}
+                </ul>
             `;
 
+            // Set up the "Choose" button functionality
             document.getElementById("choose-genotype").onclick = () => {
                 if (state.getCpTotal() >= genotypeInfo.cpCost) {
                     state.setGenotype(selectedGenotype);
-                    state.modifyCp(-genotypeInfo.cpCost);
+                    state.updateCpTotal(-genotypeInfo.cpCost);
                     document.getElementById("cp-total").textContent = state.getCpTotal();
+
+                    // Log before attribute changes
+                    console.log("Before attribute changes:");
+                    Object.entries(genotypeInfo.attributechanges).forEach(([attr, value]) => {
+                        // Get the short form for the attribute
+                        const attribute = attributes.find(a => a.name === attr);
+                        if (attribute) {
+                            const currentAttributeLevel = state.selectedAttributes[attribute.shortForm];
+                            console.log(`${attribute.name}: ${currentAttributeLevel}`);
+                        }
+                    });
+
+                    // Apply attribute changes
+                    Object.entries(genotypeInfo.attributechanges).forEach(([attr, value]) => {
+                        // Get the short form for the attribute
+                        const attribute = attributes.find(a => a.name === attr);
+                        if (attribute) {
+                            // Update the attribute level
+                            const newLevel = state.selectedAttributes[attribute.shortForm] + value;
+                            state.updateAttributeLevel(attribute.shortForm, newLevel);
+                        }
+                    });
+
+                    // Log after attribute changes
+                    console.log("After attribute changes:");
+                    Object.entries(genotypeInfo.attributechanges).forEach(([attr, value]) => {
+                        // Get the short form for the attribute
+                        const attribute = attributes.find(a => a.name === attr);
+                        if (attribute) {
+                            const currentAttributeLevel = state.selectedAttributes[attribute.shortForm];
+                            console.log(`${attribute.name}: ${currentAttributeLevel}`);
+                        }
+                    });
+
+                    document.getElementById("current-genotype").textContent = genotypeInfo.name;
+                    alert(`${genotypeInfo.name} selected!`);
+                } else {
+                    alert("Not enough CP to choose this genotype.");
                 }
             };
         });
     });
+
+    // Set up the "Remove Genotype" button functionality
+    document.getElementById("remove-genotype").addEventListener("click", () => {
+        const currentGenotype = state.getGenotype(); // Get the current genotype
+        const currentGenotypeInfo = allgenotypes[currentGenotype];
+
+        // Check if the current genotype is not Human
+        if (currentGenotype !== "Human") {
+            // Refund CP for the current genotype
+            state.updateCpTotal(currentGenotypeInfo.cpCost);
+            document.getElementById("cp-total").textContent = state.getCpTotal();
+
+            // Log before attribute changes
+            console.log("Before attribute changes (removal):");
+            Object.entries(currentGenotypeInfo.attributechanges).forEach(([attr, value]) => {
+                // Get the short form for the attribute
+                const attribute = attributes.find(a => a.name === attr);
+                if (attribute) {
+                    const currentAttributeLevel = state.selectedAttributes[attribute.shortForm];
+                    console.log(`${attribute.name}: ${currentAttributeLevel}`);
+                }
+            });
+
+            // Revert the attribute changes
+            Object.entries(currentGenotypeInfo.attributechanges).forEach(([attr, value]) => {
+                // Get the short form for the attribute
+                const attribute = attributes.find(a => a.name === attr);
+                if (attribute) {
+                    // Revert the attribute level
+                    const newLevel = state.selectedAttributes[attribute.shortForm] - value;
+                    state.updateAttributeLevel(attribute.shortForm, newLevel);
+                }
+            });
+
+            // Log after attribute changes
+            console.log("After attribute changes (removal):");
+            Object.entries(currentGenotypeInfo.attributechanges).forEach(([attr, value]) => {
+                // Get the short form for the attribute
+                const attribute = attributes.find(a => a.name === attr);
+                if (attribute) {
+                    const currentAttributeLevel = state.selectedAttributes[attribute.shortForm];
+                    console.log(`${attribute.name}: ${currentAttributeLevel}`);
+                }
+            });
+
+            // Set genotype back to Human
+            state.setGenotype("Human");
+
+            // Update the UI
+            document.getElementById("current-genotype").textContent = "Human";
+            document.getElementById("genotype-info").innerHTML = "<p>No genotype selected.</p>";
+            alert("Genotype removed and reverted to Human.");
+        } else {
+            alert("You are already Human. No genotype to remove.");
+        }
+    });
 }
+
+
 
 
 // Mutations

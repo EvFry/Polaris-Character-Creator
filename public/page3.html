@@ -6,6 +6,7 @@
     <title>Character Creation - Page 3</title>
     <link rel="stylesheet" href="/css/page3.css">
     <script type="module" defer src="/javascript/page3.js"></script>
+    <script defer type="module" src="/javascript/background.js"></script>
 <body>
 <!-- CP Tracker (Sticky to Top) -->
 <div id="cp-tracker">
@@ -17,14 +18,17 @@
     <div class="section" id="genotype-section">
         <h2>Select Genotype</h2>
         <div id="genotype-options">
-            <button class="genotype-btn" data-type="Human">Human</button>
-            <button class="genotype-btn" data-type="Natural Hybrid">Natural Hybrid</button>
-            <button class="genotype-btn" data-type="Techno Hybrid">Techno Hybrid</button>
-            <button class="genotype-btn" data-type="GenoHybrid">GenoHybrid</button>
+            <button class="genotype-btn" data-type="naturalHybrid">Natural Hybrid</button>
+            <button class="genotype-btn" data-type="technoHybrid">Techno Hybrid</button>
+            <button class="genotype-btn" data-type="technoHybridDeserter">Techno Hybrid Deserter</button>
+            <button class="genotype-btn" data-type="genoHybrid">GenoHybrid</button>
         </div>
         <div id="genotype-info"></div>
+        <p><strong>Current Genotype:</strong> <span id="current-genotype">Human</span></p>
         <button id="choose-genotype">Choose Genotype</button>
+        <button id="remove-genotype">Remove Genotype</button>
     </div>
+    
 
     <!-- Mutations List -->
     <div class="section" id="mutation-section">

@@ -1,11 +1,8 @@
 // stateManager.js
-import { Attribute } from './define.js';
-import { Skill } from './define.js';
-import { Mutation } from './define.js';
 import { attributes } from './attributes.js';
 import { allmutations } from './mutations.js';
 import { allskills, skilloptions } from './skills.js';
-import { polarispowers } from './polarispowers.js';
+import { polarisPowers } from './polarispowers.js';
 
 
 
@@ -60,8 +57,11 @@ let characterName = characterNameElement && characterNameElement.value.trim()
         spentCPOnAP: stateManager.spentCPOnAP,
         pageNumber: pageNumber,
         polarisEffect: stateManager.getPolarisEffect(),
+        genotype: stateManager.getGenotype() // Call the method to get the actual genotype value
     };
+    
     const stateJson = JSON.stringify(stateData);
+    
     localStorage.setItem("characterState", stateJson);
     
     fetch('/save-character', {
@@ -72,10 +72,12 @@ let characterName = characterNameElement && characterNameElement.value.trim()
     .then(response => response.json())
     .then(data => {
         console.log('Character saved:', data);
+        alert("Character saved!"); // This will pop up a simple alert box
     })
     .catch(error => {
         console.error('Error saving character:', error);
     });
+    
 }
 
 export function loadCharacterState(characterName) {
@@ -202,24 +204,12 @@ if (parsedState.selectedPolarisPowers && Array.isArray(parsedState.selectedPolar
     console.log("❌ No character state found.");
 }
         // 5️⃣ Restore other state properties
-        console.log("📌 Before Assigning to StateManager:", {
-            cpTotal: parsedState.cpTotal,
-            apTotal: parsedState.apTotal,
-            difficultyLevel: parsedState.difficultyLevel,
-            spentCPOnAP: parsedState.spentCPOnAP,
-        });
-
+      
         stateManager.cpTotal = parsedState.cpTotal;
         stateManager.apTotal = parsedState.apTotal;
         stateManager.difficultyLevel = parsedState.difficultyLevel;
         stateManager.spentCPOnAP = parsedState.spentCPOnAP;
-
-        console.log("✅ After Assigning to StateManager:", {
-            cpTotal: stateManager.cpTotal,
-            apTotal: stateManager.apTotal,
-            difficultyLevel: stateManager.difficultyLevel,
-            spentCPOnAP: stateManager.spentCPOnAP,
-        });
+        stateManager.genotype=parsedState.genotype
 
         console.log("Character state loaded for:", parsedState.name || "Unknown");
     } else {
@@ -239,7 +229,7 @@ class StateManager {
         this.allSkills = allskills;
         this.skillOptions = skilloptions;
         this.allMutations = allmutations;
-        this.allPolarisPowers = polarispowers;
+        this.allPolarisPowers = polarisPowers;
 
         // Selected items
         this.selectedAttributes = {};
@@ -249,6 +239,7 @@ class StateManager {
         this.selectedSkills = [];
         this.selectedMutations = [];
         this.selectedPolarisPowers = [];
+        this.genotype="human"
 
         // Character points and settings
         this.cpTotal = 20;
@@ -287,8 +278,13 @@ class StateManager {
 
     getAttribute(shortForm) {
         const level = this.selectedAttributes[shortForm];
-        return this.allAttributes.find(attr => attr.shortForm === shortForm && attr.level === level);
+        
+        // Ensure level is at least 3
+        const effectiveLevel = level < 3 ? 3 : level;
+    
+        return this.allAttributes.find(attr => attr.shortForm === shortForm && attr.level === effectiveLevel);
     }
+    
 
     updateAttributeLevel(shortForm, newLevel) {
         if (this.selectedAttributes[shortForm] !== undefined) {
@@ -506,8 +502,19 @@ addPolarisPower(powerData) {
 
 // Retrieve a Polaris Power by name
 getPolarisPower(powerName) {
-    return this.selectedPolarisPowers.find(power => power.name === powerName) || null;
+    // Find the selected power by name in selectedPolarisPowers
+    const selectedPower = this.selectedPolarisPowers.find(power => power.name === powerName);
+
+    if (selectedPower) {
+        // If the selected power is found, search for the corresponding power in the polarisPowers group
+        const fullPowerData = polarisPowers.find(power => power.name === powerName);
+        return fullPowerData || null; // Return the corresponding power data or null if not found
+    }
+
+    return null; // Return null if the power wasn't found in selectedPolarisPowers
 }
+
+
     
 
     // ✅ Getter for polarisEffect
@@ -572,8 +579,13 @@ setApTotal(amount) {
 }
 
 
-
+setGenotype(selectedGenotype){
+    this.genotype=selectedGenotype
+}
  
+getGenotype(){
+    return this.genotype
+}
     // Method to reset all state values
     resetState() {
         this.cpTotal = 20;

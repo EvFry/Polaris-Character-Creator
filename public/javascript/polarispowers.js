@@ -107,7 +107,7 @@ export function randomPower(powerCount = 1) {
 }
 
 
-export let polarispowers =[
+export let polarisPowers =[
  new  Skill({
     name: "Blob of Destruction",
     description: "Unleash a dark, gelatinous entity that consumes all life in its path. If controlled, it follows the user’s commands; if not, it attacks indiscriminately.",
