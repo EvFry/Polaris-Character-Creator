@@ -39,3 +39,12 @@
 .character-section {
     margin-bottom: 20px;
 }
+
+#cp-tracker {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #ddd;
+    padding: 10px;
+    font-size: 20px;
+}

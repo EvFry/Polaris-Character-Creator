@@ -10,6 +10,8 @@ const characterTypeDropdown = document.getElementById("characterType");
 const cpSpendDropdown = document.getElementById("cp-spend");
 const characterName = document.getElementById('characterName')
 
+const newCharacter = localStorage.getItem("isNewCharacter");
+let characterState = JSON.parse(localStorage.getItem('characterState')) || {};
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded and parsed.");
@@ -30,9 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         if (characterState.name) {
             // ✅ Load name into textbox and cp-character-name display
+      loadCharacterState(characterState.name)
             characterName.value = characterState.name;
             document.getElementById('cp-character-name').textContent = characterState.name;
-
+            updateUIWithState();
             console.log("Loaded character name:", characterState.name);
         } else {
             // Default to empty if name is missing
@@ -43,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    updateUIWithState();
+  
 
 
   
@@ -55,55 +58,60 @@ document.addEventListener("DOMContentLoaded", function () {
     // Ensure UI reflects loaded state
   
 
-    cpTotalElement.textContent = state.getCpTotal();
-    apTotalElement.textContent = state.getApTotal();
+    cpTotalElement.textContent = characterState.cpTotal;
+    apTotalElement.textContent = characterState.apTotal;
 });
 
 function updateUIWithState() {
-    console.log("🔄 Updating UI with loaded state...");
+    console.log("🔄 Updating UI with loaded characterState...");
 
-    console.log("✅ state at the START of UI update:", {
-        cpTotal: state.cpTotal,
-        apTotal: state.apTotal,
-        difficultyLevel: state.difficultyLevel,
-        spentCPOnAP: state.spentCPOnAP,
+    console.log("✅ characterState at the START of UI update:", {
+        cpTotal: characterState.cpTotal,
+        apTotal: characterState.apTotal,
+        difficultyLevel: characterState.difficultyLevel,
+        spentCPOnAP: characterState.spentCPOnAP,
     });
 
     // 1️⃣ Update the character type (difficulty level)
     const difficultyMap = { 1: "realistic", 2: "intermediary", 3: "heroic" };
 
-    if (state.difficultyLevel in difficultyMap) {
-        characterTypeDropdown.value = difficultyMap[state.difficultyLevel];
+    if (characterState.difficultyLevel in difficultyMap) {
+        characterTypeDropdown.value = difficultyMap[characterState.difficultyLevel];
 
         console.log("📌 CharacterTypeDropdown value set to:", characterTypeDropdown.value);
         
         // 🔹 Add this to see if changing dropdown triggers any listener
         characterTypeDropdown.dispatchEvent(new Event("change"));
     } else {
-        console.error("❌ Invalid difficulty level in state:", state.difficultyLevel);
+        console.error("❌ Invalid difficulty level in characterState:", characterState.difficultyLevel);
     }
 
-    console.log("✅ state AFTER updating dropdown:", {
-        cpTotal: state.cpTotal,
-        apTotal: state.apTotal,
-        difficultyLevel: state.difficultyLevel,
-        spentCPOnAP: state.spentCPOnAP,
+    console.log("✅ characterState AFTER updating dropdown:", {
+        cpTotal: characterState.cpTotal,
+        apTotal: characterState.apTotal,
+        difficultyLevel: characterState.difficultyLevel,
+        spentCPOnAP: characterState.spentCPOnAP,
     });
 
     // 2️⃣ Update the CP spend dropdown
-    if (typeof state.spentCPOnAP === "number") {
-        cpSpendDropdown.value = state.spentCPOnAP.toString();
+    if (typeof characterState.spentCPOnAP === "number") {
+        cpSpendDropdown.value = characterState.spentCPOnAP.toString();
     } else {
-        console.error("❌ Invalid CP spent on AP in state:", state.spentCPOnAP);
+        console.error("❌ Invalid CP spent on AP in characterState:", characterState.spentCPOnAP);
     }
 
-    console.log("✅ state AFTER updating CP dropdown:", {
-        cpTotal: state.cpTotal,
-        apTotal: state.apTotal,
-        difficultyLevel: state.difficultyLevel,
-        spentCPOnAP: state.spentCPOnAP,
+    console.log("✅ characterState AFTER updating CP dropdown:", {
+        cpTotal: characterState.cpTotal,
+        apTotal: characterState.apTotal,
+        difficultyLevel: characterState.difficultyLevel,
+        spentCPOnAP: characterState.spentCPOnAP,
     });
-
+characterState.selectedAttributes.forEach(attribute => {
+        const attrShortForm = characterState.selectedAttributes.shortForm;  // Assuming each attribute has a `shortForm` property
+        state.updateAttributeLevel(attrShortForm, attribute.level);
+    });
+    
+    
     console.log("✅ UI fully updated!");
 }
 
@@ -120,40 +128,53 @@ function renderAttributes() {
         const listItem = document.createElement("li");
         listItem.id = `attribute-${attribute.shortForm}`;
 
+        // Create attribute label (Name)
         const attributeLabel = document.createElement("span");
         attributeLabel.textContent = `${attribute.name}: `;
 
+        // Create description text
+        const descriptionText = document.createElement("span");
+        descriptionText.classList.add("attribute-description");
+        descriptionText.textContent = `(${attribute.description}) `;
+
+        // Create level text
         const levelText = document.createElement("span");
         levelText.id = `value-${attribute.shortForm}`;
         levelText.textContent = attribute.level;
 
+        // Create button container
         const buttonContainer = document.createElement("div");
         buttonContainer.classList.add("button-container");
 
         if (attribute.shortForm !== "LCK") {  // Skip Luck attribute buttons
-            const decreaseButton = document.createElement("button");
-            decreaseButton.textContent = "-";
-            decreaseButton.id = `decrease-${attribute.shortForm}`;
-            buttonContainer.appendChild(decreaseButton);
-
             const increaseButton = document.createElement("button");
             increaseButton.textContent = "+";
             increaseButton.id = `increase-${attribute.shortForm}`;
-            buttonContainer.appendChild(increaseButton);
 
-            decreaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, -1));
+            const decreaseButton = document.createElement("button");
+            decreaseButton.textContent = "-";
+            decreaseButton.id = `decrease-${attribute.shortForm}`;
+
+            // Append buttons in reversed order (+ first, - second)
+            buttonContainer.appendChild(increaseButton);
+            buttonContainer.appendChild(decreaseButton);
+
+            // Add event listeners for buttons
             increaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, 1));
+            decreaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, -1));
         }
 
+        // Append elements to listItem in new order
         listItem.appendChild(attributeLabel);
+        listItem.appendChild(descriptionText);  // Add description here
         listItem.appendChild(levelText);
         listItem.appendChild(buttonContainer);
+        
         attributesList.appendChild(listItem);
 
         updateButtonStates(attribute);
     });
 }
-
 
 function updateDropdownOptions() {
     // Update Difficulty Dropdown
@@ -228,17 +249,25 @@ function updateDifficultyDropdown() {
     state.updateDifficulty(newDifficulty);
     apTotalElement.textContent = state.getApTotal();
 
-    // Update Luck attribute
-    const luckAttribute = attributeData.find(attr => attr.shortForm === "LCK");
-    if (luckAttribute) {
-        luckAttribute.level = luckValues[newDifficulty];
-        document.getElementById(`value-LCK`).textContent = luckAttribute.level;
-    }
+// Find the Luck attribute
+const luckAttribute = attributeData.find(attr => attr.shortForm === "LCK");
+if (luckAttribute) {
+    luckAttribute.level = luckValues[newDifficulty];
+
+    // Wait until LCK element exists before modifying it
+    setTimeout(() => {
+        const luckElement = document.getElementById("value-LCK");
+        if (luckElement) {
+            luckElement.textContent = luckAttribute.level;
+        } else {
+            console.error("LCK element not found in DOM.");
+        }
+    }, 0);
 
     // Update dropdown options
     updateDropdownOptions();
 }
-
+}
 characterTypeDropdown.addEventListener("change", updateDifficultyDropdown);
 
 function modifyAttribute(attrShortForm, change) {

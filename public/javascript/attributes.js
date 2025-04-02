@@ -24,8 +24,8 @@ get level() {
 
     // Method to calculate natural ability based on level
     calculateNaturalAbility() {
-        if (this._level >= 3 && this._level <= 4) return this._level === 3 ? -4 : -3;
-        if (this._level >= 5 && this._level <= 7) return -1;
+        if (this._level <= 3) return -4;
+        if (this._level >= 4 && this._level <= 7) return this._level <= 4 ? -3 : -1;
         if (this._level >= 8 && this._level <= 9) return 0;
         if (this._level >= 10 && this._level <= 12) return 1;
         if (this._level >= 13 && this._level <= 15) return 2;
@@ -35,6 +35,7 @@ get level() {
         if (this._level === 25) return 6;
         return null;
     }
+    
 }
 
 // Initialize attributes
@@ -47,7 +48,7 @@ export let attributes = [
     new Attribute("Intelligence", "INT", "Measures mental capacity, problem-solving ability, and aptitude for knowledge assimilation.", 7),
     new Attribute("Willpower", "WIL", "Determines mental resistance, focus under pressure, and tenacity in adversity.", 7),
     new Attribute("Presence", "PRE", "Measures aura, charisma, and ability to influence and build relationships.", 7),
-    new Attribute("Luck", "LCK", "Represents a character's connection to fate. It allows rerolls, avoids bad events, and grants small bonuses from the GM. Luck ranges from 1 to 20.", 11) // Luck with value 11
+    new Attribute("Luck", "LCK", "Represents a character's connection to fate. It allows rerolls, avoids bad events, and grants small bonuses.", 11) // Luck with value 11
 ];
 
 

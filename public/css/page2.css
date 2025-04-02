@@ -1,36 +1,93 @@
 #cp-tracker {
     position: fixed;
     top: 0;
-    left: 0;
-    background: #333;
-    color: white;
-    padding: 10px;
     width: 100%;
-    text-align: left;
+    background-color: #ddd;
+    padding: 10px;
+    font-size: 20px;
 }
 
-.ap-counter {
-    float: right;
+
+
+
+
+
+
+/* Container for attributes section */
+#attributes-list {
+    background: rgba(0, 0, 0, 0.8); /* Dark transparent background */
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    color: white; /* Text color for visibility */
 }
 
+/* Attribute row - aligns elements properly */
 .attribute-row {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin: 5px 0;
+    padding: 8px;
+    border-bottom: 1px solid #555;
 }
+
+/* Name and description */
+.attribute-label {
+    flex: 2;
+    font-size: 18px;
+}
+
+/* Description style */
+.attribute-description {
+    font-style: italic;
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Number box for level */
+.attribute-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #555;
+}
+
+/* Button container: aligns buttons into columns */
+.button-container {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Button styling */
 button {
-    margin: 0 5px;
-    padding: 5px 10px;
-    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    border: none;
+    background: #555;
+    color: white;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #777;
 }
 
 button:disabled {
-    background-color: #ccc; /* Grayed-out buttons when disabled */
+    background: #333;
     cursor: not-allowed;
 }
-
-/* Button container styling */
-.button-container {
-    display: inline-block;
+[id^="value-"] {
+    font-size: 24px;  /* Increase size */
+    font-weight: bold;
+    text-align: left;
+    display: block;  /* Ensure full-width centering */
+    margin: 10px auto; /* Adds spacing and centers */
 }

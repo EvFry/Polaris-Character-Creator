@@ -183,7 +183,7 @@ characterState.selectedPolarisPowers.forEach(selectedPower => {
             // Add the power name, description, and calculated bonus to the section
             polarisPowersSection += `
                 <div class="character-detail">
-                    <strong>${fullPowerData.name}:</strong> Mastery Level ${fullPowerData.masteryLevel}
+                    <strong>${fullPowerData.name}:</strong> Mastery Level ${finalBonus}
                     <p>${fullPowerData.description}</p> <!-- Display the description -->
                     <p>Bonus: ${finalBonus}</p>  <!-- Display the calculated bonus -->
                 </div>

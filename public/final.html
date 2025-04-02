@@ -5,6 +5,8 @@
     <script defer type="module" src="/javascript/attributes.js"></script>
     <script defer type="module" src="/javascript/final.js"></script>
     <script defer type="module" src="/javascript/background.js"></script>
+    <script defer src="/javascript/navigation.js"></script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +14,21 @@
     <style>
      
     </style>
+
+<div id="cp-tracker">
+    <span>Character Name: <span id="cp-character-name">Unknown</span></span> |
+    <span>CP Total: <span id="cp-total">0</span></span>
+
+    <div id="button-container">
+        <button id="btn-main-menu" title="New Character, Load, Copy, Delete">Main Menu</button>
+        <button id="btn-1" title="Name, Character Type, Attributes">1</button>
+        <button id="btn-2" title="Genotype, Mutations, Polaris Effect">2</button>
+        <button id="btn-3" title="Origin, Education (Coming soon)" disabled>3</button>
+        <button id="btn-4" title="Professions (Coming soon)" disabled>4</button>
+        <button id="btn-5" title="Advantages (Coming soon)" disabled>5</button>
+        <button id="btn-character-sheet" title="Character Sheet">Character Sheet</button>
+    </div>
+</div>
 </head>
 <body>
     <h1>Character Sheet</h1>

@@ -772,7 +772,7 @@ function handleButtonClick(event) {
     saveCharacterState();
 
     if (event.target.id === 'nextCharacter') {
-        window.location.href = 'page4.html';
+        window.location.href = 'final.html';
     }
 }
 
