@@ -1,14 +1,14 @@
 #cp-tracker {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #ddd;
-    padding: 10px;
-    font-size: 20px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background-color: #6470ae;
+	padding: 10px;
+	font-size: 20px;
+	display: flex;
+	justify-content: center;
+    flex-wrap: wrap;
 }
-
-
-
 
 
 
@@ -58,13 +58,13 @@
 /* Button container: aligns buttons into columns */
 .button-container {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     gap: 10px;
     width: 100%;
 }
 
 /* Button styling */
-button {
+.attribute-buttons {
     width: 40px;
     height: 40px;
     font-size: 20px;
@@ -74,7 +74,26 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease;
+    display:flex;
+    justify-content: left;
+    gap:10px;
 }
+
+
+[id^="increase-"]{
+width:40px;
+height: 40px;
+padding:10px;
+justify-items: center;
+}
+
+[id^="decrease-"]{
+    width:40px;
+    height: 40px;
+    padding:10px;
+    justify-items: center;
+    }
+
 
 button:hover {
     background: #777;
@@ -85,9 +104,41 @@ button:disabled {
     cursor: not-allowed;
 }
 [id^="value-"] {
-    font-size: 24px;  /* Increase size */
+    font-size: 24px;
     font-weight: bold;
     text-align: left;
-    display: block;  /* Ensure full-width centering */
-    margin: 10px auto; /* Adds spacing and centers */
+    display: block;
+    margin: auto 32px;
+}
+.ap-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Ensure vertical alignment */
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 10px;
+    width: fit-content;
+    padding: 10px 20px; /* Adds some spacing */
+    margin: auto; /* Centers horizontally */
+}
+
+.basics-container {
+    display: flex;
+    
+    align-items: center; /* Ensure vertical alignment */
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 30px;
+    width: fit-content;
+    padding: 10px 20px; /* Adds some spacing */
+    margin: auto; /* Centers horizontally */
+    flex-wrap: wrap;
+
+}
+
+.label {
+    display: inline-block;
+    text-align:center;
+     margin:auto;
+     border-radius: 5px;
 }

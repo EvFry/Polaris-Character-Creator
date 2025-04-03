@@ -17,7 +17,7 @@
 <div id="cp-tracker">
     <span>Character Name: <span id="cp-character-name">Unknown</span></span> |
     <span>CP Total: <span id="cp-total">0</span></span>
-
+    <div class="break"></div>
     <div id="button-container">
         <button id="btn-main-menu" title="New Character, Load, Copy, Delete">Main Menu</button>
         <button id="btn-1" title="Name, Character Type, Attributes">1</button>
@@ -32,22 +32,23 @@
     
     <div class="container">
         <h1>Create Your Character</h1>
-    
+    <div class="basics-container">
+        <label>
         <!-- Character Name Input -->
-        <label for="characterName">Enter Character Name:</label>
-        <input type="text" id="characterName" placeholder="Enter a valid name..." required>
+        <label for="characterName">Enter Character Name:
+        <input type="text" id="characterName" placeholder="Enter a valid name..." required></label>
         <p id="nameError" class="error-message"></p>
-    
+        
         <!-- Character Type Dropdown -->
         <label for="characterType">Select Character Type:</label>
         <select id="characterType">
             <option value="realistic">Realistic (30 AP)</option>
             <option value="intermediary">Intermediary (38 AP)</option>
             <option value="heroic">Heroic (46 AP)</option>
-        </select>
-    
+        </select></label>
+    </div>
         <!-- Attributes Section -->
-        <h2>Attributes <span class="ap-counter">Attribute Points: <span id="ap-total">0</span></span></h2>
+        <h2> <span class="ap-counter">Attribute Points: <span id="ap-total">0</span></span></h2>
         <div id="attributes-list"></div>
     
         <!-- CP Spending Dropdown -->

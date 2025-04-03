@@ -143,8 +143,8 @@ function renderAttributes() {
         levelText.textContent = attribute.level;
 
         // Create button container
-        const buttonContainer = document.createElement("div");
-        buttonContainer.classList.add("button-container");
+        const attributeButton = document.createElement("div");
+        attributeButton.classList.add("attribute-buttons");
 
         if (attribute.shortForm !== "LCK") {  // Skip Luck attribute buttons
             const increaseButton = document.createElement("button");
@@ -156,8 +156,8 @@ function renderAttributes() {
             decreaseButton.id = `decrease-${attribute.shortForm}`;
 
             // Append buttons in reversed order (+ first, - second)
-            buttonContainer.appendChild(increaseButton);
-            buttonContainer.appendChild(decreaseButton);
+            attributeButton.appendChild(increaseButton);
+            attributeButton.appendChild(decreaseButton);
 
             // Add event listeners for buttons
             increaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, 1));
@@ -168,7 +168,7 @@ function renderAttributes() {
         listItem.appendChild(attributeLabel);
         listItem.appendChild(descriptionText);  // Add description here
         listItem.appendChild(levelText);
-        listItem.appendChild(buttonContainer);
+        listItem.appendChild(attributeButton);
         
         attributesList.appendChild(listItem);
 
