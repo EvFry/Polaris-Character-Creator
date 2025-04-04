@@ -59,6 +59,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             `;
 
+// 3 Get mutations
+            let mutationSection = "<div class='character-section'><h3>Mutations</h3>";
+
+            state.selectedMutations.forEach(mutationName => {
+                const mutation = allmutations.find(m => m.name === mutationName);
+        
+        
+            
+                if (!mutation) return; // skip if not found
+
+                mutationSection += `
+                    <div class="character-detail">
+                        <strong>${mutation.name}</strong> – <em>${mutation.cpCost} CP</em>
+                        <button class="accordion">Details</button>
+                        <div class="panel">
+                            <p>${mutation.descriptionFull || "No description available."}</p>
+                        </div>
+                    </div>
+                `;}
+
+            );
+            mutationSection += "</div>";
+
 // 3. Display all skills and calculate mastery levels
 let skillsSection = "<div class='character-section'><h3>Skills</h3>";
 
@@ -96,17 +119,7 @@ allskills.forEach(skill => {
                 <strong>${skill.name}:</strong> Base Skill ${skill.baseSkill}, Mastery Level ${skill._skillMastery},Final Bonus ${finalBonus}
             </div>
         `;
-    }
-});
-
-
-
-
-            // 4. Calculate the mastery level of all skills in selected skills
-
-let selectedSkillsSection = "<div class='character-section'><h3>Skills</h3>";
-
-characterState.selectedSkills.forEach(skill => {
+    }characterState.selectedSkills.forEach(skill => {
         console.log(`Calculating mastery for: ${skill.name}`);
 
         // Fetch the first and second attribute objects
@@ -134,12 +147,21 @@ characterState.selectedSkills.forEach(skill => {
         console.log(`-> Total Bonus for ${skill.name}: ${finalBonus}`);
 
         // Add to the display section
-        selectedSkillsSection += `
+        skillsSection += `
             <div class="character-detail">
                 <strong>${skill.name}:</strong> Base Skill ${skill.baseSkill}, Mastery Level ${skill._skillMastery}, Final Bonus ${finalBonus}
             </div>
         `;
     
+});
+
+
+
+
+            // 4. Calculate the mastery level of all skills in selected skills
+
+
+
 });
 
 
@@ -198,9 +220,10 @@ characterState.selectedPolarisPowers.forEach(selectedPower => {
             document.getElementById("characterOptions").innerHTML = `
                 ${attributesSection}
                 ${genotypeSection}
+                ${mutationSection}
                 ${skillsSection}
-                ${selectedSkillsSection}
+             
                 ${polarisPowersSection}
             `;
-        });
- 
+        
+})

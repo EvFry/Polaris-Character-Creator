@@ -1,137 +1,97 @@
 #cp-tracker {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	background-color: #6470ae;
-	padding: 10px;
-	font-size: 20px;
-	display: flex;
-	justify-content: center;
-    flex-wrap: wrap;
-}
-
-
-
-
-/* Container for attributes section */
-#attributes-list {
-    background: rgba(0, 0, 0, 0.8); /* Dark transparent background */
-    padding: 15px;
-    border-radius: 10px;
-    max-width: 600px;
-    margin: auto;
-    color: white; /* Text color for visibility */
-}
-
-/* Attribute row - aligns elements properly */
-.attribute-row {
+    position: fixed;
+    top: 0;
+    left: 50%; 
+    transform: translateX(-50%);
+    background-color: rgba(100, 112, 174, 0.85); 
+    padding: 10px 20px; 
+    font-size: 20px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px;
-    border-bottom: 1px solid #555;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px); 
+    box-sizing: border-box; 
+    width: auto; 
+    max-width: 960px; 
+    min-width: 400px;
 }
 
-/* Name and description */
-.attribute-label {
-    flex: 2;
-    font-size: 18px;
-}
 
-/* Description style */
-.attribute-description {
-    font-style: italic;
-    font-size: 14px;
-    color: #ccc;
-}
 
-/* Number box for level */
-.attribute-row {
+.cp-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 10px;
-    border-bottom: 1px solid #555;
 }
 
-/* Button container: aligns buttons into columns */
-.button-container {
+#button-container {
+    margin-top: 10px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    width: 100%;
-}
-
-/* Button styling */
-.attribute-buttons {
-    width: 40px;
+    align-items: center; 
+  }
+  
+  #button-container button {
+    width: 70px;
     height: 40px;
-    font-size: 20px;
-    border: none;
-    background: #555;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    display:flex;
-    justify-content: left;
-    gap:10px;
-}
-
-
-[id^="increase-"]{
-width:40px;
-height: 40px;
-padding:10px;
-justify-items: center;
-}
-
-[id^="decrease-"]{
-    width:40px;
-    height: 40px;
-    padding:10px;
-    justify-items: center;
-    }
-
-
-button:hover {
-    background: #777;
-}
-
-button:disabled {
-    background: #333;
-    cursor: not-allowed;
-}
-[id^="value-"] {
-    font-size: 24px;
     font-weight: bold;
-    text-align: left;
-    display: block;
-    margin: auto 32px;
-}
-.ap-counter {
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    line-height: normal;          
+    vertical-align: middle;     
     display: flex;
     justify-content: center;
-    align-items: center; /* Ensure vertical alignment */
+    align-items: center;
+  }
+  
+  #button-container button:hover {
+    background-color: #555;
+  }
+  
+  body {
+    padding-top: 80px; 
+    margin: 0 auto; 
+    width: 100%;   
+    height: 100vh;     
+    display: flex;     
+    flex-direction: column; 
+    align-items: center;  
+    text-align: center;    
+  }
+  
+
+  .ap-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: rgba(0, 0, 0, 0.8);
     color: white;
     border-radius: 10px;
     width: fit-content;
-    padding: 10px 20px; /* Adds some spacing */
-    margin: auto; /* Centers horizontally */
+    padding: 10px 20px;
+
 }
+
 
 .basics-container {
     display: flex;
     
-    align-items: center; /* Ensure vertical alignment */
+    align-items: center; 
     background: rgba(0, 0, 0, 0.8);
     color: white;
     border-radius: 30px;
     width: fit-content;
-    padding: 10px 20px; /* Adds some spacing */
-    margin: auto; /* Centers horizontally */
+    padding: 10px 20px; 
+    margin: auto; 
     flex-wrap: wrap;
 
 }
@@ -142,3 +102,141 @@ button:disabled {
      margin:auto;
      border-radius: 5px;
 }
+
+.attributes-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 20px auto;
+    width: fit-content;
+  }
+  
+  .cp-spend-container {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+    .attributes-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin: 20px auto;
+        width: fit-content;
+      }
+
+/* Container for attributes section *//* General styles for the attribute list container */
+#attributes-list {
+    background: rgba(0, 0, 0, 0.8); 
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    color: white; 
+}
+
+/* Attribute row - aligns elements properly */
+.attribute-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #555;
+}
+.attribute-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Left-align the contents */
+    flex: 2; /* Give it space in the row */
+}
+.attribute-label {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.attribute-description {
+    font-size: 14px;
+    font-style: italic;
+    color: #ccc;
+    text-align: left;
+}
+
+/* Buttons container */
+.attribute-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px; /* spacing between buttons */
+    align-items: center;
+}
+
+/* Individual buttons for increasing/decreasing values */
+[id^="increase-"],
+[id^="decrease-"] {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background-color: #ccc;
+    border: 1px solid #999;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0; /* Makes sure button doesn't overflow */
+    margin: 0;  /* Optional: remove default spacing */
+    text-align: center;
+    line-height: 1;
+}
+
+[id^="increase-"]:hover,
+[id^="decrease-"]:hover {
+    background-color: #bbb;
+}
+
+/* Disable button styles */
+button:disabled {
+    background: #333;
+    cursor: not-allowed;
+}
+
+/* Value display style */
+[id^="value-"] {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+    display: block;
+    margin: auto 32px;
+}
+
+      
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px auto;
+  }
+  
+  .button-group button {
+    width: 70px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    background-color: #333; /* Dark background for contrast */
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .button-group button:hover {
+    background-color: #555;
+  }

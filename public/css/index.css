@@ -1,28 +1,53 @@
+/* General Body Styles */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding-top: 80px; /* Added space for fixed header */
     margin: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
     text-align: center;
 }
 
+/* #indexPage Styles */
 #indexPage {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%;
-    max-width: 400px;
+    width: auto;
+    max-width: 960px; /* Similar to cp-tracker width */
+    min-width: 400px;
+    background: rgba(0, 0, 0, 0.8); /* Dark transparent background */
+    padding: 15px 20px;
+    border-radius: 10px;
+    color: white; /* Text color for visibility */
+    box-sizing: border-box;
+    margin: auto;
 }
 
+/* #newCharacter Styles */
 #newCharacter {
     display: block;
     width: 100%;
     height: 3em;
     margin-bottom: 10px;
     text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* #savedCharacters Styles */
 #savedCharacters {
     display: block;
     width: 100%;
@@ -30,29 +55,83 @@ body {
     margin-bottom: 10px;
 }
 
+/* Load Buttons Container */
+#loadButtonsContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* Space out the two buttons */
+    gap: 10px; /* Add some space between buttons */
+    margin-bottom: 15px;
+}
+
+#loadButtonsContainer button {
+    width: 48%; /* Each button takes up about half the width */
+    height: 3em;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loadButtonsContainer button:hover {
+    background-color: #555;
+}
+
+/* Button Container for Delete and Copy */
 #buttonContainer {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: center; /* Center the buttons */
     width: 100%;
+    gap: 10px;
 }
 
 #buttonContainer button {
-    margin: 5px;
-    padding: 10px;
+    width: 70px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+#buttonContainer button:hover {
+    background-color: #555;
+}
+
+/* Media Query for smaller screens */
 @media (max-width: 600px) {
+    #loadButtonsContainer {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        align-items: center;
+    }
+
+    #loadButtonsContainer button {
+        width: 90%; /* Full width buttons on small screens */
+        margin-bottom: 10px;
+    }
+
     #buttonContainer {
         flex-direction: column;
     }
-    
-    #buttonContainer.small-screen button:nth-child(1),
-    #buttonContainer.small-screen button:nth-child(2),
-    #buttonContainer.small-screen button:nth-child(3) {
-        display: block;
-    }
-    #buttonContainer.small-screen button:nth-child(4) {
-        display: block;
+
+    #buttonContainer button {
+        width: 90%; /* Full width buttons on small screens */
+        margin-bottom: 10px;
     }
 }

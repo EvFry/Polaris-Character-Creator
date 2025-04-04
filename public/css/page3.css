@@ -1,65 +1,184 @@
-body {
+#cp-tracker {
+    position: fixed;
+    top: 0;
+    left: 50%; 
+    transform: translateX(-50%);
+    background-color: rgba(100, 112, 174, 0.85); 
+    padding: 10px 20px; 
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px); 
+    box-sizing: border-box; 
+    width: auto; 
+    max-width: 960px; 
+    min-width: 400px;
+}
+
+
+
+.cp-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
-#cp-tracker {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #ddd;
-    padding: 10px;
-    font-size: 20px;
-}
+#button-container {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    align-items: center; 
+  }
+  
+  #button-container button {
+    width: 70px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    line-height: normal;          
+    vertical-align: middle;     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #button-container button:hover {
+    background-color: #555;
+  }
+  
 
-.section {
+  .section {
     width: 60%;
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #000;
-    border-radius: 10px;
-    background-color: #f9f9f9;
+    margin: 20px auto; /* vertical margin added here */
+    padding: 15px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.8); 
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    align-items: center;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
-#mutation-list, #second-power-list, #third-power-list {
+
+
+/* Inputs/lists matching dark theme */
+#mutation-list, 
+#second-power-list, 
+#third-power-list {
     width: 100%;
     height: 150px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #555;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
+/* Power selection layout container */
 #power-selection div {
     margin-bottom: 15px;
-}
-
-.accordion {
-    background-color: #f1f1f1;
-    color: #444;
-    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
     padding: 10px;
+    border-radius: 10px;
+    color: white;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+  
+    max-width: 600px;   /* or any value you want */
+    margin-left: auto;
+    margin-right: auto; /* this centers it */
+  }
+  
+
+/* Accordion styling to match dark card-like UI */
+.accordion {
+    background-color: rgba(100, 112, 174, 0.85);
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
     width: 100%;
     border: none;
+    border-radius: 10px;
     text-align: left;
-    outline: none;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s ease;
 }
 
+.accordion:hover {
+    background-color: rgba(130, 142, 200, 0.9);
+}
+
+/* Panel that expands */
 .panel {
-    padding: 0 18px;
+    padding: 10px 20px;
     display: none;
-    background-color: #f1f1f1;
-    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 .panel.active {
     display: block;
 }
 
+/* Remove button with dark theme */
 .remove-button {
-    background-color: red;
+    background-color: #900;
     color: white;
     border: none;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s ease;
 }
 
+.remove-button:hover {
+    background-color: #c00;
+}
 
+/* Already styled button group, preserved */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 40px auto;
+}
+
+.button-group button {
+    width: 70px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.button-group button:hover {
+    background-color: #555;
+}

@@ -1,5 +1,5 @@
 const accessKey = "DSuJWdKwiraIXeKbgzPvLwo4AuHvhW-LYdmBVfyZ2LM";  // Replace with your actual access key
-const searchQuery = "sea";  // Searching for water-related terms
+const searchQuery = "undersea";  // Searching for water-related terms
 const url = `https://api.unsplash.com/photos/random?query=${searchQuery}&client_id=${accessKey}`;
 
 fetch(url)

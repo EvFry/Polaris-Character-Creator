@@ -126,16 +126,26 @@ function renderAttributes() {
 
     attributeData.forEach(attribute => {
         const listItem = document.createElement("li");
+        listItem.classList.add("attribute-row");
         listItem.id = `attribute-${attribute.shortForm}`;
+
+        // === Create info container (label + description) ===
+        const infoContainer = document.createElement("div");
+        infoContainer.classList.add("attribute-info");
 
         // Create attribute label (Name)
         const attributeLabel = document.createElement("span");
-        attributeLabel.textContent = `${attribute.name}: `;
+        attributeLabel.classList.add("attribute-label");
+        attributeLabel.textContent = `${attribute.name}`;
 
         // Create description text
         const descriptionText = document.createElement("span");
         descriptionText.classList.add("attribute-description");
-        descriptionText.textContent = `(${attribute.description}) `;
+        descriptionText.textContent = `${attribute.description}`;
+
+        // Add name and description to info container
+        infoContainer.appendChild(attributeLabel);
+        infoContainer.appendChild(descriptionText);
 
         // Create level text
         const levelText = document.createElement("span");
@@ -146,7 +156,7 @@ function renderAttributes() {
         const attributeButton = document.createElement("div");
         attributeButton.classList.add("attribute-buttons");
 
-        if (attribute.shortForm !== "LCK") {  // Skip Luck attribute buttons
+        if (attribute.shortForm !== "LCK") {
             const increaseButton = document.createElement("button");
             increaseButton.textContent = "+";
             increaseButton.id = `increase-${attribute.shortForm}`;
@@ -155,26 +165,24 @@ function renderAttributes() {
             decreaseButton.textContent = "-";
             decreaseButton.id = `decrease-${attribute.shortForm}`;
 
-            // Append buttons in reversed order (+ first, - second)
             attributeButton.appendChild(increaseButton);
             attributeButton.appendChild(decreaseButton);
 
-            // Add event listeners for buttons
             increaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, 1));
             decreaseButton.addEventListener("click", () => modifyAttribute(attribute.shortForm, -1));
         }
 
-        // Append elements to listItem in new order
-        listItem.appendChild(attributeLabel);
-        listItem.appendChild(descriptionText);  // Add description here
+        // Append everything to the row
+        listItem.appendChild(infoContainer);
         listItem.appendChild(levelText);
         listItem.appendChild(attributeButton);
-        
+
         attributesList.appendChild(listItem);
 
         updateButtonStates(attribute);
     });
 }
+
 
 function updateDropdownOptions() {
     // Update Difficulty Dropdown

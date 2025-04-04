@@ -1,3 +1,81 @@
+#cp-tracker {
+    position: fixed;
+    top: 0;
+    left: 50%; 
+    transform: translateX(-50%);
+    background-color: rgba(100, 112, 174, 0.85); 
+    padding: 10px 30px; 
+    font-size: 20px;
+    min-width: unset;
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(6px); 
+    box-sizing: border-box; 
+    width: auto; 
+    max-width: 960px; 
+    min-width: 400px;
+}
+
+
+
+.cp-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#button-container {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    align-items: center; 
+    max-width: 100%; 
+  }
+  
+  #button-container button {
+    width: 70px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    line-height: normal;          
+    vertical-align: middle;     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #button-container button:hover {
+    background-color: #555;
+  }
+  
+
+  
+  
+  body {
+    padding-top: 80px; 
+    margin: 0 auto; 
+    width: 100%;   
+    height: 100vh;     
+    display: flex;     
+    flex-direction: column; 
+    align-items: center;  
+    text-align: center;    
+  }
+
+
 #characterOptions {
     margin-top: 20px;
     padding: 10px;
@@ -40,11 +118,3 @@
     margin-bottom: 20px;
 }
 
-#cp-tracker {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #ddd;
-    padding: 10px;
-    font-size: 20px;
-}

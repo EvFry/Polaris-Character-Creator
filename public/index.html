@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Index</title>
+    <title>Polaris Character Creator</title>
     <link rel="stylesheet" href="css/index.css">
     <script type="module" src="javascript/index.js"></script>
     <script type="module" src="javascript/background.js"></script> <!-- Link to background.js -->
 </head>
 <body>
     <div id="indexPage">
-        <h1>Index</h1>
+        <h1>Polaris Character Creator<br>Main Menu</h1>
         <button id="newCharacter">New Character</button>
         <select id="savedCharacters" size="5"></select>
-        <div id="buttonContainer">
+        
+        <!-- Two Load buttons underneath the Saved Characters box -->
+        <div id="loadButtonsContainer">
             <button id="loadCreator">Load Character in Creator</button>
             <button id="loadSheet">Load Character Sheet</button>
+        </div>
+    
+        <!-- Delete and Copy buttons, centered on a new row -->
+        <div id="buttonContainer">
             <button id="delete">Delete</button>
             <button id="copy">Copy</button>
         </div>
     </div>
+    
 </body>
 </html>

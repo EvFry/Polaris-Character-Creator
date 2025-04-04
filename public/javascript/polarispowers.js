@@ -88,7 +88,7 @@ export function randomPower(powerCount = 1) {
 
     // Retrieve full details from polarispowers array (including name, fullDescription, categories)
     const powerDetails = normalizedPowerNames.map(powerName => {
-        return polarispowers.find(power => power.name.toLowerCase().trim() === powerName);
+        return polarisPowers.find(power => power.name.toLowerCase().trim() === powerName);
     });
 
     if (powerDetails.includes(undefined)) {
